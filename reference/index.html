@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Reference · Bitlync docs</title>
+<meta name="description" content="Auth is the X-API-Key header. Writes take dry_run (default true). Import the OpenAPI file. This page is not the spec."/>
+<link rel="canonical" href="https://docs.bitlync.com/reference/"/>
+<meta property="og:title" content="Reference · Bitlync docs"/>
+<meta property="og:description" content="Auth is the X-API-Key header. Writes take dry_run (default true). Import the OpenAPI file. This page is not the spec."/>
+<meta property="og:url" content="https://docs.bitlync.com/reference/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts" hidden>
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/" class="on">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+
+  <div class="docs-hero">
+    <p class="kicker">Reference</p>
+    <h1>Routes that exist today.</h1>
+    <p class="lede">Auth is the <code class="inline">X-API-Key</code> header. Writes take <code class="inline">dry_run</code> (default true). Import the OpenAPI file. This page is not the spec.</p>
+    <p class="note"><a href="/openapi.json">OpenAPI 0.65.0</a></p>
+  </div>
+  <div class="two" id="ref-tickets">
+    <article>
+      <p class="path">GET /tenants/{tenant_id}/tickets</p>
+      <p class="path">POST /tenants/{tenant_id}/tickets</p>
+      <h3>Tickets</h3>
+      <p class="note">List and create. Write back (update, note, close-with-evidence, hours) only on tickets Bitlync created. Close defaults off. Hours are a write, not a read. dry_run defaults true.</p>
+    </article>
+    <article>
+      <p class="path">curl · JSON</p>
+      <div class="code" style="margin:0;border:0">
+        <div class="hd"><b>snippet</b><button class="copy" type="button" data-copy="curl -s &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/tickets&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot;">Copy</button></div>
+        <pre id="snip-tickets">curl -s "$BITLYNC_BASE/tenants/sandbox-mainstreet/tickets" \
+  -H "X-API-Key: $BITLYNC_KEY"</pre>
+      </div>
+    </article>
+  </div>
+  <div class="rt-wrap">
+  <table class="rt">
+    <thead><tr><th>Method</th><th>Path</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr id="ref-agreements"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/agreements</code></td><td>Store-served. 501 when the connector does not support agreements. We do not mint a header.</td></tr>
+      <tr id="ref-devices"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/devices</code></td><td>Store-served device list.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/applications</code></td><td></td></tr>
+      <tr id="ref-audit"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/audit</code></td><td></td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/connections</code></td><td></td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/connections/events</code></td><td></td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/identity/mappings</code></td><td></td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/identity/unmapped</code></td><td></td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/incidents</code></td><td></td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/status</code></td><td></td></tr>
+      <tr><td><code>GET</code> / <code>PUT</code></td><td><code>/tenants/{tenant_id}/routing</code></td><td></td></tr>
+      <tr id="ref-companies"><td><code>POST</code></td><td><code>/tenants/{tenant_id}/companies</code></td><td></td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/findings/route</code></td><td></td></tr>
+      <tr><td><code>POST</code></td><td><code>/sandbox/reset</code></td><td>Sandbox tenants only</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <article class="obj" id="docs-ticket">
+    <h3>Ticket</h3>
+    <p class="note">GET and POST /tenants/{tenant_id}/tickets. Write-back and hours only on tickets Bitlync created. Time has no notes field.</p>
+    <div class="fields">
+      <button type="button" data-goto="ref-tickets" data-copy="curl -s &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/tickets&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot;">source</button>
+      <button type="button" data-goto="ref-tickets" data-copy="{&quot;source&quot;:&quot;psa&quot;,&quot;source_id&quot;:&quot;…&quot;,&quot;summary&quot;:&quot;…&quot;,&quot;status&quot;:&quot;in_progress&quot;,&quot;priority&quot;:&quot;medium&quot;,&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">source_id</button>
+      <button type="button" data-goto="ref-tickets" data-copy="{&quot;summary&quot;:&quot;Printer offline&quot;,&quot;dry_run&quot;:true,&quot;idempotency_key&quot;:&quot;ticket-1&quot;}">summary</button>
+      <button type="button" data-goto="ref-tickets" data-copy="{&quot;status&quot;:&quot;in_progress&quot;,&quot;source&quot;:&quot;psa&quot;,&quot;raw&quot;:{}}">status</button>
+      <button type="button" data-goto="ref-tickets" data-copy="{&quot;priority&quot;:&quot;medium&quot;}">priority</button>
+      <button type="button" data-goto="ref-tickets" data-copy="{&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">synced_at</button>
+      <button type="button" data-goto="ref-tickets" data-copy="{&quot;raw&quot;:{}}">raw</button>
+    </div>
+  </article>
+  <article class="obj" id="docs-company">
+    <h3>Company</h3>
+    <p class="note">POST /tenants/{tenant_id}/companies. Pax8 matches a company it already has, then creates the rest. We do not mint a PSA company. Creating a leftover PSA company in the ISV still returns 501.</p>
+    <div class="fields">
+      <button type="button" data-goto="ref-companies" data-copy="curl -s -X POST &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/companies&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot; -d '{&quot;name&quot;:&quot;Brightside Pediatrics&quot;,&quot;dry_run&quot;:true}'">source</button>
+      <button type="button" data-goto="ref-companies" data-copy="{&quot;name&quot;:&quot;Brightside Pediatrics&quot;,&quot;dry_run&quot;:true}">name</button>
+      <button type="button" data-goto="ref-companies" data-copy="{&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">synced_at</button>
+      <button type="button" data-goto="ref-companies" data-copy="{&quot;raw&quot;:{}}">raw</button>
+    </div>
+  </article>
+  <article class="obj" id="docs-device">
+    <h3>Device</h3>
+    <p class="note">GET /tenants/{tenant_id}/devices.</p>
+    <div class="fields">
+      <button type="button" data-goto="ref-devices" data-copy="curl -s &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/devices&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot;">source</button>
+      <button type="button" data-goto="ref-devices" data-copy="{&quot;hostname&quot;:&quot;front-desk-01&quot;,&quot;online&quot;:true,&quot;source&quot;:&quot;rmm&quot;}">hostname</button>
+      <button type="button" data-goto="ref-devices" data-copy="{&quot;online&quot;:true}">online</button>
+      <button type="button" data-goto="ref-devices" data-copy="{&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">synced_at</button>
+      <button type="button" data-goto="ref-devices" data-copy="{&quot;raw&quot;:{}}">raw</button>
+    </div>
+  </article>
+  <article class="obj" id="docs-agreement">
+    <h3>Agreement</h3>
+    <p class="note">GET /tenants/{tenant_id}/agreements. Recurring MSP service billing arrangement. Not “PSA Contract.” We do not mint an agreement header.</p>
+    <div class="fields">
+      <button type="button" data-goto="ref-agreements" data-copy="{&quot;name&quot;:&quot;…&quot;,&quot;monthly_recurring_revenue&quot;:0,&quot;company_name&quot;:&quot;…&quot;,&quot;source&quot;:&quot;psa&quot;,&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">source</button>
+      <button type="button" data-goto="ref-agreements" data-copy="{&quot;company_name&quot;:&quot;…&quot;}">company_name</button>
+      <button type="button" data-goto="ref-agreements" data-copy="{&quot;name&quot;:&quot;…&quot;}">name</button>
+      <button type="button" data-goto="ref-agreements" data-copy="{&quot;monthly_recurring_revenue&quot;:0}">monthly_recurring_revenue</button>
+      <button type="button" data-goto="ref-agreements" data-copy="{&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">synced_at</button>
+      <button type="button" data-goto="ref-agreements" data-copy="{&quot;raw&quot;:{}}">raw</button>
+    </div>
+  </article>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/#terms">Terms</a> · <a href="https://www.bitlync.com/#privacy">Privacy</a> · <a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>

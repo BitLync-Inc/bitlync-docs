@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>MSP permissions · Bitlync docs</title>
+<meta name="description" content="A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500."/>
+<link rel="canonical" href="https://docs.bitlync.com/concepts/msp-permissions/"/>
+<meta property="og:title" content="MSP permissions · Bitlync docs"/>
+<meta property="og:description" content="A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500."/>
+<meta property="og:url" content="https://docs.bitlync.com/concepts/msp-permissions/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts">
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/" class="on">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+  <div class="docs-hero">
+    <p class="kicker">Concepts</p>
+    <h1>MSP permissions</h1>
+  </div>
+<p class="note">A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500.</p>
+  <p class="note">ConnectWise and Halo connect are numbered click paths in the flow. Halo pastes a client ID, client secret, and the two server URLs. If a permission is missing, we name it in English. We do not create a company in the PSA and we do not create an agreement.</p>
+  <p class="lbl">Mechanism</p>
+  <p class="note">The MSP pastes keys in the guided flow. The probe names the permission to fix. The ISV does not paste MSP creds.</p>
+  <p class="lbl">What the caller sees</p>
+  <p class="note">Reads still serve from the store. A parked write is 501 <code class="inline">unsupported</code>. Portal copy tells the MSP which permission to fix.</p>
+    <div class="code">
+    <div class="hd"><b>parked write, not 500</b><button class="copy" type="button" data-copy="{&quot;status&quot;:501,&quot;code&quot;:&quot;unsupported&quot;}">Copy</button></div>
+    <pre>HTTP 501
+{
+  "status": 501,
+  "code": "unsupported"
+}
+
+# Portal copy names the permission.
+# ISV does not paste MSP creds.</pre>
+  </div>
+  <p class="note">No ISV-side form that collects PSA keys. Partial connect is not collapsed into “failed.”</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/#terms">Terms</a> · <a href="https://www.bitlync.com/#privacy">Privacy</a> · <a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>

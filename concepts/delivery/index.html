@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Delivery · Bitlync docs</title>
+<meta name="description" content="Transient vendor rate limits (429) and 503 are retried with backoff on the Bitlync side of the write."/>
+<link rel="canonical" href="https://docs.bitlync.com/concepts/delivery/"/>
+<meta property="og:title" content="Delivery · Bitlync docs"/>
+<meta property="og:description" content="Transient vendor rate limits (429) and 503 are retried with backoff on the Bitlync side of the write."/>
+<meta property="og:url" content="https://docs.bitlync.com/concepts/delivery/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts">
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/" class="on">Delivery</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+  <div class="docs-hero">
+    <p class="kicker">Concepts</p>
+    <h1>Delivery</h1>
+  </div>
+<p class="note">Transient vendor rate limits (429) and 503 are retried with backoff on the Bitlync side of the write.</p>
+  <p class="lbl">Mechanism</p>
+  <p class="note">The caller sends one write. Bitlync retries the vendor when the failure is transient. The caller is not asked to implement vendor backoff for those hops.</p>
+  <p class="lbl">What the caller sees</p>
+  <p class="note">The caller sees one result. If the write still cannot land, the final rate-limit response (429) still carries the vendor <code class="inline">Retry-After</code>.</p>
+    <div class="code">
+    <div class="hd"><b>Final rate limit still honest</b><button class="copy" type="button" data-copy="Retry-After: 30">Copy</button></div>
+    <pre>HTTP 429
+Retry-After: 30
+
+{
+  "status": 429
+}</pre>
+  </div>
+  <p class="note">No hidden swallow of a vendor rate limit (429). No rewrite of a final rate limit into a 200.</p>
+
+  <p class="note">Delivery status is visible. Nothing is dropped silently.</p>
+  <p class="lbl">Mechanism</p>
+  <p class="note">A write that was acknowledged cannot double-write. A write that was throttled is a real rate-limit response (429), not a delayed success. Dedup and retries sit on this same rule.</p>
+  <p class="lbl">What the caller sees</p>
+  <p class="note">Success means the write landed or was an idempotent replay. Throttle means a rate-limit response (429) plus <code class="inline">Retry-After</code>.</p>
+    <div class="code">
+    <div class="hd"><b>acknowledged, not doubled</b><button class="copy" type="button" data-copy="{&quot;status&quot;:&quot;ok&quot;,&quot;idempotent_replay&quot;:false}">Copy</button></div>
+    <pre>{
+  "idempotent_replay": false
+}</pre>
+  </div>
+  <p class="note">No silent drop. No “accepted” that later vanishes.</p>
+
+  <p class="note">Writes that support it take <code class="inline">idempotency_key</code>. The same key does not open a second ticket.</p>
+  <p class="lbl">Mechanism</p>
+  <p class="note">Send the key on the write. A retry with that key is a replay, not a new vendor create.</p>
+  <p class="lbl">What the caller sees</p>
+  <p class="note">The replay is marked <code class="inline">idempotent_replay</code>.</p>
+    <div class="code">
+    <div class="hd"><b>same key</b><button class="copy" type="button" data-copy="{&quot;summary&quot;:&quot;Printer offline&quot;,&quot;dry_run&quot;:false,&quot;idempotency_key&quot;:&quot;ticket-1&quot;}">Copy</button></div>
+    <pre>{
+  "summary": "Printer offline",
+  "dry_run": false,
+  "idempotency_key": "ticket-1"
+}
+
+{
+  "status": "ok",
+  "idempotent_replay": true
+}</pre>
+  </div>
+  <p class="note">Keys are not implied on every future write. Only writes that already support <code class="inline">idempotency_key</code>.</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/#terms">Terms</a> · <a href="https://www.bitlync.com/#privacy">Privacy</a> · <a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>

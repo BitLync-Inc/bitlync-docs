@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Credential vault · Bitlync docs</title>
+<meta name="description" content="The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the MSP Connect Terms. We stamp the time. No box, no keys."/>
+<link rel="canonical" href="https://docs.bitlync.com/concepts/credential-vault/"/>
+<meta property="og:title" content="Credential vault · Bitlync docs"/>
+<meta property="og:description" content="The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the MSP Connect Terms. We stamp the time. No box, no keys."/>
+<meta property="og:url" content="https://docs.bitlync.com/concepts/credential-vault/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts">
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/" class="on">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+  <div class="docs-hero">
+    <p class="kicker">Concepts</p>
+    <h1>Credential vault</h1>
+  </div>
+<p class="note">The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the <a href="https://www.bitlync.com/#connect-terms">MSP Connect Terms</a>. We stamp the time. No box, no keys.</p>
+  <p class="lbl">Mechanism</p>
+  <p class="note">ISVs start with a key that looks like <code class="inline">blk_…</code> and header <code class="inline">X-API-Key</code>. MSP credentials are entered on Bitlync, not in your frontend.</p>
+  <p class="lbl">What the caller sees</p>
+  <p class="note">Your product sends <code class="inline">X-API-Key</code>. It does not send the MSP’s PSA or RMM secret.</p>
+    <div class="code">
+    <div class="hd"><b>ISV auth header</b><button class="copy" type="button" data-copy="X-API-Key: blk_…">Copy</button></div>
+    <pre>X-API-Key: blk_…
+
+# MSP keys are not in this header.
+# They sit in the per-tenant vault.</pre>
+  </div>
+  <p class="note">The ISV does not paste MSP creds. There is no shared-secret path that puts PSA keys in your app.</p>
+  <p class="note">A sure match auto-maps. A leftover PSA company with no ISV candidate is an ask: the MSP creates or imports it in the ISV. Ambiguous <code class="inline">UNMAPPED</code> is a human match. It is never an auto-create.</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/#terms">Terms</a> · <a href="https://www.bitlync.com/#privacy">Privacy</a> · <a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>
