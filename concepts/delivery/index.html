@@ -106,6 +106,8 @@ Retry-After: 30
   </div>
   <p class="note">Keys are not implied on every future write. Only writes that already support <code class="inline">idempotency_key</code>.</p>
   <p class="note">When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=ticket.closed</code> (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (<code class="inline">psa.ticket.events</code>). Missing is <code class="inline">grant_missing</code>.</p>
+  <p class="note">When a device is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=device.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">rmm.device.events</code>). Missing is <code class="inline">grant_missing</code>.</p>
+  <p class="note">When a company is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=company.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">psa.company.events</code>). Missing is <code class="inline">grant_missing</code>.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>

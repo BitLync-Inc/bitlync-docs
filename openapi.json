@@ -1123,9 +1123,9 @@
     }
   },
   "info": {
-    "description": "Canonical read + act surface over the connected MSP stack. Every write supports dry_run (preview, default) and an idempotency_key (replay never duplicates). Fan-out writes return an explicit per-target envelope — partial is a first-class outcome. Every tenant-scoped response carries a top-level `sandbox` boolean: true means the tenant's connected stack is simulated (fixture-backed sandbox), false means production — simulated data is never mistakable for real.\n\n**Grant keys** (connect UI, MSP permissions, this contract): `psa.company.read`, `psa.company.create`, `psa.contact.read`, `psa.contact.create`, `psa.ticket.read`, `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`, `psa.time.write`, `psa.agreement.read`, `psa.agreement.line.write`, `psa.agreement.create`, `psa.project.read`, `psa.project.write`, `psa.project.create`, `psa.opportunity.write`, `psa.config.read`, `psa.config.write`, `rmm.device.read`, `rmm.device.write`, `docs.document.read`, `docs.document.write`, plus existing `commerce` read/write. `never.delete` and `never.setup_tables` always refuse. A write without the grant returns `grant_missing` with `needed`, one English sentence, and `doc_url`. Leftover `psa_company_create_refused` means the grant is present and policy still refused.\n\n**Escape hatch:** Canonical first. Every canonical object includes `vendor: {connector, native_id, native}` on reads (`native` is the raw vendor object; `.raw` is the same payload). Writes accept optional `vendor_native` after the write grant.\n\n**Developer docs:** [Quickstart](/docs/quickstart) · [Object dictionary](/docs/object-dictionary) · [What we write](/docs/object-dictionary#what-we-write) · [Error codes](/docs/errors) · Try it out below (paste your sandbox API key into Authorize).",
+    "description": "Canonical read + act surface over the connected MSP stack. Every write supports dry_run (preview, default) and an idempotency_key (replay never duplicates). Fan-out writes return an explicit per-target envelope — partial is a first-class outcome. Every tenant-scoped response carries a top-level `sandbox` boolean: true means the tenant's connected stack is simulated (fixture-backed sandbox), false means production — simulated data is never mistakable for real.\n\n**Grant keys** (connect UI, MSP permissions, this contract): `psa.company.read`, `psa.company.create`, `psa.company.events`, `psa.contact.read`, `psa.contact.create`, `psa.ticket.read`, `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`, `psa.time.write`, `psa.agreement.read`, `psa.agreement.line.write`, `psa.agreement.create`, `psa.project.read`, `psa.project.write`, `psa.project.create`, `psa.opportunity.write`, `psa.config.read`, `psa.config.write`, `rmm.device.read`, `rmm.device.events`, `rmm.device.write`, `docs.document.read`, `docs.document.write`, plus existing `commerce` read/write. `never.delete` and `never.setup_tables` always refuse. A write without the grant returns `grant_missing` with `needed`, one English sentence, and `doc_url`. Leftover `psa_company_create_refused` means the grant is present and policy still refused.\n\n**Escape hatch:** Canonical first. Every canonical object includes `vendor: {connector, native_id, native}` on reads (`native` is the raw vendor object; `.raw` is the same payload). `.raw` and `vendor.native` are read-only extra fields. Writes accept optional `vendor_native` after the write grant.\n\n**Developer docs:** [Quickstart](/docs/quickstart) · [Object dictionary](/docs/object-dictionary) · [What we write](/docs/object-dictionary#what-we-write) · [Error codes](/docs/errors) · Try it out below (paste your sandbox API key into Authorize).",
     "title": "Bitlync API",
-    "version": "0.69.0",
+    "version": "0.70.0",
     "x-error-catalog": "/docs/errors",
     "x-object-dictionary": "/docs/object-dictionary",
     "x-quickstart": "/docs/quickstart"
@@ -3008,7 +3008,7 @@
     },
     "/tenants/{tenant_id}/connections/events": {
       "get": {
-        "description": "Health two-class feed, or ticket events when ``kind`` is set.\n\nDefault (no kind) is unchanged. Ticket kinds are the PSA→ISV watch\n(BL-P0-02): cursor is still ``since``. Grant ``psa.ticket.events``.\nPaginated (S4): ``next_cursor`` feeds ``since``.",
+        "description": "Health two-class feed, or watch events when ``kind`` is set.\n\nDefault (no kind) is unchanged. Ticket/device/company kinds share\nthis feed (BL-P0-02 + device/customer watch): cursor is still\n``since``. Grants ``psa.ticket.events`` / ``rmm.device.events`` /\n``psa.company.events``. Paginated (S4): ``next_cursor`` feeds\n``since``.",
         "operationId": "list_connection_events_tenants__tenant_id__connections_events_get",
         "parameters": [
           {
@@ -3086,7 +3086,7 @@
             }
           },
           {
-            "description": "Ticket lifecycle kind: ticket.created, ticket.updated, ticket.noted, ticket.closed, ticket.reopened. Omit for the health two-class feed. Requires grant psa.ticket.events.",
+            "description": "Watch kind: ticket.created/updated/noted/closed/reopened (grant psa.ticket.events), device.created/updated (grant rmm.device.events), company.created/updated (grant psa.company.events). Omit for the health two-class feed.",
             "in": "query",
             "name": "kind",
             "required": false,
@@ -3099,7 +3099,7 @@
                   "type": "null"
                 }
               ],
-              "description": "Ticket lifecycle kind: ticket.created, ticket.updated, ticket.noted, ticket.closed, ticket.reopened. Omit for the health two-class feed. Requires grant psa.ticket.events.",
+              "description": "Watch kind: ticket.created/updated/noted/closed/reopened (grant psa.ticket.events), device.created/updated (grant rmm.device.events), company.created/updated (grant psa.company.events). Omit for the health two-class feed.",
               "title": "Kind"
             }
           }
@@ -3839,7 +3839,7 @@
     },
     "/tenants/{tenant_id}/ticket-events/webhook": {
       "post": {
-        "description": "Register an optional push URL for ticket.* events.\n\nSecret is returned once. Payloads are HMAC-SHA256 signed\n(Bitlync-Signature: t=<unix>,v1=<hex> over ``{t}.{body}``).\nHTTP 410 disables. Retry with backoff on Deployment.tick().\nGrant psa.ticket.events.",
+        "description": "Register an optional push URL for ticket/device/company events.\n\nSame endpoint as BL-P0-02 — not a second webhook. Secret is\nreturned once. Payloads are HMAC-SHA256 signed\n(Bitlync-Signature: t=<unix>,v1=<hex> over ``{t}.{body}``).\nHTTP 410 disables. Retry with backoff on Deployment.tick().\nRegister with any connected watch-events grant; delivery\nre-checks the grant for that kind.",
         "operationId": "register_ticket_event_webhook_tenants__tenant_id__ticket_events_webhook_post",
         "parameters": [
           {
