@@ -3998,7 +3998,7 @@
     },
     "/tenants/{tenant_id}/tickets/write": {
       "post": {
-        "description": "Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: psa.ticket.create, psa.ticket.update, psa.ticket.events. Events are not a live PSA watch.\n\nUpdate, append a note, or close-with-resolution on a linked ticket.\n\nFixture / dry_run first. The ISV may write only tickets in its own\nlink store. Close is MSP opt-in (RoutingConfig.allow_close_on_resolution,\ndefault off) for tickets we created. Not a new MCP tool.",
+        "description": "Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: psa.ticket.create, psa.ticket.update, psa.ticket.events.\n\nUpdate, append a note, or close-with-resolution on a linked ticket.\n\nFixture / dry_run first. The ISV may write only tickets in its own\nlink store. Close is MSP opt-in (RoutingConfig.allow_close_on_resolution,\ndefault off) for tickets we created. Not a new MCP tool.",
         "operationId": "write_ticket_tenants__tenant_id__tickets_write_post",
         "parameters": [
           {
