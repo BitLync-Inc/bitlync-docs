@@ -63,7 +63,7 @@
   <p class="note">You need an active agreement so we can write the line.</p>
   <p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements.</p>
   <p class="note">Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse.</p>
-  <p class="note">We do not mint an agreement header. We do not write devices. We never auto-create an unmatched company. <code class="inline">psa_company_create_refused</code> is leftover only when the grant is on; missing grant is <code class="inline">grant_missing</code>.</p>
+  <p class="note">We do not mint an agreement header. Device write is off unless the MSP turns it on for your grant. We never auto-create an unmatched company. <code class="inline">psa_company_create_refused</code> is leftover only when the grant is on; missing grant is <code class="inline">grant_missing</code>.</p>
   <p class="note">If they try anyway: a stable <code class="inline">code</code>, one English sentence, and <code class="inline">doc_url</code>.</p>
   <p class="note"><code class="inline">agreement_header_not_supported</code> — they tried to mint a header. Autotask’s API would create one. Bitlync still refuses. That is policy.</p>
   <p class="note"><code class="inline">agreement_requires_existing</code> — missing or unknown agreement.</p>
