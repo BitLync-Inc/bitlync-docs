@@ -17,7 +17,7 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 - Reads first. Then writes. Webhooks only if they already exist in product.
 - Keep the old vendor clients until Bitlync matches in their environment.
 - Use `dry_run` as the shadow pass on writes. Compare shape, do not cut over on a preview.
-- Never mint an agreement header. Never write devices (not implemented). Never auto-create an unmatched company.
+- Never mint an agreement header. Never auto-create an unmatched company.
 - Write a line on an existing agreement only. Public word is Agreement, not Contract. Site word for the line is Line item.
 - MSP pastes their own keys. Name a missing permission in the connect flow. Do not claim OAuth unless that vendor actually publishes a partner app.
 - No Rewst (or other vendor) screenshots in anything that ships.
@@ -59,6 +59,7 @@ Replace create/update only after reads match.
 - Line items: on an existing agreement only.
 - Time on a ticket: hours the caller states, on a linked ticket.
 - Company create is a separate grant (`psa.company.create`). Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. `dry_run`. Distributor create is not a PSA create.
+- Device write is off unless the MSP turns it on for your grant.
 
 Every write: `dry_run` first, then apply. Same payload in sandbox. If they hit a Never, the 422 is a stable code, one English sentence, and a docs URL.
 
