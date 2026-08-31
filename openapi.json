@@ -2805,7 +2805,7 @@
     },
     "/tenants/{tenant_id}/companies": {
       "post": {
-        "description": "Match-then-create on a connected distributor (Pax8). PSA fan_out\nis policy-refused (422). Never routes to the PSA.",
+        "description": "Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Grant psa.company.create. Match-then-create on a connected distributor (Pax8) is not a PSA create. Unmatched auto-create is still never.",
         "operationId": "create_company_tenants__tenant_id__companies_post",
         "parameters": [
           {
@@ -3998,7 +3998,7 @@
     },
     "/tenants/{tenant_id}/tickets/write": {
       "post": {
-        "description": "Update, append a note, or close-with-resolution on a linked ticket.\n\nFixture / dry_run first. The ISV may write only tickets in its own\nlink store. Close is MSP opt-in (RoutingConfig.allow_close_on_resolution,\ndefault off). Not a new MCP tool. Not two-way ticketing.",
+        "description": "Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Grants: psa.ticket.create, psa.ticket.update, psa.ticket.events. Events are not a live PSA watch.\n\nUpdate, append a note, or close-with-resolution on a linked ticket.\n\nFixture / dry_run first. The ISV may write only tickets in its own\nlink store. Close is MSP opt-in (RoutingConfig.allow_close_on_resolution,\ndefault off) for tickets we created. Not a new MCP tool.",
         "operationId": "write_ticket_tenants__tenant_id__tickets_write_post",
         "parameters": [
           {

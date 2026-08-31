@@ -65,7 +65,7 @@
       <p class="path">GET /tenants/{tenant_id}/tickets</p>
       <p class="path">POST /tenants/{tenant_id}/tickets</p>
       <h3>Tickets</h3>
-      <p class="note">List and create. Write back (update, note, close-with-evidence, hours) only on tickets Bitlync created. Close defaults off. Hours are a write, not a read. dry_run defaults true.</p>
+      <p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Grants: <code class="inline">psa.ticket.create</code>, <code class="inline">psa.ticket.update</code>, <code class="inline">psa.ticket.events</code>. Events are not a live PSA watch. Close on a ticket we created stays off unless the MSP turns it on. Hours are a write, not a read. dry_run defaults true.</p>
     </article>
     <article>
       <p class="path">curl · JSON</p>
@@ -99,7 +99,7 @@
   </div>
   <article class="obj" id="docs-ticket">
     <h3>Ticket</h3>
-    <p class="note">GET and POST /tenants/{tenant_id}/tickets. Write-back and hours only on tickets Bitlync created. Time has no notes field.</p>
+    <p class="note">GET and POST /tenants/{tenant_id}/tickets. Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Events are not a live PSA watch. Close on a ticket we created stays off unless the MSP turns it on. Time has no notes field.</p>
     <div class="fields">
       <button type="button" data-goto="ref-tickets" data-copy="curl -s &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/tickets&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot;">source</button>
       <button type="button" data-goto="ref-tickets" data-copy="{&quot;source&quot;:&quot;psa&quot;,&quot;source_id&quot;:&quot;…&quot;,&quot;summary&quot;:&quot;…&quot;,&quot;status&quot;:&quot;in_progress&quot;,&quot;priority&quot;:&quot;medium&quot;,&quot;synced_at&quot;:&quot;…&quot;,&quot;raw&quot;:{}}">source_id</button>
@@ -112,7 +112,7 @@
   </article>
   <article class="obj" id="docs-company">
     <h3>Company</h3>
-    <p class="note">POST /tenants/{tenant_id}/companies. Pax8 matches a company it already has, then creates the rest. We do not mint a PSA company. Creating a leftover PSA company in the ISV still returns 501.</p>
+    <p class="note">POST /tenants/{tenant_id}/companies. Pax8 matches a company it already has, then creates the rest. Matching then creating at a distributor is not a PSA create. Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Creating a leftover PSA company in the ISV still returns 501.</p>
     <div class="fields">
       <button type="button" data-goto="ref-companies" data-copy="curl -s -X POST &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/companies&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot; -d '{&quot;name&quot;:&quot;Brightside Pediatrics&quot;,&quot;dry_run&quot;:true}'">source</button>
       <button type="button" data-goto="ref-companies" data-copy="{&quot;name&quot;:&quot;Brightside Pediatrics&quot;,&quot;dry_run&quot;:true}">name</button>
