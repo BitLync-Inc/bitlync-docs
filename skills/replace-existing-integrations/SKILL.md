@@ -55,7 +55,7 @@ Keep `.raw` for vendor-only fields they still need. Do not log it. Do not put Hu
 
 Replace create/update only after reads match.
 
-- Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Grants: `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`. Events are not a live PSA watch. Close on a ticket we created stays off unless the MSP turns it on.
+- Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Grants: `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`. Events are not a live PSA watch. Close uses the same grant as update (the MSP accepted the connection). Auto-close when a finding is fixed is a separate switch.
 - Line items: on an existing agreement only.
 - Time on a ticket: hours the caller states, on a linked ticket.
 - Company create is a separate grant (`psa.company.create`). Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. `dry_run`. Distributor create is not a PSA create.
