@@ -60,17 +60,31 @@
     <p class="lede">The jobs. Alert to ticket through check an asset.</p>
   </div>
   <article class="uc"><h3>1. Alert to ticket</h3><p class="note">A finding becomes a ticket we created. We keep the link. You can update, append a note, or close with evidence on that ticket.</p></article>
-  <article class="uc"><h3>2. Import, map, and create customers</h3><p class="note">Sure match auto-maps. A leftover is an ask. * We do not create the customer in a PSA. The partner creates them there, where the contract lives. Until they are in the PSA, they are not a customer.</p></article>
-  <article class="uc"><h3>3. Time on the ticket</h3><p class="note">Hours on a ticket Bitlync already linked. Hours, stated billable, optional member.</p></article>
-  <article class="uc"><h3>4. Billing reconciliation</h3><p class="note">Read agreements and lines. Write lines on an existing agreement.</p></article>
-  <article class="uc"><h3>5. Create action items</h3><p class="note">Create the follow-up the MSP already tracks.</p></article>
-  <article class="uc"><h3>6. Create initiatives</h3><p class="note">Create the workstream those items sit on.</p></article>
-  <article class="uc"><h3>7. Add to an existing project</h3><p class="note">Add notes or items on a project that already exists.</p></article>
-  <article class="uc"><h3>8. Create an order</h3><p class="note">Place a third-party licensing order.</p></article>
-  <article class="uc"><h3>9. Write a document</h3><p class="note">Write into the MSP's documentation tool.</p></article>
-  <article class="uc"><h3>10. Read devices</h3><p class="note">Pull the device roster.</p></article>
-  <article class="uc"><h3>11. Software inventory</h3><p class="note">Pull installed software.</p></article>
-  <article class="uc"><h3>12. Check an asset</h3><p class="note">Pull the documented asset.</p></article>
+  <article class="uc"><h3>2. Two-way tickets</h3><p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Grants: <code class="inline">psa.ticket.create</code>, <code class="inline">psa.ticket.update</code>, <code class="inline">psa.ticket.events</code>. Events are not a live PSA watch.</p></article>
+  <article class="uc"><h3>3. Map customers</h3><p class="note">Map customers to companies that already exist. Sure match auto-maps. A leftover is an ask.</p></article>
+  <article class="uc"><h3>4. Create a company</h3><p class="note">Creating a company is a separate grant. Grant <code class="inline">psa.company.create</code>, <code class="inline">dry_run</code>, match-first.</p></article>
+  <article class="uc"><h3>5. Time on the ticket</h3><p class="note">Hours on a ticket Bitlync already linked. Hours, stated billable, optional member.</p></article>
+  <article class="uc"><h3>6. Billing reconciliation</h3><p class="note">Read agreements and lines. Write lines on an existing agreement.</p></article>
+  <article class="uc"><h3>7. Create action items</h3><p class="note">Create the follow-up the MSP already tracks.</p></article>
+  <article class="uc"><h3>8. Create initiatives</h3><p class="note">Create the workstream those items sit on.</p></article>
+  <article class="uc"><h3>9. Add to an existing project</h3><p class="note">Add notes or items on a project that already exists.</p></article>
+  <article class="uc"><h3>10. Create an order</h3><p class="note">Place a third-party licensing order.</p></article>
+  <article class="uc"><h3>11. Write a document</h3><p class="note">Write into the MSP's documentation tool.</p></article>
+  <article class="uc"><h3>12. Read devices</h3><p class="note">Pull the device roster.</p></article>
+  <article class="uc"><h3>13. Software inventory</h3><p class="note">Pull installed software.</p></article>
+  <article class="uc"><h3>14. Check an asset</h3><p class="note">Pull the documented asset.</p></article>
+  <h2>If you are this kind of ISV</h2>
+  <p class="note">Alerting/security — map companies, do not create. Tickets create, update, close, and events. Optional agreement lines for billing counts.</p>
+  <p class="note">Network monitoring — companies must already exist. Two-way tickets. Create-only is not enough.</p>
+  <p class="note">Backup — failed job to ticket, close when it succeeds. Optional usage on agreement lines.</p>
+  <p class="note">Documentation — PSA companies are the source of truth. Document write. No company create.</p>
+  <p class="note">vCIO / QBR — map companies, findings to tickets, add to an existing project.</p>
+  <p class="note">Commerce / distributor — map, plus company-create grant, orders, lines on existing agreements.</p>
+  <p class="note">Quoting — map, company create for a new logo.</p>
+  <p class="note">Time / scheduling — ticket update (status, notes), time write. Not the watch.</p>
+  <p class="note">Identity / comms — full two-way tickets plus time.</p>
+  <p class="note">Onboarding / import — company create is the product. Grant plus match-first.</p>
+  <p class="note">AI copilot — read plus ticket write plus events. Do not lead with creating companies or agreements.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>
