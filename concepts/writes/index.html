@@ -58,6 +58,7 @@
     <h1>Writes</h1>
   </div>
 <p class="note"><code class="inline">dry_run</code> defaults true. That is a preview with no side effect. Commit by sending <code class="inline">dry_run</code> false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync.</p>
+  <p class="note">Reads include <code class="inline">vendor: { connector, native_id, native }</code>. <code class="inline">native</code> is the same payload as <code class="inline">.raw</code>. <code class="inline">.raw</code> is read-only. Ticket writes accept optional <code class="inline">vendor_native</code> on <code class="inline">POST /tickets</code> and <code class="inline">POST /tickets/write</code>.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">Preview first. Then commit with the same body and an <code class="inline">idempotency_key</code> on writes that support it. If a fan-out is only partial, that failure is explicit. It is never collapsed into a single silent success.</p>
   <p class="lbl">What the caller sees</p>
