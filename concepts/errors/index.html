@@ -61,15 +61,19 @@
   <p class="lbl">Mechanism</p>
   <p class="note">The codes on this page are the codes that exist: 401 <code class="inline">auth</code>, 403 <code class="inline">tenant</code>, 404 unknown tenant, 422 <code class="inline">validation</code> (and <code class="inline">request_invalid</code> on a bad sandbox reset), 429 plus <code class="inline">Retry-After</code>, 501 <code class="inline">unsupported</code> / parked capability, 500 opaque <code class="inline">internal_error</code>.</p>
   <p class="lbl">What the caller sees</p>
+  <p class="note">The body is <code class="inline">code</code>, <code class="inline">message</code>, and <code class="inline">doc_url</code>. <code class="inline">details</code> is optional.</p>
     <div class="code">
-    <div class="hd"><b>stable code</b><button class="copy" type="button" data-copy="{&quot;status&quot;:401,&quot;code&quot;:&quot;auth&quot;}">Copy</button></div>
-    <pre>HTTP 401  { "status": 401, "code": "auth" }
-HTTP 403  { "status": 403, "code": "tenant" }
-HTTP 404  { "status": 404 }
-HTTP 422  { "status": 422, "code": "validation" }
-HTTP 429  Retry-After: 12
-HTTP 501  { "status": 501, "code": "unsupported" }
-HTTP 500  { "status": 500, "code": "internal_error" }</pre>
+    <div class="hd"><b>error body</b><button class="copy" type="button" data-copy="{
+  &quot;code&quot;: &quot;validation&quot;,
+  &quot;message&quot;: &quot;The request did not validate.&quot;,
+  &quot;doc_url&quot;: &quot;https://docs.bitlync.com/concepts/errors/&quot;
+}">Copy</button></div>
+    <pre>HTTP 422
+{
+  "code": "validation",
+  "message": "The request did not validate.",
+  "doc_url": "https://docs.bitlync.com/concepts/errors/"
+}</pre>
   </div>
   <p class="note">500 stays opaque. A parked write is 501, not a generic 500.</p>
   <p class="note">Health, incidents, and audit are listed reads on Reference, not a new UI.</p>
