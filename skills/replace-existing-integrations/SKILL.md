@@ -67,6 +67,10 @@ Every write: `dry_run` first, then apply. Same payload in sandbox. If they hit a
 
 Subscribe with `psa.ticket.events` when granted. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. Do not fake a unified event. If the grant is off, they keep their vendor webhooks.
 
+When a device is created or updated, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=device.updated` (also created). Optional signed webhook. Grant is the connection (`rmm.device.events`). Missing is `grant_missing`.
+
+When a company is created or updated, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=company.updated` (also created). Optional signed webhook. Grant is the connection (`psa.company.events`). Missing is `grant_missing`.
+
 ## Done when
 
 - Their app talks to Bitlync for the inventoried objects
