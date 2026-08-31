@@ -60,7 +60,7 @@
     <p class="lede">You already have vendor clients. Change those calls to Bitlync. We do not ingest your old code or import tokens.</p>
   </div>
   <p class="note">The ISV rewrites the calls. The MSP pastes keys once. Connect names a missing permission in the flow.</p>
-  <p class="note"><code class="inline">.raw</code> is extra fields on a read. It is not a write pipe. Leftover verbs stay on the old client.</p>
+  <p class="note"><code class="inline">.raw</code> is extra vendor fields on a read. <code class="inline">.raw</code> is read-only. <code class="inline">vendor.native</code> is the same payload. Ticket writes accept optional <code class="inline">vendor_native</code>.</p>
   <p class="note">Order: inventory, coverage, reads, writes. Webhooks only if we already have them. Reads first. Keep the old vendor clients until Bitlync matches in their environment. <code class="inline">dry_run</code> is the shadow pass on writes.</p>
   <p class="note">Never: mint an agreement header; auto-create an unmatched company.</p>
   <p class="note">Device write is off unless the MSP turns it on for your grant.</p>
