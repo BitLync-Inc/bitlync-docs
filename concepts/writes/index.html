@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex,nofollow"/>
 <title>Writes · Bitlync docs</title>
-<meta name="description" content="dry_run defaults true. That is a preview with no side effect. Commit by sending dry_run false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. Close stays off unless the MSP turns it on. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync."/>
+<meta name="description" content="dry_run defaults true. That is a preview with no side effect. Commit by sending dry_run false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync."/>
 <link rel="canonical" href="https://docs.bitlync.com/concepts/writes/"/>
 <meta property="og:title" content="Writes · Bitlync docs"/>
-<meta property="og:description" content="dry_run defaults true. That is a preview with no side effect. Commit by sending dry_run false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. Close stays off unless the MSP turns it on. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync."/>
+<meta property="og:description" content="dry_run defaults true. That is a preview with no side effect. Commit by sending dry_run false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync."/>
 <meta property="og:url" content="https://docs.bitlync.com/concepts/writes/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -57,7 +57,7 @@
     <p class="kicker">Concepts</p>
     <h1>Writes</h1>
   </div>
-<p class="note"><code class="inline">dry_run</code> defaults true. That is a preview with no side effect. Commit by sending <code class="inline">dry_run</code> false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. Close stays off unless the MSP turns it on. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync.</p>
+<p class="note"><code class="inline">dry_run</code> defaults true. That is a preview with no side effect. Commit by sending <code class="inline">dry_run</code> false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Hours take stated billable and an optional member. No notes on time. Not field-level ticket sync.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">Preview first. Then commit with the same body and an <code class="inline">idempotency_key</code> on writes that support it. If a fan-out is only partial, that failure is explicit. It is never collapsed into a single silent success.</p>
   <p class="lbl">What the caller sees</p>

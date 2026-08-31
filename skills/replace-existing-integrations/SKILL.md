@@ -55,7 +55,7 @@ Keep `.raw` for vendor-only fields they still need. Do not log it. Do not put Hu
 
 Replace create/update only after reads match.
 
-- Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. We still do not silently create companies or agreements. Grants: `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`. Events are not a live PSA watch. Close on a ticket we created stays off unless the MSP turns it on.
+- Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch.
 - Line items: on an existing agreement only.
 - Time on a ticket: hours the caller states, on a linked ticket.
 - Company create is a separate grant (`psa.company.create`). Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. `dry_run`. Distributor create is not a PSA create.
@@ -65,7 +65,7 @@ Every write: `dry_run` first, then apply. Same payload in sandbox. If they hit a
 
 ## Phase 5 — Webhooks
 
-Subscribe with `psa.ticket.events` when granted. Events are not a live PSA watch. Do not fake a unified event. If the grant is off, they keep their vendor webhooks.
+Subscribe with `psa.ticket.events` when granted. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. Do not fake a unified event. If the grant is off, they keep their vendor webhooks.
 
 ## Done when
 
