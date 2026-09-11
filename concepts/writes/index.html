@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <title>Writes · Bitlync docs</title>
 <meta name="description" content="dry_run defaults true. That is a preview with no side effect. Commit by sending dry_run false. After Bitlync creates a ticket, you can update it, append a note, close with evidence, or POST hours on that ticket only. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Hours take stated billable and a required member. Pick the member id from GET /tenants/{tenant_id}/members (Halo and ConnectWise live when permitted; Autotask → honest 501; permission miss is honest English — ConnectWise may 403 without System Members inquire). Empty list stays empty — never invent. No notes on time. Not field-level ticket sync."/>
 <link rel="canonical" href="https://docs.bitlync.com/concepts/writes/"/>
@@ -78,7 +78,7 @@
   "idempotency_key": "ticket-1"
 }</pre>
   </div>
-  <p class="note">Halo ticket create, update, close, reopen, notes, and time commit when dry_run is false. ConnectWise ticket create, update, close, notes, and time commit when dry_run is false. Ticket create, write-back, and time for Autotask run on fixtures and dry_run. dry_run defaults true. Halo pulls agreements and line items, the same objects as ConnectWise and Autotask. ConnectWise, Autotask, and Halo write line items on an existing agreement: add, rewrite, end, replace. ConnectWise, Autotask, and Halo pull the project container and write on an existing project. We do not mint a project header. Baseline cannot take that write. ConnectWise and Halo list ticket statuses, boards, and priorities live and enrich ticket display. Contacts are list and match only — no contact create. When the ISV book supports company import from PSA, Import creates a leftover in the ISV after preview (bulk Import unmatched uses the same path). When that write is unavailable, Import returns 501. We never create the company in the PSA. Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Pax8 matches a company it already has, then creates the rest. Matching then creating at a distributor is not a PSA create.</p>
+  <p class="note">Halo ticket create, update, close, reopen, notes, and time commit when dry_run is false. ConnectWise ticket create, update, close, notes, and time commit when dry_run is false. Ticket create, write-back, and time for Autotask run on fixtures and dry_run. dry_run defaults true. Halo pulls agreements and line items, the same objects as ConnectWise and Autotask. ConnectWise, Autotask, and Halo write line items on an existing agreement: add, rewrite, end, replace. ConnectWise, Autotask, and Halo pull the project container and write on an existing project. We do not mint a project header. Baseline cannot take that write. ConnectWise and Halo list ticket statuses, boards, and priorities live and enrich ticket display (<code class="inline">GET /tenants/{tenant_id}/ticket-boards</code>, <code class="inline">ticket-statuses</code>, <code class="inline">ticket-priorities</code>). Ticket create and update accept those list ids for board, status, and priority; unknown id → 422. Autotask has no boards/statuses/priorities list in this slice — we do not invent them. Contacts are list and match only — no contact create. Exact PSA company name to one ISV customer may auto-fill Match only — never auto-import. Ambiguous names stay Needs match. Per leftover row the MSP sees Match, company import from PSA, Skip, or Needs match (unset only). When the ISV book supports company import from PSA, Import creates a leftover in the ISV after preview (bulk Import unmatched uses the same path). When that write is unavailable, Import returns 501. We never create the company in the PSA. Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Pax8 matches a company it already has, then creates the rest. Matching then creating at a distributor is not a PSA create.</p>
   <p class="note">The MSP can approve or dismiss a mapped line item. Approve writes the line on an existing agreement. Dismiss does not change the agreement. ConnectWise only.</p>
   <p class="note"><a href="/what-we-write/">What we write</a> lists the locks and refusals.</p>
   <p class="lbl">Validation</p>
@@ -110,7 +110,7 @@
 <footer>
   <div class="wrap foot">
     <span>© 2026 Bitlync · stealth · private beta</span>
-    <span><a href="https://www.bitlync.com/#terms">Terms</a> · <a href="https://www.bitlync.com/#privacy">Privacy</a> · <a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+    <span><a href="https://www.bitlync.com/">www.bitlync.com</a></span>
   </div>
 </footer>
 <script src="/docs.js"></script>
