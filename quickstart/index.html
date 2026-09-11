@@ -40,6 +40,7 @@
             <a href="/concepts/store-served-reads/">Store-served reads</a>
             <a href="/concepts/rate-limits/">Rate limits</a>
             <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/">Webhooks</a>
             <a href="/concepts/writes/">Writes</a>
             <a href="/concepts/credential-vault/">Credential vault</a>
             <a href="/concepts/errors/">Errors</a>
@@ -100,6 +101,19 @@ tenant_id: sandbox-mainstreet
       </div>
     </article>
   </div>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Register a webhook</h3>
+  <p class="note">Outbound Bitlync→ISV events. One register route for ticket / device / company kinds (grants required). Save <code class="inline">secret</code> once; verify <code class="inline">Bitlync-Signature</code>. Details: <a href="/concepts/webhooks/">Webhooks</a>.</p>
+  <div class="code">
+    <div class="hd"><b>register webhook</b><button class="copy" type="button" data-copy="curl -sS -X POST &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/ticket-events/webhook&quot; \
+  -H &quot;X-API-Key: $BITLYNC_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;url&quot;:&quot;https://example.com/bitlync/hooks&quot;}'">Copy</button></div>
+    <pre>curl -sS -X POST "$BITLYNC_BASE/tenants/sandbox-mainstreet/ticket-events/webhook" \
+  -H "X-API-Key: $BITLYNC_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/bitlync/hooks"}'</pre>
+  </div>
+  <p class="note">Sandbox day-one proof is registration plus <code class="inline">GET /tenants/{id}/connections/events?kind=…</code>. Live push needs a reachable HTTPS URL — example.com will not receive events.</p>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">GET audit</h3>
   <div class="code">
     <div class="hd"><b>GET audit</b><button class="copy" type="button" data-copy="curl -s &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/audit&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot;">Copy</button></div>
