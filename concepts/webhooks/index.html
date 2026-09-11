@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Webhooks · Bitlync docs</title>
+<meta name="description" content="Outbound signed events to your HTTPS URL. Register once; verify Bitlync-Signature."/>
+<link rel="canonical" href="https://docs.bitlync.com/concepts/webhooks/"/>
+<meta property="og:title" content="Webhooks · Bitlync docs"/>
+<meta property="og:description" content="Outbound signed events to your HTTPS URL. Register once; verify Bitlync-Signature."/>
+<meta property="og:url" content="https://docs.bitlync.com/concepts/webhooks/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts">
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/" class="on">Webhooks</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+  <div class="docs-hero">
+    <p class="kicker">Concepts</p>
+    <h1>Webhooks</h1>
+  </div>
+<p class="note">Bitlync pushes signed events to your HTTPS URL after sync. You can also poll <code class="inline">GET /tenants/{id}/connections/events?kind=…</code>. This page is outbound Bitlync→ISV only.</p>
+
+  <p class="lbl">Kinds shipped today</p>
+  <p class="note">Tickets: <code class="inline">ticket.created</code> / <code class="inline">updated</code> / <code class="inline">noted</code> / <code class="inline">closed</code> / <code class="inline">reopened</code> — grant <code class="inline">psa.ticket.events</code>.</p>
+  <p class="note">Devices: <code class="inline">device.created</code> / <code class="inline">updated</code> — grant <code class="inline">rmm.device.events</code>.</p>
+  <p class="note">Companies: <code class="inline">company.created</code> / <code class="inline">updated</code> — grant <code class="inline">psa.company.events</code>.</p>
+
+  <p class="lbl">Register</p>
+  <p class="note">One pipe: <code class="inline">POST /tenants/{tenant_id}/ticket-events/webhook</code> with <code class="inline">{"url":"https://…"}</code>. OpenAPI name stays ticket-events; the same registration delivers device and company kinds when those grants are on. There is not a second register route.</p>
+  <div class="code">
+    <div class="hd"><b>register</b><button class="copy" type="button" data-copy="curl -sS -X POST &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/ticket-events/webhook&quot; \
+  -H &quot;X-API-Key: $BITLYNC_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;url&quot;:&quot;https://example.com/bitlync/hooks&quot;}'">Copy</button></div>
+    <pre>curl -sS -X POST "$BITLYNC_BASE/tenants/sandbox-mainstreet/ticket-events/webhook" \
+  -H "X-API-Key: $BITLYNC_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/bitlync/hooks"}'</pre>
+  </div>
+
+  <p class="lbl">Secret</p>
+  <p class="note">The response returns <code class="inline">secret</code> <strong>once</strong>. Store it. Docs examples redact as <code class="inline">whsec_…</code> — never log plaintext.</p>
+
+  <p class="lbl">HMAC</p>
+  <p class="note">Header <code class="inline">Bitlync-Signature: t=&lt;unix&gt;,v1=&lt;hex&gt;</code> over <code class="inline">{t}.{body}</code> (HMAC-SHA256 with the secret).</p>
+  <div class="code">
+    <div class="hd"><b>verify (Python)</b><button class="copy" type="button" data-copy="import hmac, hashlib
+t, v1 = dict(p.split('=', 1) for p in header.split(',')).get('t'), dict(p.split('=', 1) for p in header.split(',')).get('v1')
+ok = hmac.compare_digest(v1, hmac.new(secret.encode(), f'{t}.{body}'.encode(), hashlib.sha256).hexdigest())">Copy</button></div>
+    <pre>import hmac, hashlib
+parts = dict(p.split("=", 1) for p in header.split(","))
+t, v1 = parts["t"], parts["v1"]
+expect = hmac.new(secret.encode(), f"{t}.{body}".encode(), hashlib.sha256).hexdigest()
+ok = hmac.compare_digest(v1, expect)</pre>
+  </div>
+  <div class="code">
+    <div class="hd"><b>verify (Node)</b><button class="copy" type="button" data-copy="const crypto = require('crypto');
+const parts = Object.fromEntries(header.split(',').map(p => p.split('=')));
+const expect = crypto.createHmac('sha256', secret).update(`${parts.t}.${body}`).digest('hex');
+const ok = crypto.timingSafeEqual(Buffer.from(parts.v1), Buffer.from(expect));">Copy</button></div>
+    <pre>const crypto = require("crypto");
+const parts = Object.fromEntries(header.split(",").map((p) => p.split("=")));
+const expect = crypto.createHmac("sha256", secret)
+  .update(`${parts.t}.${body}`).digest("hex");
+const ok = crypto.timingSafeEqual(
+  Buffer.from(parts.v1), Buffer.from(expect));</pre>
+  </div>
+
+  <p class="lbl">Delivery rules</p>
+  <p class="note">Retry with backoff on tick. Your endpoint returning <strong>HTTP 410</strong> disables the webhook. A revoked grant stops delivery for that kind. Nothing is dropped silently.</p>
+
+  <p class="lbl">Missing grant</p>
+  <p class="note">Without the connection grant, list/push fails with <code class="inline">grant_missing</code>. The MSP must grant events on the connection (<code class="inline">psa.ticket.events</code>, <code class="inline">rmm.device.events</code>, or <code class="inline">psa.company.events</code>).</p>
+
+  <p class="lbl">Not this page</p>
+  <p class="note">Inbound vendor→Bitlync webhooks are a later Scale build — not shipped here. Contact events (create) are parked. Agreement/time event kinds are not on this outbound pipe today.</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/#terms">Terms</a> · <a href="https://www.bitlync.com/#privacy">Privacy</a> · <a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>
