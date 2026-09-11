@@ -113,9 +113,9 @@ const ok = crypto.timingSafeEqual(
   <p class="note">Without the connection grant, list/push fails with <code class="inline">grant_missing</code>. The MSP must grant events on the connection (<code class="inline">psa.ticket.events</code>, <code class="inline">rmm.device.events</code>, or <code class="inline">psa.company.events</code>).</p>
 
   <p class="lbl">Inbound (vendor→Bitlync)</p>
-  <p class="note">E3a plumbing only: refuse-unknown path-token intake + DirtyFlagBoard → demand-path sync. No vendor payload parsers. Reconciliation poll stays on (webhooks accelerate freshness only). HTTP mount is mount-when-wired (<code class="inline">POST /webhooks/{vendor}/{intake_token}</code>) — may be absent from the public OpenAPI until that wiring is on. Contact events (create) are parked. Agreement/time event kinds are not on the outbound pipe today. Badge OFF.</p>
+  <p class="note">E3b Halo Ticket inbound is PARTIAL: tickets only, under path-token intake + Basic Auth (fail closed). DirtyFlagBoard → demand-path sync; store unchanged (no body→store parser). Reconciliation poll stays on (webhooks accelerate freshness only). HMAC / X-HALO-SIGNATURE for Halo→URL webhooks is UNKNOWN — not implemented. No Autotask or ConnectWise inbound parsers. Live Halo→Bitlync ingress is UNKNOWN / not proven in prod. HTTP mount is mount-when-wired (<code class="inline">POST /webhooks/{vendor}/{intake_token}</code>) — may be absent from the public OpenAPI. Contact create parked. Badge OFF.</p>
   <p class="lbl">Not this page</p>
-  <p class="note">This chapter stays outbound Bitlync→ISV. Inbound does not invent Autotask or Halo parsers, and it does not claim real-time PSA push into your product.</p>
+  <p class="note">This chapter stays outbound Bitlync→ISV. Inbound does not invent Autotask or ConnectWise parsers, and it does not claim live real-time PSA push into your product.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>
