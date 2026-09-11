@@ -31,6 +31,14 @@
       <p>Docs</p>
       <a href="/">Overview</a>
       <a href="/quickstart/" class="on">Quickstart</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-quickstart">Chapters</button>
+          <div class="docs-fold-body" id="fold-quickstart">
+            <a href="/quickstart/connect-checklist/">Connect checklist</a>
+          </div>
+        </div>
+      </div>
       <a href="/coverage/">Coverage</a>
       <a href="/concepts/">Concepts</a>
       <div class="nest">
@@ -59,6 +67,7 @@
     <p class="kicker">Quickstart</p>
     <h1>From key to first write.</h1>
     <p class="note">This is the sandbox. Fixture data. Not a customer tenant.</p>
+    <p class="note">MSP first connect for Halo or ConnectWise (company import from PSA, bulk unmatched, contacts list/match, boards): <a href="/quickstart/connect-checklist/">Connect checklist</a>. Production badge OFF.</p>
     <p class="lede">Copy the curl. You should get tickets back with <code class="inline">sandbox: true</code>.</p>
   </div>
   <p class="note">Send the key as <code class="inline">X-API-Key</code>. Host is <code class="inline">bitlync-sandbox-demo.onrender.com</code>.</p>

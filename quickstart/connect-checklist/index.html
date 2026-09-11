@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="index,follow"/>
+<title>First-customer Connect checklist · Bitlync docs</title>
+<meta name="description" content="Halo + ConnectWise checklist for the MSP connecting so an ISV can use Bitlync. Production badge OFF. Contact create parked."/>
+<link rel="canonical" href="https://docs.bitlync.com/quickstart/connect-checklist/"/>
+<meta property="og:title" content="First-customer Connect checklist · Bitlync docs"/>
+<meta property="og:description" content="Halo + ConnectWise checklist for the MSP connecting so an ISV can use Bitlync. Production badge OFF. Contact create parked."/>
+<meta property="og:url" content="https://docs.bitlync.com/quickstart/connect-checklist/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-quickstart">Chapters</button>
+          <div class="docs-fold-body" id="fold-quickstart">
+            <a href="/quickstart/connect-checklist/" class="on">Connect checklist</a>
+          </div>
+        </div>
+      </div>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts" hidden>
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/">Webhooks</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+
+  <div class="docs-hero">
+    <p class="kicker">Quickstart</p>
+    <h1>First-customer Connect checklist</h1>
+    <p class="lede">Halo + ConnectWise. For the MSP connecting so an ISV can use Bitlync. Not Azure. Not Autotask.</p>
+  </div>
+  <p class="note"><strong>Production badge OFF.</strong> Contact create stays parked (list/match only). PSA company create refused. Never mint an agreement header.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Before you start</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>ISV has a Bitlync key and a tenant for this MSP</li>
+    <li>MSP can sign in to their <strong>Halo</strong> or <strong>ConnectWise</strong> as admin (or someone who can make an API app / API member)</li>
+    <li>MSP knows they will paste keys into <strong>Bitlync Connect</strong> (hosted). The ISV never sees those keys</li>
+    <li>Decide which PSA is first for this MSP (Halo or ConnectWise). One connection at a time</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">1. Open Connect</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>From the ISV product (or Bitlync link), MSP opens the <strong>hosted Connect</strong> link for that vendor</li>
+    <li>MSP accepts <strong>MSP Connect Terms</strong> before keys save</li>
+    <li>Follow the numbered steps beside the fields (Halo: client ID, secret, auth + resource URLs; ConnectWise: company id, public/private keys, client id, base URL)</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">2. Keys and permissions</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Paste credentials</li>
+    <li>Bitlync <strong>tests</strong> the connection in the flow</li>
+    <li>If something is missing, fix the <strong>named</strong> permission in the PSA, then re-test — do not guess</li>
+    <li>Prefer a <code class="inline">dry_run</code> / preview where the product offers it before real writes</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">3. Map companies (Match / company import from PSA / Skip)</h3>
+  <p class="note">PSA companies are the book. Bitlync does <strong>not</strong> create companies in the PSA.</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Choice</th><th scope="col">Meaning</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Match</th><td>Link to a customer that already exists in the ISV. Exact same name may auto-fill Match</td></tr>
+        <tr><th scope="row">Company import from PSA</th><td>Create that customer <strong>in the ISV</strong> from the PSA company (greenfield). Never in the PSA</td></tr>
+        <tr><th scope="row">Skip</th><td>Not a customer (internal / test). Leave unmatched</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Review rows that need a choice (<strong>Needs match</strong> = not chosen yet — not a fourth outcome)</li>
+    <li>Ambiguous names: Match by hand. Never auto-import those</li>
+    <li>Exact-name hits may auto-Match — that is Match, not import</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">4. Bulk company import (unmatched)</h3>
+  <p class="note">When many PSA companies should become ISV customers (~dozens to ~150):</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Let exact-name <strong>Match</strong> run first</li>
+    <li>Preview with <code class="inline">dry_run</code>: who will import, who is skipped (already Matched, Skip, ambiguous, not selected)</li>
+    <li>Explicit MSP action only: <strong>Import all unmatched</strong> and/or <strong>multi-select</strong> then import</li>
+    <li>Never silent auto-import. Never import ambiguous rows</li>
+    <li>Run for real: watch <strong>per-row</strong> progress and errors. A failed row stays unmatched for retry; successes stay</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">5. Contacts (list / match only)</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>After companies are mapped, pull <strong>contacts</strong> under those companies</li>
+    <li>Match on company + email (and vendor id when present)</li>
+    <li><strong>Do not</strong> create contacts in the PSA through Bitlync for first customer (parked)</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">6. Boards / statuses / priorities (ticket writes)</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Confirm Bitlync can list the PSA’s <strong>boards</strong> (or Halo teams), <strong>statuses</strong>, and <strong>priorities</strong></li>
+    <li>Use those when opening or updating tickets so writes land on a board/status the MSP recognizes</li>
+    <li>Ticket create / update / note / close / time: preview with <code class="inline">dry_run</code>, then commit</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">7. Smoke check before calling it live</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Companies: Match and/or company import from PSA worked for the rows you care about</li>
+    <li>Contacts: list/match under a mapped company</li>
+    <li>Ticket: dry_run then one real create (or update) on a lab/low-risk company</li>
+    <li>Agreement lines only on an <strong>existing</strong> agreement if billing matters — no new agreement header</li>
+    <li>Production <strong>badge stays OFF</strong> until Bitlync says otherwise</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Never on this path</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Create a company in the PSA</li>
+    <li>Silent auto-import of unmatched companies</li>
+    <li>Contact create (parked)</li>
+    <li>Mint an agreement header</li>
+    <li>Turn on a ConnectWise / Halo <strong>production</strong> badge yourself</li>
+  </ul>
+  <p class="note">Coverage for Halo + ConnectWise today (members list, contacts list/match, boards/statuses/priorities, D mapping fields, Halo Ticket inbound PARTIAL): see <a href="/coverage/">Coverage</a>. Sandbox curl day-one: <a href="/quickstart/">Quickstart</a>.</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/coverage/">Coverage</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>
