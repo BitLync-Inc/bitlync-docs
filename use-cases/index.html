@@ -61,9 +61,9 @@
   </div>
   <article class="uc"><h3>1. Alert to ticket</h3><p class="note">A finding becomes a ticket we created. We keep the link. You can update, append a note, or close with evidence on that ticket.</p></article>
   <article class="uc"><h3>2. Two-way tickets</h3><p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: <code class="inline">psa.ticket.create</code>, <code class="inline">psa.ticket.update</code>, <code class="inline">psa.ticket.events</code>. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=ticket.closed</code> (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (<code class="inline">psa.ticket.events</code>). Missing is <code class="inline">grant_missing</code>. When a device is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=device.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">rmm.device.events</code>). Missing is <code class="inline">grant_missing</code>. When a company is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=company.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">psa.company.events</code>). Missing is <code class="inline">grant_missing</code>.</p></article>
-  <article class="uc"><h3>3. Map customers</h3><p class="note">Map customers to companies that already exist. Sure match auto-maps. A leftover is an ask.</p></article>
+  <article class="uc"><h3>3. Map customers</h3><p class="note">Map customers to companies that already exist. Sure match auto-maps. A leftover is Match, company import from PSA, or Skip. Bulk unmatched import is available with dry_run preview. Contacts are Match only — list and match, no contact create.</p></article>
   <article class="uc"><h3>4. Create a company</h3><p class="note">Creating a company is a separate grant. Grant <code class="inline">psa.company.create</code>, <code class="inline">dry_run</code>, match-first.</p></article>
-  <article class="uc"><h3>5. Time on the ticket</h3><p class="note">Hours on a ticket Bitlync already linked. Hours, stated billable, optional member.</p></article>
+  <article class="uc"><h3>5. Time on the ticket</h3><p class="note">Hours on a ticket Bitlync already linked. Hours, stated billable, required member.</p></article>
   <article class="uc"><h3>6. Billing reconciliation</h3><p class="note">Read agreements and lines. Write lines on an existing agreement.</p></article>
   <article class="uc"><h3>7. Create action items</h3><p class="note">Create the follow-up the MSP already tracks.</p></article>
   <article class="uc"><h3>8. Create initiatives</h3><p class="note">Create the workstream those items sit on.</p></article>
@@ -83,7 +83,7 @@
   <p class="note">Quoting — map, company create for a new logo.</p>
   <p class="note">Time / scheduling — ticket update (status, notes), time write. Not the watch.</p>
   <p class="note">Identity / comms — full two-way tickets plus time.</p>
-  <p class="note">Onboarding / import — company create is the product. Grant plus match-first.</p>
+  <p class="note">Onboarding / import — Match contacts; company import from PSA for unmatched leftovers when the ISV book supports it (bulk + dry_run). PSA company create is a separate grant plus match-first.</p>
   <p class="note">AI copilot — read plus ticket write plus events. Do not lead with creating companies or agreements.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
