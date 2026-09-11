@@ -61,6 +61,8 @@
 <p class="note">The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the <a href="https://www.bitlync.com/#connect-terms">MSP Connect Terms</a>. We stamp the time. No box, no keys.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">ISVs start with a key that looks like <code class="inline">blk_…</code> and header <code class="inline">X-API-Key</code>. MSP credentials are entered on Bitlync, not in your frontend.</p>
+  <p class="lbl">ISV console login</p>
+  <p class="note">Human console login is passwordless: magic-link and Sign in with Microsoft (Entra OIDC). Same session cookie either way. Invite-only — Microsoft does not open-signup a new seat; the email must already be seated or invited. Live Entra prove needs deployment env (<code class="inline">BITLYNC_ENTRA_*</code>); without it, Sign in with Microsoft is not offered. Magic-link stays as the fallback. Machine API stays <code class="inline">X-API-Key</code> and never merges with the human session. No production host invented here. Sandbox unchanged. Badge OFF.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">Your product sends <code class="inline">X-API-Key</code>. It does not send the MSP’s PSA or RMM secret.</p>
     <div class="code">
