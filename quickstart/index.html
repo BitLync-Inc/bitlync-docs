@@ -130,14 +130,7 @@ tenant_id: sandbox-mainstreet
   -H "X-API-Key: $BITLYNC_KEY"</pre>
   </div>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Sandbox reset</h3>
-  <p class="note"><code class="inline">POST /sandbox/reset</code> with <code class="inline">{"tenant_id":"sandbox-mainstreet"}</code>. Clears audit, re-syncs fixtures, writes one <code class="inline">sandbox_reset</code> event. Production tenants return 422 <code class="inline">request_invalid</code>.</p>
-  <div class="code">
-    <div class="hd"><b>POST /sandbox/reset</b><button class="copy" type="button" data-copy="curl -s -X POST &quot;$BITLYNC_BASE/sandbox/reset&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot; -H &quot;Content-Type: application/json&quot; -d '{&quot;tenant_id&quot;:&quot;sandbox-mainstreet&quot;}'">Copy</button></div>
-    <pre>curl -s -X POST "$BITLYNC_BASE/sandbox/reset" \
-  -H "X-API-Key: $BITLYNC_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"tenant_id":"sandbox-mainstreet"}'</pre>
-  </div>
+  <p class="note"><code class="inline">POST /sandbox/reset</code> is disabled on the public demo host. The published demo key cannot empty the demo tenant. Local <code class="inline">python -m sandbox.serve</code> still allows reset unless <code class="inline">BITLYNC_SANDBOX_RESET_DISABLED</code> is set. Production tenants return 422 <code class="inline">request_invalid</code>.</p>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">MCP</h3>
   <p class="note">Same CanonicalService as REST. Four tools: <code class="inline">list_tickets</code>, <code class="inline">list_devices</code>, <code class="inline">list_installed_applications</code>, <code class="inline">route_finding</code>. <code class="inline">route_finding</code> is the write. Use <code class="inline">$BITLYNC_BASE</code>. </p>
   <div class="code">
