@@ -1,0 +1,29 @@
+name: OpenAPI CI
+
+# P1 — spec drift vs bitlync-core lock (and live core pin when
+# BITLYNC_CORE_READ_TOKEN is set). Fail message names the sync-PR fix.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: openapi-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  openapi-drift:
+    name: OpenAPI drift (core-canonical)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Assert openapi.json matches core lock / pin
+        env:
+          # Optional stronger check against private bitlync-core.
+          # Residual: set BITLYNC_CORE_READ_TOKEN (contents:read on core) for live compare.
+          BITLYNC_CORE_READ_TOKEN: ${{ secrets.BITLYNC_CORE_READ_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_openapi_drift.py
