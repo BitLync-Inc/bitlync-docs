@@ -1,0 +1,1 @@
+POST /sandbox/reset is disabled on the public demo host; the published demo key cannot empty the demo tenant.
