@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>What we write · Bitlync docs</title>
-<meta name="description" content="Line items on an existing agreement. Locks and refusals."/>
+<meta name="description" content="Billing line items on an existing agreement. Locks and refusals."/>
 <link rel="canonical" href="https://docs.bitlync.com/what-we-write/"/>
 <meta property="og:title" content="What we write · Bitlync docs"/>
-<meta property="og:description" content="Line items on an existing agreement. Locks and refusals."/>
+<meta property="og:description" content="Billing line items on an existing agreement. Locks and refusals."/>
 <meta property="og:url" content="https://docs.bitlync.com/what-we-write/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -66,9 +66,9 @@
   <div class="docs-hero">
     <p class="kicker">What we write</p>
     <h1>What we write.</h1>
-    <p class="lede">Line items on an existing agreement. Locks and refusals.</p>
+    <p class="lede">Billing line items on an existing agreement. Locks and refusals.</p>
   </div>
-  <p class="note">ConnectWise, Autotask, and Halo write line items on an existing agreement. Verbs: add, rewrite, end, replace. <code class="inline">dry_run</code> defaults true and returns the same payload. Halo and ConnectWise agreement-line apply commit when dry_run is false. Autotask apply runs on fixtures and dry_run. An Autotask host that is not a fixture returns 501. We do not mint an agreement header.</p>
+  <p class="note">ConnectWise, Autotask, and Halo write billing line items on an existing agreement. Verbs: add, rewrite, end, replace. <code class="inline">dry_run</code> defaults true and returns the same payload. Halo and ConnectWise agreement-line apply commit when dry_run is false. Autotask apply runs on fixtures and dry_run. An Autotask host that is not a fixture returns 501. We do not mint an agreement header.</p>
   <p class="note">You need an active agreement so we can write the line.</p>
   <p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA.</p>
   <p class="note">Time on a linked ticket needs a required member. List with <code class="inline">GET /tenants/{tenant_id}/members</code> — Halo and ConnectWise live when permitted; Autotask lists Resources as members (fixture-first; Hub live prove Ryan-gated); permission miss is honest English (ConnectWise may 403 without System Members inquire). Empty list stays empty — never invent. The time picker uses the listed <code class="inline">id</code>.</p>

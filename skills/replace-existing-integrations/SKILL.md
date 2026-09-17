@@ -18,7 +18,7 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 - Keep the old vendor clients until Bitlync matches in their environment.
 - Use `dry_run` as the shadow pass on writes. Compare shape, do not cut over on a preview.
 - Never mint an agreement header. Never auto-create an unmatched company.
-- Write a line on an existing agreement only. Public word is Agreement, not Contract. Site word for the line is Line item.
+- Write a line on an existing agreement only. Public word is Agreement, not Contract. Site word for the line is Billing line item.
 - MSP pastes their own keys. Name a missing permission in the connect flow. Do not claim OAuth unless that vendor actually publishes a partner app.
 - No Rewst (or other vendor) screenshots in anything that ships.
 - Do not add `pass_through`, Proxy, or vault token-import. Those are a different product.
@@ -28,12 +28,12 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 
 1. List the vendor APIs they call today (PSA first: ConnectWise, Autotask, Halo).
 2. For each, list the operations they use (list/get/create/update/close) and the fields they depend on.
-3. Map each to a Bitlync word: Ticket, Company, Contact, Device, Agreement, Line item, Project.
+3. Map each to a Bitlync word: Ticket, Company, Contact, Device, Agreement, Billing line item, Project.
 4. Mark gaps honestly. A gap is not a bug. Later or Never stays named.
 
 ## Phase 2 — Coverage
 
-1. Confirm the connector is on the Connectors tile and the object is actually listed (pull or push).
+1. Confirm the connector is on the Connectors tile and the object is actually listed (Read, Write, or List).
 2. Run connect. The probe must name a missing permission before they take a support ticket.
 3. Customer map is ISV customer to PSA company: sure match auto-maps, leftover asks the MSP to create that company in the ISV, UNMAPPED is a human match. Never auto-create.
 
@@ -47,7 +47,7 @@ Typical left-to-right:
 - Company / Account / Client → Company
 - Configuration / Asset (documented device) → Device
 - Agreement / Contract → Agreement
-- Addition / Contract charge → Line item
+- Addition / Contract charge → Billing line item
 
 Keep `.raw` for vendor-only fields they still need. Do not log it. Do not put Hudu passwords on a public docs-read path.
 
@@ -56,7 +56,7 @@ Keep `.raw` for vendor-only fields they still need. Do not log it. Do not put Hu
 Replace create/update only after reads match.
 
 - Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch.
-- Line items: on an existing agreement only.
+- Billing line items: on an existing agreement only.
 - Time on a ticket: hours the caller states, on a linked ticket.
 - Company create is a separate grant (`psa.company.create`). Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. `dry_run`. Distributor create is not a PSA create.
 - Device write is off unless the MSP turns it on for your grant.
