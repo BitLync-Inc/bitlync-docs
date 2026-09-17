@@ -73,22 +73,22 @@
   <article class="uc"><h3>3. Map customers</h3><p class="note">Map customers to companies that already exist. Exact-name auto-Match fills Match only (never auto-import); ambiguous names stay Needs match. A leftover is Match, company import from PSA, Skip, or Needs match (unset). Bulk unmatched import is available with dry_run preview. Contacts are Match only — list and match, no contact create.</p></article>
   <article class="uc"><h3>4. Create a company</h3><p class="note">Creating a company is a separate grant. Grant <code class="inline">psa.company.create</code>, <code class="inline">dry_run</code>, match-first.</p></article>
   <article class="uc"><h3>5. Time on the ticket</h3><p class="note">Hours on a ticket Bitlync already linked. Hours, stated billable, required member. List members with <code class="inline">GET /tenants/{tenant_id}/members</code> (Halo and ConnectWise live when permitted; Autotask → honest 501; permission miss is honest English). The picker uses the listed <code class="inline">id</code>.</p></article>
-  <article class="uc"><h3>6. Billing reconciliation</h3><p class="note">Read agreements and lines. Write lines on an existing agreement.</p></article>
+  <article class="uc"><h3>6. Billing reconciliation</h3><p class="note">Read agreements and billing line items. Write billing line items on an existing agreement.</p></article>
   <article class="uc"><h3>7. Create action items</h3><p class="note">Create the follow-up the MSP already tracks.</p></article>
   <article class="uc"><h3>8. Create initiatives</h3><p class="note">Create the workstream those items sit on.</p></article>
   <article class="uc"><h3>9. Add to an existing project</h3><p class="note">Add notes or items on a project that already exists.</p></article>
   <article class="uc"><h3>10. Create an order</h3><p class="note">Place a third-party licensing order.</p></article>
   <article class="uc"><h3>11. Write a document</h3><p class="note">Write into the MSP's documentation tool.</p></article>
-  <article class="uc"><h3>12. Read devices</h3><p class="note">Pull the device roster.</p></article>
-  <article class="uc"><h3>13. Software inventory</h3><p class="note">Pull installed software.</p></article>
-  <article class="uc"><h3>14. Check an asset</h3><p class="note">Pull the documented asset.</p></article>
+  <article class="uc"><h3>12. Read devices</h3><p class="note">Read the device roster.</p></article>
+  <article class="uc"><h3>13. Software inventory</h3><p class="note">Read installed software.</p></article>
+  <article class="uc"><h3>14. Check an asset</h3><p class="note">Read the documented asset.</p></article>
   <h2>If you are this kind of ISV</h2>
-  <p class="note">Alerting/security — map companies, do not create. Tickets create, update, close, and events. Optional agreement lines for billing counts.</p>
+  <p class="note">Alerting/security — map companies, do not create. Tickets create, update, close, and events. Optional billing line items for billing counts.</p>
   <p class="note">Network monitoring — companies must already exist. Two-way tickets. Create-only is not enough.</p>
-  <p class="note">Backup — failed job to ticket, close when it succeeds. Optional usage on agreement lines.</p>
+  <p class="note">Backup — failed job to ticket, close when it succeeds. Optional usage on billing line items.</p>
   <p class="note">Documentation — PSA companies are the source of truth. Document write. No company create.</p>
   <p class="note">vCIO / QBR — map companies, findings to tickets, add to an existing project.</p>
-  <p class="note">Commerce / distributor — map, plus company-create grant, orders, lines on existing agreements.</p>
+  <p class="note">Commerce / distributor — map, plus company-create grant, orders, billing line items on existing agreements.</p>
   <p class="note">Quoting — map, company create for a new logo.</p>
   <p class="note">Time / scheduling — ticket update (status, notes), time write with member from the members list. Not the watch.</p>
   <p class="note">Identity / comms — full two-way tickets plus time.</p>
