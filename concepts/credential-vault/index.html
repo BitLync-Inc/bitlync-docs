@@ -71,6 +71,8 @@
   <p class="note">ISVs start with a key that looks like <code class="inline">blk_…</code> and header <code class="inline">X-API-Key</code>. MSP credentials are entered on Bitlync, not in your frontend.</p>
   <p class="lbl">ISV console login</p>
   <p class="note">Human console login is passwordless: magic-link and Sign in with Microsoft (Entra OIDC). Same session cookie either way. Invite-only — Microsoft does not open-signup a new seat; the email must already be seated or invited. Live Entra prove needs deployment env (<code class="inline">BITLYNC_ENTRA_*</code>); without it, Sign in with Microsoft is not offered. Magic-link stays as the fallback. Machine API stays <code class="inline">X-API-Key</code> and never merges with the human session. No production host invented here. Sandbox unchanged. Badge OFF.</p>
+  <p class="lbl">ISV experience (Connect)</p>
+  <p class="note">Console <code class="inline">#/experience</code> ships for capability profile + recommended grants + thin branding (<code class="inline">GET|PUT /isv/experience-config</code>). Preview-as-MSP opens a sandbox Connect session (fixture only). Profile drives Connect rows; MSP can tighten. Badge OFF.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">Your product sends <code class="inline">X-API-Key</code>. It does not send the MSP’s PSA or RMM secret.</p>
     <div class="code">
