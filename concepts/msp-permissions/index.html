@@ -35,7 +35,8 @@
         <div class="docs-folder">
           <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
           <div class="docs-fold-body" id="fold-quickstart" hidden>
-            <a href="/quickstart/connect-checklist/">Connect checklist</a>
+            <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
+            <a href="/quickstart/connect-checklist-autotask/">Connect checklist (Autotask)</a>
           </div>
         </div>
       </div>
@@ -67,7 +68,7 @@
     <h1>MSP permissions</h1>
   </div>
 <p class="note">A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500.</p>
-  <p class="note">ConnectWise and Halo connect are numbered click paths in the flow. Halo pastes a client ID, client secret, and the two server URLs. If a permission is missing, we name it in English. Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Create an agreement is off unless the MSP turns it on for your grant.</p>
+  <p class="note">ConnectWise and Halo connect are numbered click paths in the flow. Autotask has the same bar (API user + tracking ID; queues not boards; lists fixture-first; writes dry_run) — see <a href="/quickstart/connect-checklist-autotask/">Autotask Connect checklist</a>. Halo pastes a client ID, client secret, and the two server URLs. If a permission is missing, we name it in English. Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Create an agreement is off unless the MSP turns it on for your grant.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">The MSP pastes keys in the guided flow. The probe names the permission to fix. The ISV does not paste MSP creds.</p>
   <p class="lbl">What the caller sees</p>
