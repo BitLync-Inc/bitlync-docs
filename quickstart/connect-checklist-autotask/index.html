@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="index,follow"/>
+<title>Autotask Connect checklist · Bitlync docs</title>
+<meta name="description" content="Autotask words Connect checklist for the MSP. Queues not boards. Lists fixture-first. Writes dry_run. Production badge OFF."/>
+<link rel="canonical" href="https://docs.bitlync.com/quickstart/connect-checklist-autotask/"/>
+<meta property="og:title" content="Autotask Connect checklist · Bitlync docs"/>
+<meta property="og:description" content="Autotask words Connect checklist for the MSP. Queues not boards. Lists fixture-first. Writes dry_run. Production badge OFF."/>
+<meta property="og:url" content="https://docs.bitlync.com/quickstart/connect-checklist-autotask/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-quickstart">Chapters</button>
+          <div class="docs-fold-body" id="fold-quickstart">
+            <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
+            <a href="/quickstart/connect-checklist-autotask/" class="on">Connect checklist (Autotask)</a>
+          </div>
+        </div>
+      </div>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts" hidden>
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/">Webhooks</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+
+  <div class="docs-hero">
+    <p class="kicker">Quickstart</p>
+    <h1>Autotask Connect checklist</h1>
+    <p class="lede">Autotask words. For the MSP connecting so an ISV can use Bitlync. Queues not boards. Fixture/docs path — live Hub prove is gated elsewhere.</p>
+  </div>
+  <p class="note"><strong>Production badge OFF.</strong> Contact create stays parked (list/match only). PSA company create refused. Never mint an agreement header. Never invent boards for Autotask.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Before you start</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>ISV has a Bitlync key and a tenant for this MSP</li>
+    <li>MSP can create an Autotask <strong>API User (system)</strong> and copy username, secret, and API tracking ID</li>
+    <li>MSP pastes keys into <strong>Bitlync Connect</strong> (hosted). The ISV never sees those keys</li>
+    <li>Expect <strong>fixture-first lists</strong> and <strong>dry_run</strong> writes until a live Hub path is proven (do not treat this checklist as a Hub join ask)</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">1. Open Connect</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>MSP opens the hosted Connect link for <strong>Autotask</strong></li>
+    <li>MSP accepts <strong>MSP Connect Terms</strong> before keys save</li>
+    <li>Follow the numbered guide: create API user → check security level → paste into Bitlync step 2</li>
+    <li>Fields: username, secret, API tracking ID (<code class="inline">ApiIntegrationCode</code>), optional base URL (leave blank to resolve zone)</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">2. Keys and permissions</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Paste credentials (no OAuth / Authorize for Autotask)</li>
+    <li>Bitlync tests the connection in the flow</li>
+    <li>If something is missing, fix the <strong>named</strong> permission on the API user security level, then re-test</li>
+    <li>Read / Write / Never on the card: lists ship; writes stay dry_run / fixture where true</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">3. Map companies (Match / company import from PSA / Skip)</h3>
+  <p class="note">PSA companies are the book. Bitlync does <strong>not</strong> create companies in Autotask.</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Same Match / company import from PSA / Skip outcomes as Halo and ConnectWise</li>
+    <li>Exact-name auto-Match fills Match only — never auto-import; ambiguous → Needs match</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">4. Contacts and members (list / match)</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Contacts: list and match under mapped companies — <strong>no create</strong></li>
+    <li>Members: Autotask <strong>Resources</strong> map to canonical <code class="inline">member</code> ids (fixture-first)</li>
+    <li>Empty list stays empty — never invent a member</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">5. Queues / statuses / priorities (not boards)</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Confirm Bitlync can list Autotask <strong>queues</strong>, <strong>statuses</strong>, and <strong>priorities</strong></li>
+    <li>Public routes: <code class="inline">GET …/ticket-queues</code>, <code class="inline">ticket-statuses</code>, <code class="inline">ticket-priorities</code></li>
+    <li><code class="inline">ticket-boards</code> stays unsupported for Autotask — never call a queue a board</li>
+    <li>Ticket / time writes: preview with <code class="inline">dry_run</code> on the fixture path; live Autotask HTTP apply stays off until Hub prove</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">6. Smoke check (fixture / dry_run)</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Companies: Match and/or company import from PSA for the rows you care about</li>
+    <li>Contacts list/match; members list (Resources)</li>
+    <li>Queues / statuses / priorities list</li>
+    <li>Ticket or time: dry_run preview only on this path</li>
+    <li>Agreement lines only on an <strong>existing</strong> Contract — no new agreement header</li>
+    <li>Production <strong>badge stays OFF</strong></li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Never on this path</h3>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Create a company in Autotask</li>
+    <li>Contact create (parked)</li>
+    <li>Mint an agreement or project header</li>
+    <li>Invent CW-style boards for Autotask</li>
+    <li>Invent OAuth / Authorize</li>
+    <li>Turn on an Autotask <strong>production</strong> badge yourself</li>
+    <li>Treat Connect as an Autotask Hub join ask</li>
+  </ul>
+  <p class="note">Halo + ConnectWise first-customer path: <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>. Coverage matrix: <a href="/coverage/">Coverage</a>. Sandbox curl day-one: <a href="/quickstart/">Quickstart</a>.</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/coverage/">Coverage</a>
+        <a class="btn" href="/quickstart/connect-checklist/">Halo/CW checklist</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>
