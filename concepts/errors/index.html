@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>Errors · Bitlync docs</title>
-<meta name="description" content="Branch on the stable code. Do not parse a human sentence."/>
+<meta name="description" content="Branch on the stable code."/>
 <link rel="canonical" href="https://docs.bitlync.com/concepts/errors/"/>
 <meta property="og:title" content="Errors · Bitlync docs"/>
-<meta property="og:description" content="Branch on the stable code. Do not parse a human sentence."/>
+<meta property="og:description" content="Branch on the stable code."/>
 <meta property="og:url" content="https://docs.bitlync.com/concepts/errors/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -66,9 +66,9 @@
     <p class="kicker">Concepts</p>
     <h1>Errors</h1>
   </div>
-<p class="note">Branch on the stable <code class="inline">code</code>. Do not parse a human sentence.</p>
+<p class="note">Branch on the stable <code class="inline">code</code>.</p>
   <p class="lbl">Mechanism</p>
-  <p class="note">The codes on this page are the codes that exist: 401 <code class="inline">auth</code>, 403 <code class="inline">tenant</code>, 404 unknown tenant, 422 <code class="inline">validation</code> (and <code class="inline">request_invalid</code> on a bad sandbox reset), 429 plus <code class="inline">Retry-After</code>, 501 <code class="inline">unsupported</code> / parked capability, 500 opaque <code class="inline">internal_error</code>.</p>
+  <p class="note">The codes on this page are the codes that exist: 401 <code class="inline">auth</code>, 403 <code class="inline">tenant</code>, 404 unknown tenant, 422 <code class="inline">validation</code> (and <code class="inline">request_invalid</code> on a bad sandbox reset), 429 plus <code class="inline">Retry-After</code>, 501 <code class="inline">unsupported</code>, 500 <code class="inline">internal_error</code>.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">The body is <code class="inline">code</code>, <code class="inline">message</code>, and <code class="inline">doc_url</code>. <code class="inline">details</code> is optional.</p>
     <div class="code">
@@ -84,7 +84,7 @@
   "doc_url": "https://docs.bitlync.com/concepts/errors/"
 }</pre>
   </div>
-  <p class="note">500 stays opaque. A parked write is 501, not a generic 500.</p>
+  <p class="note">500 is <code class="inline">internal_error</code>. 501 is <code class="inline">unsupported</code>.</p>
   <p class="note">Health, incidents, and audit are listed reads on Reference, not a new UI.</p>
 
       <div class="btn-row" style="margin:36px 0 0">

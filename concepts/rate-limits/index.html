@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>Rate limits · Bitlync docs</title>
-<meta name="description" content="We pace writes to the vendor’s real limit. If we have to wait, you get a rate-limit response (HTTP 429) with Retry-After. You do not guess a vendor quota."/>
+<meta name="description" content="We pace writes to the vendor’s real limit. If we have to wait, you get a rate-limit response (HTTP 429) with Retry-After. Branch on that status and header."/>
 <link rel="canonical" href="https://docs.bitlync.com/concepts/rate-limits/"/>
 <meta property="og:title" content="Rate limits · Bitlync docs"/>
-<meta property="og:description" content="We pace writes to the vendor’s real limit. If we have to wait, you get a rate-limit response (HTTP 429) with Retry-After. You do not guess a vendor quota."/>
+<meta property="og:description" content="We pace writes to the vendor’s real limit. If we have to wait, you get a rate-limit response (HTTP 429) with Retry-After. Branch on that status and header."/>
 <meta property="og:url" content="https://docs.bitlync.com/concepts/rate-limits/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -66,7 +66,7 @@
     <p class="kicker">Concepts</p>
     <h1>Rate limits</h1>
   </div>
-<p class="note">We pace writes to the vendor’s real limit. If we have to wait, you get a rate-limit response (HTTP 429) with Retry-After. You do not guess a vendor quota.</p>
+<p class="note">We pace writes to the vendor’s real limit. If we have to wait, you get HTTP 429 with <code class="inline">Retry-After</code>. Branch on that status and header.</p>
   <p class="note">One sync per MSP tenant fills the store. Every product on that tenant reads the same copy. When each product polls the same PSA, they share one budget.</p>
 <div class="arch-pair">
     <div class="arch" aria-label="Today every product polls the same PSA">
@@ -136,7 +136,7 @@
   <p class="lbl">Mechanism</p>
   <p class="note">ISV-facing: 600 req/min times the number of connected MSPs. There is no daily cap. The per-minute rate is the limit. Hit it and you get a rate-limit response with <code class="inline">Retry-After</code>. There is no silent throttle.</p>
   <p class="lbl">What the caller sees</p>
-  <p class="note">A rate-limit response you can branch on. The header is the wait. Do not treat a delayed 200 as a throttle.</p>
+  <p class="note">A rate-limit response you can branch on. The header is the wait. A delayed 200 is not a throttle.</p>
     <div class="code">
     <div class="hd"><b>Rate limit (429) + wait</b><button class="copy" type="button" data-copy="Retry-After: 12">Copy</button></div>
     <pre>HTTP 429

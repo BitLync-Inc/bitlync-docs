@@ -67,8 +67,8 @@
   <div class="docs-hero">
     <p class="kicker">Quickstart</p>
     <h1>From key to first write.</h1>
-    <p class="note">This is the sandbox. Fixture data. Not a customer tenant.</p>
-    <p class="note">MSP first connect for Halo or ConnectWise: <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>. Autotask words (queues not boards; lists fixture-first; writes dry_run): <a href="/quickstart/connect-checklist-autotask/">Connect checklist (Autotask)</a>. Production badge OFF.</p>
+    <p class="note">This is the sandbox.</p>
+    <p class="note">MSP first connect: <a href="/quickstart/connect-checklist/">Halo and ConnectWise</a>, or <a href="/quickstart/connect-checklist-autotask/">Autotask</a> (queues, not boards).</p>
     <p class="lede">Copy the curl. You should get tickets back with <code class="inline">sandbox: true</code>.</p>
   </div>
   <p class="note">Send the key as <code class="inline">X-API-Key</code>. Host is <code class="inline">bitlync-sandbox-demo.onrender.com</code>.</p>
@@ -83,7 +83,7 @@
 tenant_id: sandbox-mainstreet
 # or sandbox-northline</pre>
   </div>
-  <p class="note"><code class="inline">sandbox-mainstreet</code> and <code class="inline">sandbox-northline</code> are sandbox fixtures (PSA and RMM seed data). They are not production tenants.</p>
+  <p class="note"><code class="inline">sandbox-mainstreet</code> and <code class="inline">sandbox-northline</code> are the sandbox tenants.</p>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">GET tickets</h3>
   <div class="code">
     <div class="hd"><b>GET tickets</b><button class="copy" type="button" data-copy="curl -sS -H &quot;X-API-Key: blk_b27562d334f68281b783571dd8aa2522f2dddb273fd30311&quot; https://bitlync-sandbox-demo.onrender.com/tenants/sandbox-mainstreet/tickets">Copy</button></div>
@@ -131,7 +131,7 @@ tenant_id: sandbox-mainstreet
   -H "X-API-Key: $BITLYNC_KEY"</pre>
   </div>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Sandbox reset</h3>
-  <p class="note"><code class="inline">POST /sandbox/reset</code> is disabled on the public demo host. The published demo key cannot empty the demo tenant. Local <code class="inline">python -m sandbox.serve</code> still allows reset unless <code class="inline">BITLYNC_SANDBOX_RESET_DISABLED</code> is set. Production tenants return 422 <code class="inline">request_invalid</code>.</p>
+  <p class="note"><code class="inline">POST /sandbox/reset</code> is off on the public demo host. A production tenant returns 422 <code class="inline">request_invalid</code>.</p>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">MCP</h3>
   <p class="note">Same CanonicalService as REST. Four tools: <code class="inline">list_tickets</code>, <code class="inline">list_devices</code>, <code class="inline">list_installed_applications</code>, <code class="inline">route_finding</code>. <code class="inline">route_finding</code> is the write. Use <code class="inline">$BITLYNC_BASE</code>. </p>
   <div class="code">
@@ -160,13 +160,13 @@ tenant_id: sandbox-mainstreet
     <div class="hd"><b>agent prompt</b><button class="copy" type="button" data-copy="Use the Bitlync MCP. Tenant sandbox-mainstreet. Send X-API-Key.
 
 Read with list_tickets, list_devices, or list_installed_applications.
-The write tool is route_finding. Do not create tickets over MCP.
-dry_run ticket create is REST-only.">Copy</button></div>
+The write tool is route_finding.
+Ticket create with dry_run is REST.">Copy</button></div>
     <pre>Use the Bitlync MCP. Tenant sandbox-mainstreet. Send X-API-Key.
 
 Read with list_tickets, list_devices, or list_installed_applications.
-The write tool is route_finding. Do not create tickets over MCP.
-dry_run ticket create is REST-only.</pre>
+The write tool is route_finding.
+Ticket create with dry_run is REST.</pre>
   </div>
 
       <div class="btn-row" style="margin:36px 0 0">

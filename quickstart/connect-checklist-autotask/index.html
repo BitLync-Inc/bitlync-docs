@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>Autotask Connect checklist · Bitlync docs</title>
-<meta name="description" content="Autotask words Connect checklist for the MSP. Queues not boards. Lists fixture-first. Writes dry_run. Production badge OFF."/>
+<meta name="description" content="Autotask Connect checklist. Queues, not boards."/>
 <link rel="canonical" href="https://docs.bitlync.com/quickstart/connect-checklist-autotask/"/>
 <meta property="og:title" content="Autotask Connect checklist · Bitlync docs"/>
-<meta property="og:description" content="Autotask words Connect checklist for the MSP. Queues not boards. Lists fixture-first. Writes dry_run. Production badge OFF."/>
+<meta property="og:description" content="Autotask Connect checklist. Queues, not boards."/>
 <meta property="og:url" content="https://docs.bitlync.com/quickstart/connect-checklist-autotask/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -67,16 +67,15 @@
   <div class="docs-hero">
     <p class="kicker">Quickstart</p>
     <h1>Autotask Connect checklist</h1>
-    <p class="lede">Autotask words. For the MSP connecting so an ISV can use Bitlync. Queues not boards. Fixture/docs path — live Hub prove is gated elsewhere.</p>
+    <p class="lede">Autotask words. For the MSP connecting so an ISV can use Bitlync. Queues, not boards.</p>
   </div>
-  <p class="note"><strong>Production badge OFF.</strong> Contact create stays parked (list/match only). PSA company create refused. Never mint an agreement header. Never invent boards for Autotask.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Before you start</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>ISV has a Bitlync key and a tenant for this MSP</li>
     <li>MSP can create an Autotask <strong>API User (system)</strong> and copy username, secret, and API tracking ID</li>
-    <li>MSP pastes keys into <strong>Bitlync Connect</strong> (hosted). The ISV never sees those keys</li>
-    <li>Expect <strong>fixture-first lists</strong> and <strong>dry_run</strong> writes until a live Hub path is proven (do not treat this checklist as a Hub join ask)</li>
+    <li>MSP pastes keys into <strong>Bitlync Connect</strong> (hosted). Those keys stay in Bitlync Connect</li>
+    <li>Lists are queues, statuses, priorities, contacts, and members. Ticket and time writes preview with <code class="inline">dry_run</code></li>
   </ul>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">1. Open Connect</h3>
@@ -92,51 +91,40 @@
     <li>Paste credentials (no OAuth / Authorize for Autotask)</li>
     <li>Bitlync tests the connection in the flow</li>
     <li>If something is missing, fix the <strong>named</strong> permission on the API user security level, then re-test</li>
-    <li>Read / Write / Never on the card: lists ship; writes stay dry_run / fixture where true</li>
+    <li>On the card, lists are queues, statuses, priorities, contacts, and members. Ticket and time writes preview with dry_run</li>
   </ul>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">3. Map companies (Match / company import from PSA / Skip)</h3>
-  <p class="note">PSA companies are the book. Bitlync does <strong>not</strong> create companies in Autotask.</p>
+  <p class="note">PSA companies are the book. Match links an ISV customer. Company import creates that customer in the ISV.</p>
   <ul class="note" style="padding-left:1.2em">
     <li>Same Match / company import from PSA / Skip outcomes as Halo and ConnectWise</li>
-    <li>Exact-name auto-Match fills Match only — never auto-import; ambiguous → Needs match</li>
+    <li>Exact-name auto-Match fills Match. Ambiguous names stay Needs match</li>
   </ul>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">4. Contacts and members (list / match)</h3>
   <ul class="note" style="padding-left:1.2em">
-    <li>Contacts: list and match under mapped companies — <strong>no create</strong></li>
-    <li>Members: Autotask <strong>Resources</strong> map to canonical <code class="inline">member</code> ids (fixture-first)</li>
-    <li>Empty list stays empty — never invent a member</li>
+    <li>Contacts: list and match under mapped companies</li>
+    <li>Members: Autotask <strong>Resources</strong> are canonical <code class="inline">member</code> ids</li>
+    <li>The member id you send is one returned by that list</li>
   </ul>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">5. Queues / statuses / priorities (not boards)</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>Confirm Bitlync can list Autotask <strong>queues</strong>, <strong>statuses</strong>, and <strong>priorities</strong></li>
     <li>Public routes: <code class="inline">GET …/ticket-queues</code>, <code class="inline">ticket-statuses</code>, <code class="inline">ticket-priorities</code></li>
-    <li><code class="inline">ticket-boards</code> stays unsupported for Autotask — never call a queue a board</li>
-    <li>Ticket / time writes: preview with <code class="inline">dry_run</code> on the fixture path; live Autotask HTTP apply stays off until Hub prove</li>
+    <li>Autotask routing uses <code class="inline">ticket-queues</code>. A queue is not a board</li>
+    <li>Ticket and time writes: preview with <code class="inline">dry_run</code></li>
   </ul>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">6. Smoke check (fixture / dry_run)</h3>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">6. Smoke check</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>Companies: Match and/or company import from PSA for the rows you care about</li>
     <li>Contacts list/match; members list (Resources)</li>
     <li>Queues / statuses / priorities list</li>
-    <li>Ticket or time: dry_run preview only on this path</li>
-    <li>Agreement lines only on an <strong>existing</strong> Contract — no new agreement header</li>
-    <li>Production <strong>badge stays OFF</strong></li>
+    <li>Ticket or time: preview with dry_run</li>
+    <li>Agreement lines go on an existing Contract</li>
   </ul>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Never on this path</h3>
-  <ul class="note" style="padding-left:1.2em">
-    <li>Create a company in Autotask</li>
-    <li>Contact create (parked)</li>
-    <li>Mint an agreement or project header</li>
-    <li>Invent CW-style boards for Autotask</li>
-    <li>Invent OAuth / Authorize</li>
-    <li>Turn on an Autotask <strong>production</strong> badge yourself</li>
-    <li>Treat Connect as an Autotask Hub join ask</li>
-  </ul>
   <p class="note">Halo + ConnectWise first-customer path: <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>. Coverage matrix: <a href="/coverage/">Coverage</a>. Sandbox curl day-one: <a href="/quickstart/">Quickstart</a>.</p>
 
       <div class="btn-row" style="margin:36px 0 0">

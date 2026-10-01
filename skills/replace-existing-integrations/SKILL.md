@@ -17,7 +17,7 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 - Reads first. Then writes. Webhooks only if they already exist in product.
 - Keep the old vendor clients until Bitlync matches in their environment.
 - Use `dry_run` as the shadow pass on writes. Compare shape, do not cut over on a preview.
-- Never mint an agreement header. Never auto-create an unmatched company.
+- Agreement lines go on an existing agreement. An unmatched company is Match, company import from PSA, or Skip.
 - Write a line on an existing agreement only. Public word is Agreement, not Contract. Site word for the line is Billing line item.
 - MSP pastes their own keys. Name a missing permission in the connect flow. Do not claim OAuth unless that vendor actually publishes a partner app.
 - No Rewst (or other vendor) screenshots in anything that ships.
@@ -29,13 +29,13 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 1. List the vendor APIs they call today (PSA first: ConnectWise, Autotask, Halo).
 2. For each, list the operations they use (list/get/create/update/close) and the fields they depend on.
 3. Map each to a Bitlync word: Ticket, Company, Contact, Device, Agreement, Billing line item, Project.
-4. Mark gaps honestly. A gap is not a bug. Later or Never stays named.
+4. Mark a missing route as missing. Do not describe a route that is not in these docs.
 
 ## Phase 2 — Coverage
 
 1. Confirm the connector is on the Connectors tile and the object is actually listed (Read, Write, or List).
 2. Run connect. The probe must name a missing permission before they take a support ticket.
-3. Customer map is ISV customer to PSA company: sure match auto-maps, leftover asks the MSP to create that company in the ISV, UNMAPPED is a human match. Never auto-create.
+3. Customer map is ISV customer to PSA company: sure match auto-maps, leftover asks the MSP to create that company in the ISV, UNMAPPED is a human match. Ambiguous UNMAPPED is a human match.
 
 ## Phase 3 — Reads
 
@@ -58,14 +58,14 @@ Replace create/update only after reads match.
 - Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch.
 - Billing line items: on an existing agreement only.
 - Time on a ticket: hours the caller states, on a linked ticket.
-- Company create is a separate grant (`psa.company.create`). Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. `dry_run`. Distributor create is not a PSA create.
-- Device write is off unless the MSP turns it on for your grant.
+- Company create uses grant `psa.company.create`, with `dry_run`. Match runs first. Two matches return `company_match_ambiguous`. A distributor create is the distributor write.
+- Device write runs when the MSP turns on that grant.
 
-Every write: `dry_run` first, then apply. Same payload in sandbox. If they hit a Never, the 422 is a stable code, one English sentence, and a docs URL.
+Every write: `dry_run` first, then apply. Same payload in sandbox. A refused write is HTTP 422 with a stable code, one English sentence, and a docs URL.
 
 ## Phase 5 — Webhooks
 
-Subscribe with `psa.ticket.events` when granted. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. Do not fake a unified event. If the grant is off, they keep their vendor webhooks.
+Subscribe with `psa.ticket.events` when granted. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=ticket.closed` (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (`psa.ticket.events`). Missing is `grant_missing`. Ticket, device, and company events are separate grants.
 
 When a device is created or updated, you can list those events or get a signed webhook. After a tenant sync, `GET /tenants/{id}/connections/events?kind=device.updated` (also created). Optional signed webhook. Grant is the connection (`rmm.device.events`). Missing is `grant_missing`.
 
@@ -75,6 +75,5 @@ When a company is created or updated, you can list those events or get a signed 
 
 - Their app talks to Bitlync for the inventoried objects
 - Old vendor clients are still in the repo until they verify
-- Never list was not bypassed
 - Connect named any missing permission
 - No Rewst pixels, no invented OAuth, no live POST retry duplicates
