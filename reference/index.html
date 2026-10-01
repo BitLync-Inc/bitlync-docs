@@ -36,7 +36,6 @@
           <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
           <div class="docs-fold-body" id="fold-quickstart" hidden>
             <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
-            <a href="/quickstart/connect-checklist-autotask/">Connect checklist (Autotask)</a>
           </div>
         </div>
       </div>
@@ -68,7 +67,7 @@
     <p class="kicker">Reference</p>
     <h1>Routes that exist today.</h1>
     <p class="lede">Auth is the <code class="inline">X-API-Key</code> header. Writes take <code class="inline">dry_run</code> (default true). Import the OpenAPI file. This page is not the spec.</p>
-    <p class="note"><a href="/openapi.json">OpenAPI 0.83.0</a></p>
+    <p class="note"><a href="/openapi.json">OpenAPI 0.85.0</a></p>
     <p class="note"><code class="inline">GET|PUT /isv/experience-config</code> sets category config for PSA, RMM, Docs, CS, and Commerce, plus recommended grants and branding. Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Sandbox Experience Preview (<code class="inline">POST /connect/sessions/preview</code> and console <code class="inline">#/experience</code>) walks Connect after Save: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
     <p class="note">Halo company custom fields: <code class="inline">POST /tenants/{tenant_id}/companies/write</code> with <code class="inline">vendor_native</code>, on an allowlisted sandbox host, when <code class="inline">psa.company.update</code> is on. A missing grant is <code class="inline">grant_missing</code>. If the update does not run, the code is <code class="inline">psa_company_update_refused</code>.</p>
     <p class="note">Machine API auth is <code class="inline">X-API-Key</code>. Console login is a magic link or Sign in with Microsoft, for an email that is already seated or invited.</p>
@@ -94,7 +93,7 @@
     <thead><tr><th>Method</th><th>Path</th><th>Notes</th></tr></thead>
     <tbody>
       <tr id="ref-agreements"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/agreements</code></td><td>Store-served agreement list.</td></tr>
-      <tr id="ref-members"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/members</code></td><td>Time picker. Halo and ConnectWise when the member permission is on. Autotask lists Resources as members. A missing ConnectWise members permission can return 403. Each <code>id</code> is what <code>CreateTimeEntryBody.member</code> accepts.</td></tr>
+      <tr id="ref-members"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/members</code></td><td>Time picker. Halo and ConnectWise when the member permission is on. Autotask lists Resources as members. A missing ConnectWise members permission returns 502 <code class="inline">upstream_auth_failure</code>. Each <code>id</code> is what <code>CreateTimeEntryBody.member</code> accepts.</td></tr>
       <tr id="ref-ticket-boards"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-boards</code></td><td>Board ids for ConnectWise and Halo (ConnectWise board, Halo team). Autotask routing uses ticket-queues.</td></tr>
       <tr id="ref-ticket-queues"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-queues</code></td><td>Autotask queue ids for routing.</td></tr>
       <tr id="ref-ticket-statuses"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-statuses</code></td><td>Status ids for create and update on ConnectWise and Halo. An unknown id returns 422. Autotask returns the list.</td></tr>
@@ -143,7 +142,7 @@
   </article>
   <article class="obj" id="docs-member">
     <h3>Member</h3>
-    <p class="note">GET /tenants/{tenant_id}/members. PSA people for the time picker (ConnectWise System Members; Halo Agents; Autotask Resources). Public word is always member. Halo and ConnectWise list members when that permission is on. Autotask lists Resources as members. A missing ConnectWise members permission can return 403. Time write uses the listed <code class="inline">id</code> as <code class="inline">CreateTimeEntryBody.member</code>. </p>
+    <p class="note">GET /tenants/{tenant_id}/members. PSA people for the time picker (ConnectWise System Members; Halo Agents; Autotask Resources). Public word is always member. Halo and ConnectWise list members when that permission is on. Autotask lists Resources as members. A missing ConnectWise members permission returns 502 <code class="inline">upstream_auth_failure</code>. Time write uses the listed <code class="inline">id</code> as <code class="inline">CreateTimeEntryBody.member</code>. </p>
     <div class="fields">
       <button type="button" data-goto="ref-members" data-copy="curl -s &quot;$BITLYNC_BASE/tenants/sandbox-mainstreet/members&quot; -H &quot;X-API-Key: $BITLYNC_KEY&quot;">source</button>
       <button type="button" data-goto="ref-members" data-copy="{&quot;id&quot;:&quot;…&quot;,&quot;display_name&quot;:&quot;…&quot;,&quot;active&quot;:true}">id</button>
