@@ -1,7 +1,7 @@
 ---
 name: Replace existing integrations
 description: >-
-  Use when an ISV already has ConnectWise, Autotask, Halo, or other vendor
+  Use when an ISV already has ConnectWise, Halo, or other vendor
   clients and is replacing those with Bitlync. Not for first-day Quickstart,
   company-map import, or moving an MSP from one PSA to another.
 ---
@@ -26,7 +26,7 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 
 ## Phase 1 — Inventory
 
-1. List the vendor APIs they call today (PSA first: ConnectWise, Autotask, Halo).
+1. List the vendor APIs they call today (PSA first: ConnectWise, Halo).
 2. For each, list the operations they use (list/get/create/update/close) and the fields they depend on.
 3. Map each to a Bitlync word: Ticket, Company, Contact, Device, Agreement, Billing line item, Project.
 4. Mark a missing route as missing. Do not describe a route that is not in these docs.
@@ -43,7 +43,7 @@ Replace list/get first. Same Bitlync call for every vendor. Reads come from the 
 
 Typical left-to-right:
 
-- ConnectWise `service/tickets` / Autotask `Tickets` / Halo `Tickets` → Ticket
+- ConnectWise `service/tickets` / Halo `Tickets` → Ticket
 - Company / Account / Client → Company
 - Configuration / Asset (documented device) → Device
 - Agreement / Contract → Agreement
