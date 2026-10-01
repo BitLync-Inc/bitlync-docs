@@ -684,7 +684,7 @@
                 "type": "null"
               }
             ],
-            "description": "Autotask PROJECT write-back: existing project id. CW/Halo mint a project ticket and ignore this.",
+            "description": "Existing project id. ConnectWise and Halo mint a project ticket and ignore this.",
             "title": "Project Source Id"
           },
           "status": {
@@ -713,7 +713,7 @@
                 "type": "null"
               }
             ],
-            "description": "Optional vendor-native field bag (CW customFields, Halo types, Autotask UDFs). Grant-checked. Not `.raw` (`.raw` is read-only). Unknown canonical fields are ignored (not 500). We do not guarantee every native field.",
+            "description": "Optional vendor-native field bag (CW customFields, Halo types). Grant-checked. Not `.raw` (`.raw` is read-only). Unknown canonical fields are ignored (not 500). We do not guarantee every native field.",
             "title": "Vendor Native"
           }
         },
@@ -1590,7 +1590,7 @@
                 "type": "null"
               }
             ],
-            "description": "Autotask PROJECT write-back: existing project id. CW/Halo mint a project ticket and ignore this.",
+            "description": "Existing project id. ConnectWise and Halo mint a project ticket and ignore this.",
             "title": "Project Source Id"
           },
           "severity": {
@@ -2410,8 +2410,21 @@
                 "type": "null"
               }
             ],
-            "description": "Optional vendor-native field bag for company custom fields (Halo Client customfields/cf*, ConnectWise customFields: [{ id, value }], Autotask userDefinedFields: [{ name, value }]). Grant-checked (psa.company.update, default off). Not `.raw` (.raw is read-only). Autotask multi-select and reference UDFs are refused with a clear 422. We do not guarantee every native field.",
+            "description": "Optional vendor-native field bag for Halo or ConnectWise company custom fields (Halo customfields/cf*, ConnectWise customFields: [{ id, value }]), only on an operator-allowlisted sandbox host. The psa.company.update grant is off by default, and production is refused. Not `.raw` (.raw is read-only). We do not guarantee every native field.",
             "title": "Vendor Native"
+          },
+          "ensure_custom_field": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional. Creates the missing Halo or ConnectWise company custom-field definition, then writes the value, only on an operator-allowlisted sandbox host. The psa.company.update grant is off by default, and production is refused. Absent means value-only. Does not create a company.",
+            "title": "Ensure Custom Field"
           }
         },
         "required": [
@@ -6750,7 +6763,7 @@
     },
     "/tenants/{tenant_id}/companies/write": {
       "post": {
-        "description": "Update an existing PSA company with custom-field values via\n`vendor_native`. Grant `psa.company.update` (default off; missing \u2192\n`grant_missing`). Never creates a company. dry_run returns the planned\nvendor payload without mutating. Live HTTP stays leftover-refused\n(`psa_company_update_refused`) until sandbox-proven.",
+        "description": "Update an existing Halo or ConnectWise company with a custom-field value via\n`vendor_native`. `ensure_custom_field` creates the missing field definition,\nthen writes the value. Grant `psa.company.update` is off by default (missing \u2192\n`grant_missing`). Only an operator-allowlisted sandbox host. Production is refused\n(`psa_company_update_refused`). Never creates a company. dry_run returns the planned\nvendor payload without mutating.",
         "operationId": "write_company_tenants__tenant_id__companies_write_post",
         "parameters": [
           {
