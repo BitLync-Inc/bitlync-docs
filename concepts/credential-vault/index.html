@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>Credential vault · Bitlync docs</title>
-<meta name="description" content="The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the MSP Connect Terms. We stamp the time. No box, no keys."/>
+<meta name="description" content="The MSP pastes their own keys into a per-tenant vault. Before the keys save, they accept the MSP Connect Terms. We record the time."/>
 <link rel="canonical" href="https://docs.bitlync.com/concepts/credential-vault/"/>
 <meta property="og:title" content="Credential vault · Bitlync docs"/>
-<meta property="og:description" content="The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the MSP Connect Terms. We stamp the time. No box, no keys."/>
+<meta property="og:description" content="The MSP pastes their own keys into a per-tenant vault. Before the keys save, they accept the MSP Connect Terms. We record the time."/>
 <meta property="og:url" content="https://docs.bitlync.com/concepts/credential-vault/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -66,13 +66,13 @@
     <p class="kicker">Concepts</p>
     <h1>Credential vault</h1>
   </div>
-<p class="note">The MSP pastes their own keys. Those keys sit in a per-tenant vault. The ISV never holds them. Before keys persist, they check the box on the <a href="https://www.bitlync.com/#connect-terms">MSP Connect Terms</a>. We stamp the time. No box, no keys.</p>
+<p class="note">The MSP pastes their own keys into a per-tenant vault. Before the keys save, they accept the <a href="https://www.bitlync.com/#connect-terms">MSP Connect Terms</a>. We record the time.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">ISVs start with a key that looks like <code class="inline">blk_…</code> and header <code class="inline">X-API-Key</code>. MSP credentials are entered on Bitlync, not in your frontend.</p>
   <p class="lbl">ISV console login</p>
-  <p class="note">Human console login is passwordless: magic-link and Sign in with Microsoft (Entra OIDC). Same session cookie either way. Invite-only — Microsoft does not open-signup a new seat; the email must already be seated or invited. Live Entra prove needs deployment env (<code class="inline">BITLYNC_ENTRA_*</code>); without it, Sign in with Microsoft is not offered. Magic-link stays as the fallback. Machine API stays <code class="inline">X-API-Key</code> and never merges with the human session. No production host invented here. Sandbox unchanged. Badge OFF.</p>
+  <p class="note">Console login is passwordless: a magic link, or Sign in with Microsoft. Both use the same session cookie. The email must already be seated or invited. The machine API uses <code class="inline">X-API-Key</code>, separate from that session.</p>
   <p class="lbl">ISV experience (Connect)</p>
-  <p class="note">Console <code class="inline">#/experience</code> ships for category-level config (PSA/RMM/Docs/CS/Commerce) + recommended grants + thin branding (<code class="inline">GET|PUT /isv/experience-config</code>). Vendors inherit the category template. Access is stackable List/Read/Write; Never exclusive; Bitlync recommended starting verbs; MSP can tighten. Experience Preview walks the full sandbox Connect path (keys → grants → boards → map → done) with a sandbox/preview banner; fixture only; connect refuses persist (no production MSP persist). Getting Started ships on Setup: Suggest → Save → Preview → Use MCP | Use API twin. After Save, copy-paste prompts are scoped to the saved profile; Advanced per-vendor override is a stub (not available yet). Configuration tab also ships: Partner/sandbox vendor credentials stay separate from Production MSP Connect keys and are Preview/test only; the Connections list shows MSP × vendor, last synced, and sync detail; Issues provides a copy-paste support blurb in a human tone plus a thin redacted request-debug for ISV engineering. Badge OFF.</p>
+  <p class="note">Console <code class="inline">#/experience</code> sets category config (PSA, RMM, Docs, CS, Commerce), recommended grants, and branding (<code class="inline">GET|PUT /isv/experience-config</code>). Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Experience Preview walks Connect on the sandbox: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">Your product sends <code class="inline">X-API-Key</code>. It does not send the MSP’s PSA or RMM secret.</p>
     <div class="code">
@@ -82,8 +82,8 @@
 # MSP keys are not in this header.
 # They sit in the per-tenant vault.</pre>
   </div>
-  <p class="note">The ISV does not paste MSP creds. There is no shared-secret path that puts PSA keys in your app.</p>
-  <p class="note">A sure match auto-maps. A leftover PSA company with no ISV candidate is an ask: Match, company import from PSA, or Skip. Bulk unmatched import is available with dry_run preview. Ambiguous <code class="inline">UNMAPPED</code> is a human match. It is never an auto-create.</p>
+  <p class="note">MSP credentials are entered on Bitlync, not in your app.</p>
+  <p class="note">A sure match auto-maps. A PSA company with no ISV candidate is Match, company import from PSA, or Skip. Bulk unmatched import takes a <code class="inline">dry_run</code> preview. Ambiguous <code class="inline">UNMAPPED</code> is a human match.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>Migrations · Bitlync docs</title>
-<meta name="description" content="You already have vendor clients. Change those calls to Bitlync. We do not ingest your old code or import tokens."/>
+<meta name="description" content="You already have vendor clients. Change those calls to Bitlync."/>
 <link rel="canonical" href="https://docs.bitlync.com/migrations/"/>
 <meta property="og:title" content="Migrations · Bitlync docs"/>
-<meta property="og:description" content="You already have vendor clients. Change those calls to Bitlync. We do not ingest your old code or import tokens."/>
+<meta property="og:description" content="You already have vendor clients. Change those calls to Bitlync."/>
 <meta property="og:url" content="https://docs.bitlync.com/migrations/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -36,7 +36,6 @@
           <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
           <div class="docs-fold-body" id="fold-quickstart" hidden>
             <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
-            <a href="/quickstart/connect-checklist-autotask/">Connect checklist (Autotask)</a>
           </div>
         </div>
       </div>
@@ -67,15 +66,14 @@
   <div class="docs-hero">
     <p class="kicker">Replace existing integrations</p>
     <h1>Replace existing integrations.</h1>
-    <p class="lede">You already have vendor clients. Change those calls to Bitlync. We do not ingest your old code or import tokens.</p>
+    <p class="lede">You already have vendor clients. Change those calls to Bitlync.</p>
   </div>
   <p class="note">The ISV rewrites the calls. The MSP pastes keys once. Connect names a missing permission in the flow.</p>
   <p class="note"><code class="inline">.raw</code> is extra vendor fields on a read. <code class="inline">.raw</code> is read-only. <code class="inline">vendor.native</code> is the same payload. Ticket writes accept optional <code class="inline">vendor_native</code>.</p>
   <p class="note">Order: inventory, coverage, reads, writes. Webhooks only if we already have them. Reads first. Keep the old vendor clients until Bitlync matches in their environment. <code class="inline">dry_run</code> is the shadow pass on writes.</p>
-  <p class="note">Never: mint an agreement header; auto-create an unmatched company.</p>
-  <p class="note">Device write is off unless the MSP turns it on for your grant.</p>
-  <p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: <code class="inline">psa.ticket.create</code>, <code class="inline">psa.ticket.update</code>, <code class="inline">psa.ticket.events</code>. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=ticket.closed</code> (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (<code class="inline">psa.ticket.events</code>). Missing is <code class="inline">grant_missing</code>. When a device is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=device.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">rmm.device.events</code>). Missing is <code class="inline">grant_missing</code>. When a company is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=company.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">psa.company.events</code>). Missing is <code class="inline">grant_missing</code>. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Billing line items: on an existing agreement only. Public word Agreement. Time: hours the caller states, on a linked ticket. Company create is a separate grant (<code class="inline">psa.company.create</code>). Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. A company create at a distributor, when that write exists and the MSP granted it, is not a PSA create.</p>
-  <p class="note"><a href="/what-we-write/">What we write</a> lists the refuse codes.</p>
+  <p class="note">Device write runs when the MSP turns it on for your grant.</p>
+  <p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA. Grants: <code class="inline">psa.ticket.create</code>, <code class="inline">psa.ticket.update</code>, <code class="inline">psa.ticket.events</code>. When a ticket is created, updated, noted, closed, or reopened, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=ticket.closed</code> (also created, updated, noted, reopened). Optional signed webhook. Grant is the connection (<code class="inline">psa.ticket.events</code>). Missing is <code class="inline">grant_missing</code>. When a device is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=device.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">rmm.device.events</code>). Missing is <code class="inline">grant_missing</code>. When a company is created or updated, you can list those events or get a signed webhook. After a tenant sync, <code class="inline">GET /tenants/{id}/connections/events?kind=company.updated</code> (also created). Optional signed webhook. Grant is the connection (<code class="inline">psa.company.events</code>). Missing is <code class="inline">grant_missing</code>. You can close a ticket once they accept the connection. Auto-close when a finding is fixed is a separate switch. Billing line items: on an existing agreement only. Public word Agreement. Time: hours the caller states, on a linked ticket. Company create is a separate grant (<code class="inline">psa.company.create</code>). Company create runs when the MSP turns on <code class="inline">psa.company.create</code>. Match runs first. Two matches return <code class="inline">company_match_ambiguous</code>. A company create at a distributor, when the MSP has granted it, is a distributor create.</p>
+  <p class="note"><a href="/what-we-write/">What we write</a> lists the write paths and the error codes.</p>
   <div class="skill-card">
     <p class="kicker">Migrating?</p>
     <p>Hand this skill file to your coding agent</p>

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>MSP permissions · Bitlync docs</title>
-<meta name="description" content="A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500."/>
+<meta name="description" content="A missing grant is HTTP 403, code grant_missing. A parked vendor permission is HTTP 409, code scope_parked. An unsupported capability is HTTP 501, code unsupported_capability."/>
 <link rel="canonical" href="https://docs.bitlync.com/concepts/msp-permissions/"/>
 <meta property="og:title" content="MSP permissions · Bitlync docs"/>
-<meta property="og:description" content="A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500."/>
+<meta property="og:description" content="A missing grant is HTTP 403, code grant_missing. A parked vendor permission is HTTP 409, code scope_parked. An unsupported capability is HTTP 501, code unsupported_capability."/>
 <meta property="og:url" content="https://docs.bitlync.com/concepts/msp-permissions/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -36,7 +36,6 @@
           <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
           <div class="docs-fold-body" id="fold-quickstart" hidden>
             <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
-            <a href="/quickstart/connect-checklist-autotask/">Connect checklist (Autotask)</a>
           </div>
         </div>
       </div>
@@ -67,26 +66,26 @@
     <p class="kicker">Concepts</p>
     <h1>MSP permissions</h1>
   </div>
-<p class="note">A missing write permission can still connect as partial. Reads work. The parked write is refused distinctly. That is not a generic 500.</p>
-  <p class="note">ConnectWise and Halo connect are numbered click paths in the flow. Autotask has the same bar (API user + tracking ID; queues not boards; lists fixture-first; writes dry_run) — see <a href="/quickstart/connect-checklist-autotask/">Autotask Connect checklist</a>. Halo pastes a client ID, client secret, and the two server URLs. If a permission is missing, we name it in English. Company create is off unless the MSP turns it on for your grant. We always match first. If two records match, we refuse. Create an agreement is off unless the MSP turns it on for your grant.</p>
+<p class="note">A missing grant is HTTP 403, code <code class="inline">grant_missing</code>. A parked vendor permission is HTTP 409, code <code class="inline">scope_parked</code>. An unsupported capability is HTTP 501, code <code class="inline">unsupported_capability</code>.</p>
+  <p class="note">ConnectWise and Halo connect are numbered click paths. Halo takes a client ID, a client secret, and the two server URLs. A missing permission is named in English. Company create runs when the MSP turns on <code class="inline">psa.company.create</code>. Match runs first. Two matches return <code class="inline">company_match_ambiguous</code>. Agreement-line writes run when the MSP turns on that grant, on an existing agreement.</p>
   <p class="lbl">ISV experience config</p>
-  <p class="note"><code class="inline">GET|PUT /isv/experience-config</code> ships (OpenAPI 0.83.0). Category-level config for PSA/RMM/Docs/CS/Commerce; vendors inherit the category template. Access is stackable List/Read/Write; Never is exclusive. Starting verbs are Bitlync recommended; MSP can tighten. Recommended grants drive Connect rows. Sandbox Experience Preview via <code class="inline">POST /connect/sessions/preview</code> and console <code class="inline">#/experience</code> walks full Connect onboarding (keys → grants → boards → map → done) with a sandbox/preview banner; fixture tenant; connect refuses persist (no production MSP persist). Getting Started ships on Setup: Suggest → Save → Preview → Use MCP | Use API twin. After Save, copy-paste prompts are scoped to the saved profile; Advanced per-vendor override is a stub (not available yet). Configuration tab also ships: Partner/sandbox vendor credentials stay separate from Production MSP Connect keys and are Preview/test only; the Connections list shows MSP × vendor, last synced, and sync detail; Issues provides a copy-paste support blurb in a human tone plus a thin redacted request-debug for ISV engineering. Badge OFF.</p>
+  <p class="note"><code class="inline">GET|PUT /isv/experience-config</code> sets category config for PSA, RMM, Docs, CS, and Commerce, plus recommended grants and branding. Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Recommended grants drive Connect rows. Sandbox Experience Preview (<code class="inline">POST /connect/sessions/preview</code> and console <code class="inline">#/experience</code>) walks Connect: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">The MSP pastes keys in the guided flow. The probe names the permission to fix. The ISV does not paste MSP creds.</p>
   <p class="lbl">What the caller sees</p>
-  <p class="note">Reads still serve from the store. A parked write is 501 <code class="inline">unsupported</code>. Portal copy tells the MSP which permission to fix.</p>
+  <p class="note">Reads still serve from the store. A missing grant is HTTP 403, code <code class="inline">grant_missing</code>. A parked vendor permission is HTTP 409, code <code class="inline">scope_parked</code>. An unsupported capability is HTTP 501, code <code class="inline">unsupported_capability</code>.</p>
     <div class="code">
-    <div class="hd"><b>parked write, not 500</b><button class="copy" type="button" data-copy="{&quot;status&quot;:501,&quot;code&quot;:&quot;unsupported&quot;}">Copy</button></div>
-    <pre>HTTP 501
+    <div class="hd"><b>missing grant</b><button class="copy" type="button" data-copy="{&quot;status&quot;:403,&quot;code&quot;:&quot;grant_missing&quot;}">Copy</button></div>
+    <pre>HTTP 403
 {
-  "status": 501,
-  "code": "unsupported"
+  "status": 403,
+  "code": "grant_missing"
 }
 
 # Portal copy names the permission.
 # ISV does not paste MSP creds.</pre>
   </div>
-  <p class="note">No ISV-side form that collects PSA keys. Partial connect is not collapsed into “failed.”</p>
+  <p class="note">The MSP pastes PSA keys in Connect. A partial connect stays partial. It is not reported as failed.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>
