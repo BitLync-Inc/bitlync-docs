@@ -91,22 +91,21 @@ tenant_id: sandbox-mainstreet
   </div>
   <p class="note">Reads include <code class="inline">vendor.native</code>. <code class="inline">.raw</code> is the same payload and is read-only. Writes take optional <code class="inline">vendor_native</code>.</p>
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">POST tickets</h3>
-  <p class="note"><code class="inline">dry_run</code> defaults true. Commit by sending <code class="inline">dry_run: false</code> plus an <code class="inline">idempotency_key</code>. The same key on a retry returns <code class="inline">idempotent_replay</code>.</p>
+  <p class="note"><code class="inline">dry_run</code> defaults to false, so a write is real. Send an <code class="inline">idempotency_key</code>; the same key on a retry returns <code class="inline">idempotent_replay</code>. Test writes in the sandbox. Optional: <code class="inline">dry_run: true</code> checks a write against a new MSP's setup without creating a record.</p>
   <div class="two">
     <article>
       <p class="path">POST /tenants/{tenant_id}/tickets</p>
       <p class="note">Header <code class="inline">X-API-Key: blk_…</code>.</p>
     </article>
     <article>
-      <p class="path">body · dry_run then commit</p>
+      <p class="path">body</p>
       <div class="term" style="border:0;padding:0;background:transparent">
         <div>{</div>
         <div>  <span class="s">"summary"</span>: <span class="s">"Printer offline"</span>,</div>
-        <div>  <span class="s">"dry_run"</span>: true,</div>
         <div>  <span class="s">"idempotency_key"</span>: <span class="s">"ticket-1"</span></div>
         <div>}</div>
-        <div class="c">then commit</div>
-        <div>{ <span class="s">"dry_run"</span>: false, <span class="s">"idempotency_key"</span>: <span class="s">"ticket-1"</span> }</div>
+        <div class="c">optional check, no record created</div>
+        <div>{ <span class="s">"dry_run"</span>: true, <span class="s">"idempotency_key"</span>: <span class="s">"ticket-check-1"</span> }</div>
       </div>
     </article>
   </div>
