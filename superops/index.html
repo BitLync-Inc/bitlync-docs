@@ -37,6 +37,7 @@
           <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
           <div class="docs-fold-body" id="fold-quickstart" hidden>
             <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
+            <a href="/quickstart/connector-setup/">Connector setup</a>
           </div>
         </div>
       </div>
@@ -71,7 +72,7 @@
   </div>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">One connection, two categories</h3>
-  <p class="note">SuperOps is a unified PSA and RMM. The MSP connects it once and it shows under both Service desk (PSA) and RMM on Connect step 1. It is not a Documentation connector. It uses the SuperOps MSP GraphQL API; your calls stay on the normal Bitlync routes and canonical objects.</p>
+  <p class="note">SuperOps is a unified PSA and RMM. The MSP connects it once and it shows under both PSA and RMM on Connect step 1. It is not a Documentation connector. It uses the SuperOps MSP GraphQL API; your calls stay on the normal Bitlync routes and canonical objects.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">What we read</h3>
   <div class="cov-wrap">
@@ -81,7 +82,8 @@
         <tr><th scope="row">Company</th><td>Clients (name, stage, status, email domains) and client sites</td><td><code class="inline">psa.company.read</code></td></tr>
         <tr><th scope="row">Ticket</th><td>Tickets (subject, request type, source, client, technician, status, priority, created and updated time)</td><td><code class="inline">psa.ticket.read</code></td></tr>
         <tr><th scope="row">Company custom fields</th><td>Client custom field definitions (to find a field by label before writing)</td><td><code class="inline">psa.company.read</code></td></tr>
-        <tr><th scope="row">Ticket statuses</th><td>Status list (to close with a resolution)</td><td><code class="inline">psa.ticket.update</code></td></tr>
+        <tr><th scope="row">Ticket statuses</th><td>Status list (to close with a resolution)</td><td><code class="inline">psa.ticket.read</code></td></tr>
+        <tr><th scope="row">Agreement</th><td>Client contracts</td><td><code class="inline">psa.agreement.read</code></td></tr>
       </tbody>
     </table>
   </div>

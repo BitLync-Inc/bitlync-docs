@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="index,follow"/>
+<title>Connector setup · Bitlync docs</title>
+<meta name="description" content="Per-tool Connect fields, regions, and URLs for every listed tool."/>
+<link rel="canonical" href="https://docs.bitlync.com/quickstart/connector-setup/"/>
+<meta property="og:title" content="Connector setup · Bitlync docs"/>
+<meta property="og:description" content="Per-tool Connect fields, regions, and URLs for every listed tool."/>
+<meta property="og:url" content="https://docs.bitlync.com/quickstart/connector-setup/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="true" aria-controls="fold-quickstart">Chapters</button>
+          <div class="docs-fold-body" id="fold-quickstart">
+            <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
+            <a href="/quickstart/connector-setup/" class="on">Connector setup</a>
+          </div>
+        </div>
+      </div>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts" hidden>
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/">Webhooks</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+
+  <div class="docs-hero">
+    <p class="kicker">Quickstart</p>
+    <h1>Connector setup</h1>
+    <p class="lede">What the MSP pastes into Connect for each tool, and which region or URL to use.</p>
+  </div>
+
+  <p class="note">The fields the MSP fills in on the Connect step for each tool, with the help text Connect shows. Secret fields are never pre-filled or shown again.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">ConnectWise</h3>
+  <p class="note"><strong>PSA</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">ConnectWise company ID</th><td>Placeholder <code class="inline">summitpeak</code>.</td></tr>
+        <tr><th scope="row">API member public key</th><td>—</td></tr>
+        <tr><th scope="row">API member private key</th><td>Shown once in ConnectWise — copy it before leaving that page.</td></tr>
+        <tr><th scope="row">Integration clientId</th><td>Bitlync fills this. Leave it as shown — you do not register a client ID.</td></tr>
+        <tr><th scope="row">API base URL</th><td>Placeholder <code class="inline">https://na.myconnectwise.net/v4_6_release/apis/3.0</code>. The exact version segment varies per instance.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">Set by the API base URL. Core's example is the <code class="inline">na.myconnectwise.net</code> host.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Gap: core lists no other ConnectWise region hosts, so none are listed here.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">HaloPSA</h3>
+  <p class="note"><strong>PSA</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Client ID</th><td>—</td></tr>
+        <tr><th scope="row">Client secret</th><td>Shown once when you create the API application — copy it before leaving that page.</td></tr>
+        <tr><th scope="row">Auth server URL</th><td>Placeholder <code class="inline">https://your-instance.halopsa.com/auth</code>. Full URL from Configuration → Integrations → HaloPSA API → API Details.</td></tr>
+        <tr><th scope="row">Resource server URL</th><td>Placeholder <code class="inline">https://your-instance.halopsa.com/api</code>. Full URL ending in /api from API Details.</td></tr>
+        <tr><th scope="row">Tenant ID (optional)</th><td>Leave blank unless Halo shows a tenant id on API Details (multi-tenant hosted only).</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">Set by the two server URLs from API Details. Halo has no region picker.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Ticket writes don't send Halo notification emails, and notes are internal by default.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">SuperOps</h3>
+  <p class="note"><strong>PSA &amp; RMM</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">API token</th><td>Generate this token from a technician user with a limited role (tickets, clients, contracts, custom fields), not an admin: a SuperOps token inherits the role of the user who creates it. Log in as that technician, then Settings → My Profile → API token → Generate. Copy it before leaving that page.</td></tr>
+        <tr><th scope="row">Subdomain</th><td>Placeholder <code class="inline">yourcompany</code>. Settings → MSP Information. Just the subdomain, not the full URL.</td></tr>
+        <tr><th scope="row">Region</th><td>Pick US or EU — the data center your SuperOps account uses.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">US: <code class="inline">https://api.superops.ai/msp</code>. EU: <code class="inline">https://euapi.superops.ai/msp</code>. A blank region is treated as US. A wrong subdomain or region returns HTTP 400.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Full detail: <a href="/superops/">SuperOps</a>.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">NinjaOne</h3>
+  <p class="note"><strong>RMM</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">NinjaOne API URL</th><td>Placeholder <code class="inline">https://app.ninjarmm.com</code>. Instance hosts include app, eu, oc, ca, and us2.</td></tr>
+        <tr><th scope="row">API key</th><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">Set by the API URL. Instance hosts include app, eu, oc, ca, and us2.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>NinjaOne isn't available for a live connection yet.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Datto RMM</h3>
+  <p class="note"><strong>RMM</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">API key</th><td>Setup → Users → the integration user. Copy the API key.</td></tr>
+        <tr><th scope="row">API secret</th><td>Shown once on that same user when you generate the API secret.</td></tr>
+        <tr><th scope="row">API URL</th><td>Placeholder <code class="inline">https://pinotage-api.centrastage.net</code>. Use this account's platform API host (…-api.centrastage.net), not the web console.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">One host per platform: <code class="inline">https://pinotage-api.centrastage.net</code>, <code class="inline">https://merlot-api.centrastage.net</code>, <code class="inline">https://syrah-api.centrastage.net</code>, <code class="inline">https://vidal-api.centrastage.net</code>, <code class="inline">https://zinfandel-api.centrastage.net</code>, <code class="inline">https://concord-api.centrastage.net</code>.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>None beyond the field help.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">ScalePad</h3>
+  <p class="note"><strong>Customer Success</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">ScalePad Lifecycle Manager API key</th><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">One host: <code class="inline">https://api.scalepad.com</code>. No region option.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>ScalePad API keys expire. Bitlync flags an aging key before it stops working.</li>
+    <li>Gap: core has no setup path (where to create the key) for ScalePad.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Pax8</h3>
+  <p class="note"><strong>Commerce</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Client ID</th><td>Pax8 Partner dashboard → API settings. Copy the client ID.</td></tr>
+        <tr><th scope="row">Client secret</th><td>Shown once when you create the API application — copy it before leaving that page.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">One host: <code class="inline">https://api.pax8.com</code>. No region option.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>None beyond the field help.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">IT Glue</h3>
+  <p class="note"><strong>Documentation</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">API key</th><td>Account → Settings → Custom API Keys. Only an Administrator can create one.</td></tr>
+        <tr><th scope="row">Region</th><td>Pick US, EU, or AU — the region this IT Glue account uses.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">US: <code class="inline">https://api.itglue.com</code>. EU: <code class="inline">https://api.eu.itglue.com</code>. AU: <code class="inline">https://api.au.itglue.com</code>.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Bitlync never reads IT Glue passwords.</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Hudu</h3>
+  <p class="note"><strong>Documentation</strong></p>
+  <p class="lbl">Fields</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Field</th><th scope="col">Help</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">API key</th><td>Admin → Account Administration → API. Copy a key dedicated to this connection.</td></tr>
+        <tr><th scope="row">Hudu URL</th><td>Placeholder <code class="inline">https://your-company.huducloud.com</code>. The address you use to open Hudu — your cloud subdomain or your own host.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lbl">Region and URL</p>
+  <p class="note">Set by the Hudu URL: your cloud subdomain or your own host.</p>
+  <p class="lbl">Notes</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>None beyond the field help.</li>
+  </ul>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/coverage/">Coverage</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>
