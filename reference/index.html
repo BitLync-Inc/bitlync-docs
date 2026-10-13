@@ -174,6 +174,37 @@
     </div>
   </article>
 
+    <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">More endpoints in the spec</h3>
+    <p class="note">These routes are in <a href="/openapi.json">openapi.json</a> with the summaries below. Import the spec for parameters and bodies.</p>
+    <div class="cov-wrap"><table class="cov">
+      <thead><tr><th scope="col">Method</th><th scope="col">Path</th><th scope="col">Summary (from the spec)</th></tr></thead>
+      <tbody>
+      <tr><td><code>GET</code></td><td><code>/connectors/{connector_key}/coverage</code></td><td>Get Connector Coverage. The generated field-fidelity manifest for one connector: which canonical fields map at full fidelity, which are lossy, and which do not exist at the vendor.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/assistant/ask</code></td><td>Assistant Ask. Ask the AI support assistant about this tenant&#x27;s integrations.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/assistant/stats</code></td><td>Get Deflection Stats. The assistant&#x27;s deflection value for this tenant, aggregated from the append-only audit trail.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/commerce/agreement-line-mappings</code></td><td>List Agreement Line Mappings. List vendor-product ↔ PSA agreement-line pairings for this tenant.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/agreement-line-mappings</code></td><td>Create Agreement Line Mapping. Explicit POST — the only path that creates a pairing (or records UNMAPPED).</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/agreement-line-mappings/suggestions</code></td><td>Suggest Agreement Line Mappings. Exact-name / SKU labelled suggestions.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/agreement-line-mappings/{mapping_id}/release</code></td><td>Release Agreement Line Mapping. End-date a pair and leave an UNMAPPED successor.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/agreement-lines</code></td><td>Write Agreement Line. Write one PSA agreement addition (new / modify / replace / end).</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/commerce/charges</code></td><td>List Charge Queue. Pending MSP Approve/Dismiss rows for this ISV.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/charges/{charge_id}/approve</code></td><td>Approve Charge. Approve one pending charge; this writes the agreement line.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/charges/{charge_id}/dismiss</code></td><td>Dismiss Charge. Dismiss one pending charge.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/commerce/costs</code></td><td>List Isv Costs. ISV-submitted customer/product/period costs for this tenant.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/costs</code></td><td>Submit Isv Cost. Submit (or idempotently replace) one ISV direct-channel cost row at the customer/product/period grain.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/commerce/partner-minimums</code></td><td>List Partner Minimums. Partner-level billing floors above customer grain, with unallocated_amount surfaced and never allocated onto customers.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/commerce/partner-minimums</code></td><td>Submit Partner Minimum. Submit (or idempotently replace) one partner-level minimum floor.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/commerce/reconcile</code></td><td>Reconcile. Read-only comparison of vendor cost records against mapped PSA agreement lines.</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/companies/fields/bitlync-contract-link</code></td><td>Ensure Bitlync Contract Link Field. Create or reuse Bitlync&#x27;s Halo client field Contract Link (BitlyncContractLink).</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/deployments</code></td><td>Deploy. Deploy a package via the tenant&#x27;s RMM (501 until a connector implements it).</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/routing</code></td><td>Get Routing Config. This ISV&#x27;s supported/recommended write-back targets for this tenant, plus the MSP&#x27;s current per-finding-kind routing — an override where one is set, the ISV&#x27;s recommendation otherwise (routes[kind].overridden says which).</td></tr>
+      <tr><td><code>PUT</code></td><td><code>/tenants/{tenant_id}/routing</code></td><td>Set Routing Config. Set (or clear, with null) this tenant&#x27;s per-finding-kind write-back target override.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-queues</code></td><td>List Ticket Queues. Ticket queues for stacks that route by queue (not boards).</td></tr>
+      <tr><td><code>POST</code></td><td><code>/tenants/{tenant_id}/tickets/time</code></td><td>Write Time Entry. Attach hours to a linked ticket as a canonical TimeEntry.</td></tr>
+      <tr><td><code>GET</code></td><td><code>/tenants/{tenant_id}/usage</code></td><td>Get Usage Summary. Daily usage + limit hits for this tenant (abuse visibility): requests served/rate-limited, assistant token and dollar spend, budget/breaker blocks.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Per-tool Connect fields, regions, and URLs: <a href="/quickstart/connector-setup/">Connector setup</a>.</p>
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>
         <a class="btn" href="/reference/">Reference</a>
