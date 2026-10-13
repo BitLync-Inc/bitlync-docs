@@ -69,6 +69,9 @@
     <p class="lede">Halo + ConnectWise. For the MSP connecting so an ISV can use Bitlync. Not Azure.</p>
   </div>
 
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">The five steps</h3>
+  <p class="note">Hosted MSP Connect shows a five-step tracker: <strong>Choose</strong> → <strong>Connect</strong> → <strong>Configure</strong> → <strong>Map companies</strong> → <strong>Done</strong>. Choose picks the tool (grouped by category). Connect is keys and the connection test. Configure is grants and ticketing options. Map companies is one Import, Match, or Skip choice per PSA company. Done confirms the connection. Every step ends with a small "Powered by Bitlync" footer that links to Bitlync's MSP page.</p>
+
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Before you start</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>ISV has a Bitlync key and a tenant for this MSP</li>
@@ -77,14 +80,15 @@
     <li>Decide which PSA is first for this MSP (Halo or ConnectWise). One connection at a time</li>
   </ul>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">1. Open Connect</h3>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">1. Choose (open Connect)</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>From the ISV product (or Bitlync link), MSP opens the <strong>hosted Connect</strong> link for that vendor</li>
+    <li>Step 1 (Choose) shows the ISV's logo and one tagline line (default "Connect your stack to {ISV}"), then the tools the ISV allows, grouped by category</li>
     <li>MSP accepts <strong>MSP Connect Terms</strong> before keys save</li>
     <li>Follow the numbered steps beside the fields (Halo: client ID, secret, auth + resource URLs; ConnectWise: company id, public/private keys, client id, base URL)</li>
   </ul>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">2. Keys and permissions</h3>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">2. Connect and Configure (keys and permissions)</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>Paste credentials</li>
     <li>Bitlync <strong>tests</strong> the connection in the flow</li>
@@ -92,22 +96,25 @@
     <li>Prefer a <code class="inline">dry_run</code> / preview where the product offers it before real writes</li>
   </ul>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">3. Map companies (Match / company import from PSA / Skip)</h3>
-  <p class="note">PSA companies are the book. Match links an ISV customer. Company import creates that customer in the ISV.</p>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">3. Map companies (Import / Match / Skip)</h3>
+  <p class="note">PSA companies are the book. Each row gets exactly one choice. Match links an existing ISV customer. Import creates that customer in the ISV. Skip leaves it out.</p>
   <div class="cov-wrap">
     <table class="cov">
       <thead><tr><th scope="col">Choice</th><th scope="col">Meaning</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Match</th><td>Link to a customer that already exists in the ISV. Exact same name may auto-fill Match</td></tr>
-        <tr><th scope="row">Company import from PSA</th><td>Create that customer in the ISV from the PSA company</td></tr>
+        <tr><th scope="row">Match</th><td>Link to a customer that already exists in the ISV. An exact name match is filled in automatically</td></tr>
+        <tr><th scope="row">Import</th><td>Create that customer in the ISV from the PSA company</td></tr>
         <tr><th scope="row">Skip</th><td>Not a customer (internal / test). Leave unmatched</td></tr>
       </tbody>
     </table>
   </div>
   <ul class="note" style="padding-left:1.2em">
-    <li>Review rows that need a choice (<strong>Needs match</strong> = not chosen yet — not a fourth outcome)</li>
+    <li>Exact-name hits are Matched automatically and collapsed into one line — that is Match, not Import</li>
+    <li>Suggested defaults are marked: a close name is a suggested Match, a likely test or internal company is a suggested Skip</li>
+    <li>Picking Match, Import, or Skip marks the row decided (its checkbox is ticked). Unticking resets it to <strong>Needs review</strong> (not chosen yet — not a fourth outcome)</li>
+    <li>One toolbar: search, filters (All, Needs review, Matched, Import, Skipped), and bulk actions (Import all unmatched, Skip all flagged test companies). Bulk actions never change decided rows</li>
+    <li>25 companies per page</li>
     <li>Ambiguous names: Match by hand</li>
-    <li>Exact-name hits may auto-Match — that is Match, not import</li>
   </ul>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">4. Bulk company import (unmatched)</h3>
@@ -115,7 +122,7 @@
   <ul class="note" style="padding-left:1.2em">
     <li>Let exact-name <strong>Match</strong> run first</li>
     <li>Preview with <code class="inline">dry_run</code>: who will import, who is skipped (already Matched, Skip, ambiguous, not selected)</li>
-    <li>Explicit MSP action only: <strong>Import all unmatched</strong> and/or <strong>multi-select</strong> then import</li>
+    <li>Explicit MSP action only: <strong>Import all unmatched</strong> from the toolbar, and/or pick Import row by row</li>
     <li>Import is an explicit MSP action. Ambiguous rows stay unmatched</li>
     <li>Run for real: watch <strong>per-row</strong> progress and errors. A failed row stays unmatched for retry; successes stay</li>
   </ul>
@@ -136,7 +143,7 @@
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">7. Smoke check before calling it live</h3>
   <ul class="note" style="padding-left:1.2em">
-    <li>Companies: Match and/or company import from PSA worked for the rows you care about</li>
+    <li>Companies: Match and/or Import worked for the rows you care about</li>
     <li>Contacts: list/match under a mapped company</li>
     <li>Ticket: dry_run then one real create (or update) on a lab/low-risk company</li>
     <li>Agreement lines go on an existing agreement when billing matters</li>

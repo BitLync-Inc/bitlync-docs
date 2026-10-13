@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!-- GATED PAGE: publish only once SuperOps is live in production (SUPEROPS_LIVE_VERIFIED=true in prod, coverage map regenerated with SuperOps BUILT). Unlinked from nav and sitemap, noindex until then. At go-live: switch robots to index,follow, add to the nav, sitemap.xml, llms.txt, and the Coverage page. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>SuperOps · Bitlync docs</title>
+<meta name="description" content="SuperOps: one connection for PSA and RMM."/>
+<link rel="canonical" href="https://docs.bitlync.com/superops/"/>
+<meta property="og:title" content="SuperOps · Bitlync docs"/>
+<meta property="og:description" content="SuperOps: one connection for PSA and RMM."/>
+<meta property="og:url" content="https://docs.bitlync.com/superops/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
+          <div class="docs-fold-body" id="fold-quickstart" hidden>
+            <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
+          </div>
+        </div>
+      </div>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts" hidden>
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/">Webhooks</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+
+  <div class="docs-hero">
+    <p class="kicker">Connectors</p>
+    <h1>SuperOps.</h1>
+    <p class="lede">One SuperOps connection covers PSA and RMM.</p>
+  </div>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">One connection, two categories</h3>
+  <p class="note">SuperOps is a unified PSA and RMM. The MSP connects it once and it shows under both Service desk (PSA) and RMM on Connect step 1. It is not a Documentation connector. It uses the SuperOps MSP GraphQL API; your calls stay on the normal Bitlync routes and canonical objects.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">What we read</h3>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Object</th><th scope="col">SuperOps source</th><th scope="col">Grant</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Company</th><td>Clients (name, stage, status, email domains) and client sites</td><td><code class="inline">psa.company.read</code></td></tr>
+        <tr><th scope="row">Ticket</th><td>Tickets (subject, request type, source, client, technician, status, priority, created and updated time)</td><td><code class="inline">psa.ticket.read</code></td></tr>
+        <tr><th scope="row">Company custom fields</th><td>Client custom field definitions (to find a field by label before writing)</td><td><code class="inline">psa.company.read</code></td></tr>
+        <tr><th scope="row">Ticket statuses</th><td>Status list (to close with a resolution)</td><td><code class="inline">psa.ticket.update</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">SuperOps statuses and priorities are names the MSP can customize. Stock names map to canonical values; anything else comes back as unknown, never guessed.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">What we write</h3>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Write</th><th scope="col">What happens in SuperOps</th><th scope="col">Grant</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Create ticket</th><td>A ticket on a client that already exists (request type defaults to Incident)</td><td><code class="inline">psa.ticket.create</code></td></tr>
+        <tr><th scope="row">Append note</th><td>An internal note on a ticket Bitlync linked</td><td><code class="inline">psa.ticket.update</code></td></tr>
+        <tr><th scope="row">Close with resolution</th><td>When the MSP allows closing on Configure: status Resolved, and the resolution text goes in a note (SuperOps has no free-text resolution field). Off: the resolution lands as a note and the ticket stays open</td><td><code class="inline">psa.ticket.update</code></td></tr>
+        <tr><th scope="row">Company custom field</th><td>Created once by label; an existing field with the same label is reused</td><td><code class="inline">psa.company.field.create</code></td></tr>
+        <tr><th scope="row">Billing line item</th><td>Each agreement line becomes its own client contract on the client's HQ site, created as a Draft. Nothing bills until the MSP activates it. Existing contracts are never changed or ended</td><td><code class="inline">psa.agreement.line.write</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Bitlync does not create SuperOps clients. Writes take <code class="inline">dry_run</code> and are real by default. In production, the MSP's grant during Connect is the approval; without the grant for an operation, the call is refused (<code class="inline">grant_missing</code>).</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Token setup (MSP)</h3>
+  <p class="note">Use a limited technician user, not an admin. A SuperOps API token acts as the user who generated it and carries that user's role.</p>
+  <ol class="note" style="padding-left:1.2em">
+    <li>As a SuperOps admin: Settings → Technicians → Add technician. Name it <strong>Bitlync</strong> and give it a limited role with only tickets, clients, contracts, and custom fields. Not administrator.</li>
+    <li>Log in as the Bitlync technician. Settings → My Profile → API token → Generate Token. Copy it before leaving the page. Never generate it as an admin.</li>
+    <li>Copy your subdomain from Settings → My MSP → MSP Information (the first part of <code class="inline">acme.superops.ai</code>; pasting the full address is fine).</li>
+    <li>Pick your <strong>region</strong>: US, or EU if your SuperOps account is hosted in the EU data center.</li>
+    <li>Paste the token, subdomain, and region into Bitlync Connect, then Authorize.</li>
+  </ol>
+  <ul class="note" style="padding-left:1.2em">
+    <li>A wrong region looks like an invalid token. Check the region first.</li>
+    <li>SuperOps allows one active token per user. Regenerating it invalidates the old one, so update it in Connect afterwards.</li>
+    <li>The token is stored in the Bitlync credential vault, encrypted at rest, never logged, and never returned to any caller.</li>
+  </ul>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/quickstart/">Quickstart</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>

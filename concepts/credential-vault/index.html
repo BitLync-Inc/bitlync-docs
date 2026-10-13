@@ -72,7 +72,7 @@
   <p class="lbl">ISV console login</p>
   <p class="note">Console login is passwordless: a magic link, or Sign in with Microsoft. Both use the same session cookie. The email must already be seated or invited. The machine API uses <code class="inline">X-API-Key</code>, separate from that session.</p>
   <p class="lbl">ISV experience (Connect)</p>
-  <p class="note">Console <code class="inline">#/experience</code> sets category config (PSA, RMM, Docs, CS, Commerce), recommended grants, and branding (<code class="inline">GET|PUT /isv/experience-config</code>). Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Experience Preview walks Connect on the sandbox: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
+  <p class="note">Console <code class="inline">#/experience</code> sets category config (PSA, RMM, Docs, CS, Commerce), recommended grants, and branding (<code class="inline">GET|PUT /isv/experience-config</code>). Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Experience Preview walks the five MSP Connect steps on the sandbox: Choose, Connect, Configure, Map companies, Done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">Your product sends <code class="inline">X-API-Key</code>. It does not send the MSP’s PSA or RMM secret.</p>
     <div class="code">
@@ -83,7 +83,7 @@
 # They sit in the per-tenant vault.</pre>
   </div>
   <p class="note">MSP credentials are entered on Bitlync, not in your app.</p>
-  <p class="note">A sure match auto-maps. A PSA company with no ISV candidate is Match, company import from PSA, or Skip. Bulk unmatched import takes a <code class="inline">dry_run</code> preview. Ambiguous <code class="inline">UNMAPPED</code> is a human match.</p>
+  <p class="note">A sure match auto-maps. A PSA company with no ISV candidate gets one choice: Import, Match, or Skip. Bulk unmatched import takes a <code class="inline">dry_run</code> preview. Ambiguous <code class="inline">UNMAPPED</code> is a human match.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>

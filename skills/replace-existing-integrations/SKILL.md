@@ -17,7 +17,7 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 - Reads first. Then writes. Webhooks only if they already exist in product.
 - Keep the old vendor clients until Bitlync matches in their environment.
 - Use `dry_run` as the shadow pass on writes. Compare shape, do not cut over on a preview.
-- Agreement lines go on an existing agreement. An unmatched company is Match, company import from PSA, or Skip.
+- Agreement lines go on an existing agreement. Each unmatched company gets one choice: Import, Match, or Skip.
 - Write a line on an existing agreement only. Public word is Agreement, not Contract. Site word for the line is Billing line item.
 - MSP pastes their own keys. Name a missing permission in the connect flow. Do not claim OAuth unless that vendor actually publishes a partner app.
 - No Rewst (or other vendor) screenshots in anything that ships.
