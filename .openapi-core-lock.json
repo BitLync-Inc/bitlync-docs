@@ -1,7 +1,7 @@
 {
   "core_repo": "BitLync-Inc/bitlync-core",
   "version": "0.94.0",
-  "sha256": "74220901c3754b138124a1b19f107253666743e071d0fdedce8bf3fc139566a0",
+  "sha256": "5a9b037c47f5b4bbd21b668a9026f093f1047adf0dc5a6d55a6e890694916648",
   "pin_path": "docs/openapi/bitlync-openapi-0.94.0.json",
   "rule": "bitlync-core owns OpenAPI. Do not hand-edit openapi.json. Fix: from bitlync-core run bash scripts/openapi_sync_consumers.sh (opens PRs to docs + site) or workflow_dispatch openapi-sync. Never push the pin straight to main on consumers.",
   "source_note": "Bytes are the OpenAPI document served by https://bitlync-sandbox-demo.onrender.com/openapi.json (info.version 0.94.0) on 2026-10-19. bitlync-core was not readable from this environment, so this is not a verified copy of docs/openapi/bitlync-openapi-0.94.0.json on core main."
