@@ -67,7 +67,46 @@
     <p class="kicker">Reference</p>
     <h1>Routes that exist today.</h1>
     <p class="lede">Auth is the <code class="inline">X-API-Key</code> header. Writes take <code class="inline">dry_run</code> (default false; writes are real). Import the OpenAPI file. This page is not the spec.</p>
-    <p class="note"><a href="/openapi.json">OpenAPI 0.90.0</a></p>
+    <p class="note"><a href="/openapi.json">OpenAPI 0.94.0</a></p>
+    <p class="note">Billing quantities: <code class="inline">POST /tenants/{tenant_id}/billing/quantities</code>. The MSP matches the line. You send an absolute quantity (0 stops billing) on your cadence (<code class="inline">daily</code> or <code class="inline">monthly</code>). The MSP's change limit defaults to 25%. A change over that limit waits. Ending a line is refused.</p>
+    <div class="code">
+      <div class="hd"><b>request</b><button class="copy" type="button" data-copy="{&quot;idempotency_key&quot;:&quot;docs-probe-1&quot;,&quot;dry_run&quot;:true,&quot;quantities&quot;:[{&quot;customer_ref&quot;:&quot;cust-42&quot;,&quot;customer_name&quot;:&quot;Brightside Pediatrics&quot;,&quot;service&quot;:&quot;managed-edr&quot;,&quot;quantity&quot;:44}]}">Copy</button></div>
+      <pre>{
+  "idempotency_key": "docs-probe-1",
+  "dry_run": true,
+  "quantities": [
+    {
+      "customer_ref": "cust-42",
+      "customer_name": "Brightside Pediatrics",
+      "service": "managed-edr",
+      "quantity": 44
+    }
+  ]
+}</pre>
+    </div>
+    <div class="code">
+      <div class="hd"><b>response</b><button class="copy" type="button" data-copy="{&quot;tenant_id&quot;:&quot;sandbox-mainstreet&quot;,&quot;results&quot;:[{&quot;tenant_id&quot;:&quot;sandbox-mainstreet&quot;,&quot;customer_ref&quot;:&quot;cust-42&quot;,&quot;service&quot;:&quot;managed-edr&quot;,&quot;quantity&quot;:&quot;44.0000&quot;,&quot;previous_quantity&quot;:null,&quot;status&quot;:&quot;not_mapped&quot;,&quot;reason&quot;:&quot;customer_not_matched&quot;,&quot;dry_run&quot;:true,&quot;sandbox&quot;:true}],&quot;counts&quot;:{&quot;not_mapped&quot;:1},&quot;dry_run&quot;:true,&quot;sandbox&quot;:true}">Copy</button></div>
+      <pre>{
+  "tenant_id": "sandbox-mainstreet",
+  "results": [
+    {
+      "tenant_id": "sandbox-mainstreet",
+      "customer_ref": "cust-42",
+      "service": "managed-edr",
+      "quantity": "44.0000",
+      "previous_quantity": null,
+      "status": "not_mapped",
+      "reason": "customer_not_matched",
+      "dry_run": true,
+      "sandbox": true
+    }
+  ],
+  "counts": { "not_mapped": 1 },
+  "dry_run": true,
+  "sandbox": true
+}</pre>
+    </div>
+    <p class="note">The request matches <code class="inline">BillingQuantitiesBody</code>. The response is the sandbox body for that request when the customer is not matched yet. The 200 schema is an object.</p>
     <p class="note">SDK 2.0.0 (breaking): the generated Python and TypeScript clients now return typed response models where the spec declares one (for example <code class="inline">TicketList</code>) instead of plain dicts. Read attributes (<code class="inline">listed.sandbox</code>) or call <code class="inline">.to_dict()</code>.</p>
     <p class="note"><code class="inline">GET|PUT /isv/experience-config</code> sets category config for PSA, RMM, Docs, CS, and Commerce, plus recommended grants and branding. Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Sandbox Experience Preview (<code class="inline">POST /connect/sessions/preview</code> and console <code class="inline">#/experience</code>) walks Connect after Save: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
     <p class="note">Halo and ConnectWise company custom fields: <code class="inline">POST /tenants/{tenant_id}/companies/write</code> writes a value on an existing company with <code class="inline">vendor_native</code>, and <code class="inline">ensure_custom_field</code> creates the missing field definition. The field works live on Halo and ConnectWise. It is created once in your stack under the MSP's standing <code class="inline">psa.company.field.create</code> grant, and an existing field with the same label is reused. The field label shows on Configure. Value writes use the <code class="inline">psa.company.update</code> grant, off by default. A missing grant is <code class="inline">grant_missing</code>. If the update does not run, the code is <code class="inline">psa_company_update_refused</code>.</p>
@@ -94,6 +133,7 @@
     <thead><tr><th>Method</th><th>Path</th><th>Notes</th></tr></thead>
     <tbody>
       <tr id="ref-agreements"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/agreements</code></td><td>Store-served agreement list.</td></tr>
+      <tr id="ref-billing-quantities"><td><code>POST</code></td><td><code>/tenants/{tenant_id}/billing/quantities</code></td><td>Absolute quantities on lines the MSP matched. Quantity 0 stops billing. A change over the MSP's limit (default 25%) waits. Ending a line is refused.</td></tr>
       <tr id="ref-members"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/members</code></td><td>Time picker. Halo and ConnectWise when the member permission is on. A missing ConnectWise members permission returns 502 <code class="inline">upstream_auth_failure</code>. Each <code>id</code> is what <code>CreateTimeEntryBody.member</code> accepts.</td></tr>
       <tr id="ref-ticket-boards"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-boards</code></td><td>Board ids for ConnectWise and Halo (ConnectWise board, Halo team).</td></tr>
       <tr id="ref-ticket-statuses"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-statuses</code></td><td>Status ids for create and update on ConnectWise and Halo. An unknown id returns 422.</td></tr>

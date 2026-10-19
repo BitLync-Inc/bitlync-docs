@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow"/>
 <title>What we write · Bitlync docs</title>
-<meta name="description" content="Quantity updates on billing lines you matched on an existing agreement."/>
+<meta name="description" content="Quantity updates on billing lines the MSP matched on an existing agreement."/>
 <link rel="canonical" href="https://docs.bitlync.com/what-we-write/"/>
 <meta property="og:title" content="What we write · Bitlync docs"/>
-<meta property="og:description" content="Quantity updates on billing lines you matched on an existing agreement."/>
+<meta property="og:description" content="Quantity updates on billing lines the MSP matched on an existing agreement."/>
 <meta property="og:url" content="https://docs.bitlync.com/what-we-write/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -66,11 +66,52 @@
   <div class="docs-hero">
     <p class="kicker">What we write</p>
     <h1>What we write.</h1>
-    <p class="lede">Quantity updates on billing lines you matched on an existing agreement.</p>
+    <p class="lede">Quantity updates on billing lines the MSP matched on an existing agreement.</p>
   </div>
-  <p class="note">Match your product to an existing billing line first (<code class="inline">POST /tenants/{tenant_id}/commerce/agreement-line-mappings</code>). Then <code class="inline">POST /tenants/{tenant_id}/commerce/agreement-lines</code> with <code class="inline">action</code> <code class="inline">modify</code>, your <code class="inline">vendor_key</code> and <code class="inline">vendor_product_ref</code>, an absolute <code class="inline">quantity</code> (0 stops billing), and an optional <code class="inline">dry_run</code> (default false, so the write is real). ConnectWise and Halo. Quantity is the only field you can write. <code class="inline">new</code>, <code class="inline">replace</code>, <code class="inline">end</code>, and price, product, or date fields return 422 <code class="inline">agreement_line_action_not_allowed</code> before any PSA call. Bitlync never creates agreements or billing lines.</p>
-  <p class="note"><code class="inline">agreement_line_already_matched</code> (409) — the billing line already has an active match on this tenant. A line has at most one; it must be released before it is matched again.</p>
-  <p class="note">You need an active agreement so we can write the line.</p>
+  <p class="note">The MSP matches each service to a billing line that already exists, at Connect and later on the Billing tab. You do not send the match. <code class="inline">POST /tenants/{tenant_id}/commerce/agreement-line-mappings</code> with a <code class="inline">billing:</code> product ref is refused (<code class="inline">request_invalid</code>). So is <code class="inline">POST /tenants/{tenant_id}/commerce/agreement-lines</code> for that ref. Both say to send quantities with <code class="inline">POST /tenants/{tenant_id}/billing/quantities</code>. Bitlync never creates companies, agreements, or billing lines.</p>
+  <p class="note">List your services with <code class="inline">PUT /isv/billing-services</code>. <code class="inline">unit</code> is <code class="inline">per_user</code>, <code class="inline">per_device</code>, <code class="inline">per_gb</code>, or <code class="inline">flat</code>. <code class="inline">sent</code> is <code class="inline">daily</code> or <code class="inline">monthly</code>: how often you send quantities. Omit <code class="inline">key</code> on a new service and one is made from the name.</p>
+  <p class="note">A billing write happens when you send a quantity, on that cadence. Bitlync does not send quantities on its own. The MSP sets the change limit on the Billing tab. It defaults to on, at 25%. Advanced review defaults to off. A quantity inside the limit is written on the matched line. The same quantity as last time comes back <code class="inline">unchanged</code>. A change over the limit comes back <code class="inline">waiting</code> with reason <code class="inline">big_change</code> (the MSP sees "More than your change limit"). With Advanced review on, the row is <code class="inline">waiting</code> with reason <code class="inline">review</code>. You cannot skip that review by writing the line yourself.</p>
+  <p class="note">Send absolute quantities with <code class="inline">POST /tenants/{tenant_id}/billing/quantities</code>. <code class="inline">quantity</code> is a JSON number, 0 or greater. Send quantity 0 to stop billing. There is no end-a-line call. <code class="inline">action</code> <code class="inline">end</code> on <code class="inline">POST /tenants/{tenant_id}/commerce/agreement-lines</code> is refused with 422 <code class="inline">agreement_line_action_not_allowed</code>. Billing off returns 409 <code class="inline">feature_off</code> before anything is read from or written to the MSP's stack. The grant is <code class="inline">psa.agreement.line.write</code>. <code class="inline">dry_run</code> defaults to false. <code class="inline">dry_run</code> true returns the same statuses and writes nothing.</p>
+  <div class="code">
+    <div class="hd"><b>POST /tenants/{tenant_id}/billing/quantities</b><button class="copy" type="button" data-copy="{&quot;idempotency_key&quot;:&quot;docs-probe-1&quot;,&quot;dry_run&quot;:true,&quot;quantities&quot;:[{&quot;customer_ref&quot;:&quot;cust-42&quot;,&quot;customer_name&quot;:&quot;Brightside Pediatrics&quot;,&quot;service&quot;:&quot;managed-edr&quot;,&quot;quantity&quot;:44}]}">Copy</button></div>
+    <pre>{
+  "idempotency_key": "docs-probe-1",
+  "dry_run": true,
+  "quantities": [
+    {
+      "customer_ref": "cust-42",
+      "customer_name": "Brightside Pediatrics",
+      "service": "managed-edr",
+      "quantity": 44
+    }
+  ]
+}</pre>
+  </div>
+  <p class="note">Request fields match <code class="inline">BillingQuantitiesBody</code> in OpenAPI 0.94.0. <code class="inline">quantities</code> is required (1 to 500 rows). <code class="inline">customer_ref</code>, <code class="inline">service</code>, and <code class="inline">quantity</code> are required on each row. <code class="inline">customer_name</code> and <code class="inline">idempotency_key</code> are optional. <code class="inline">service</code> is a key from <code class="inline">GET /isv/billing-services</code>.</p>
+  <div class="code">
+    <div class="hd"><b>200, customer not matched yet</b><button class="copy" type="button" data-copy="{&quot;tenant_id&quot;:&quot;sandbox-mainstreet&quot;,&quot;results&quot;:[{&quot;tenant_id&quot;:&quot;sandbox-mainstreet&quot;,&quot;customer_ref&quot;:&quot;cust-42&quot;,&quot;service&quot;:&quot;managed-edr&quot;,&quot;quantity&quot;:&quot;44.0000&quot;,&quot;previous_quantity&quot;:null,&quot;status&quot;:&quot;not_mapped&quot;,&quot;reason&quot;:&quot;customer_not_matched&quot;,&quot;dry_run&quot;:true,&quot;sandbox&quot;:true}],&quot;counts&quot;:{&quot;not_mapped&quot;:1},&quot;dry_run&quot;:true,&quot;sandbox&quot;:true}">Copy</button></div>
+    <pre>{
+  "tenant_id": "sandbox-mainstreet",
+  "results": [
+    {
+      "tenant_id": "sandbox-mainstreet",
+      "customer_ref": "cust-42",
+      "service": "managed-edr",
+      "quantity": "44.0000",
+      "previous_quantity": null,
+      "status": "not_mapped",
+      "reason": "customer_not_matched",
+      "dry_run": true,
+      "sandbox": true
+    }
+  ],
+  "counts": { "not_mapped": 1 },
+  "dry_run": true,
+  "sandbox": true
+}</pre>
+  </div>
+  <p class="note">That response is what the sandbox returned for the request above, with the service in the catalog and the customer not matched yet. The spec types the 200 body as an object. Each row <code class="inline">status</code> is <code class="inline">written</code>, <code class="inline">unchanged</code>, <code class="inline">waiting</code>, <code class="inline">not_mapped</code>, <code class="inline">not_billed</code>, or <code class="inline">failed</code>. Quantity 0 uses the same body. On this call it came back <code class="inline">"0.0000"</code> with <code class="inline">status</code> <code class="inline">not_mapped</code>, because the customer was not matched. It was not refused for being 0.</p>
+  <p class="note">If the agreement is not active, the line is missing or has ended, or the line starts on a later date, the row is <code class="inline">failed</code> with <code class="inline">error.code</code> <code class="inline">billing_line_not_writable</code> and a <code class="inline">reason</code>. Nothing is written. The MSP sees the same reason. <code class="inline">agreement_inactive</code> reads "Agreement is not active in your stack".</p>
   <p class="note">Tickets are two-way when the MSP grants it. You can create, update, and close. You can subscribe to events when the MSP changes the ticket in their PSA.</p>
   <p class="note">Closing is the MSP's call. On Configure, under Ticketing, the MSP turns on "Allow closing tickets with a resolution" for that connection; it is off by default. On, a <code class="inline">close_with_resolution</code> write closes the ticket in your stack with the resolution note. Off, the resolution lands as a note and the ticket stays open.</p>
   <p class="note">Time on a linked ticket needs a required member. List with <code class="inline">GET /tenants/{tenant_id}/members</code>. Halo and ConnectWise return that list when the member permission is on. A missing ConnectWise members permission returns 502 <code class="inline">upstream_auth_failure</code>. The time picker uses the listed <code class="inline">id</code>.</p>
