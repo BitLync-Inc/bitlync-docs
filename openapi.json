@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Bitlync API",
-    "description": "Canonical read + act surface over the connected MSP stack. Writes are real; test them in the sandbox. Every write takes an idempotency_key (replay never duplicates). Fan-out writes return an explicit per-target envelope — partial is a first-class outcome. Every tenant-scoped response carries a top-level `sandbox` boolean: true means the tenant's connected stack is simulated (fixture-backed sandbox), false means production — simulated data is never mistakable for real.\n\n**Grant keys** (connect UI, MSP permissions, this contract): `psa.company.read`, `psa.company.update`, `psa.company.field.create`, `psa.company.events`, `psa.contact.read`, `psa.contact.create`, `psa.ticket.read`, `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`, `psa.time.write`, `psa.agreement.read`, `psa.agreement.line.write`, `psa.project.read`, `psa.project.write`, `psa.project.create`, `psa.opportunity.write`, `psa.config.read`, `psa.config.write`, `rmm.device.read`, `rmm.device.events`, `rmm.device.write`, `docs.document.read`, `docs.document.write`, plus existing `commerce` read/write. `never.delete`, `never.setup_tables`, `psa.company.create` and `psa.agreement.create` always refuse: vendors never create PSA companies, agreements or billing lines; `psa.agreement.line.write` only updates quantities on existing PSA lines the vendor matched (via the mapping API). A write without the grant returns `grant_missing` with `needed`, one English sentence, and `doc_url`. Leftover `psa_company_update_refused` means the grant is present and policy still refused.\n\n**Escape hatch:** Canonical first. Every canonical object includes `vendor: {connector, native_id, native}` on reads (`native` is the raw vendor object; `.raw` is the same payload). `.raw` and `vendor.native` are read-only extra fields. Writes accept optional `vendor_native` after the write grant on tickets and on `POST /companies/write` (company custom fields; grant `psa.company.update`, default off). We do not guarantee every native field.\n\n**Developer docs:** Quickstart · Billing · Alerts · Object dictionary · What we write · Error codes · Try it out below (paste your sandbox API key into Authorize).",
-    "version": "0.99.0",
+    "description": "Canonical read + act surface over the connected MSP stack. Writes are real; test them in the sandbox. Every write takes an idempotency_key (replay never duplicates). Fan-out writes return an explicit per-target envelope — partial is a first-class outcome. Every tenant-scoped response carries a top-level `sandbox` boolean: true means the tenant's connected stack is simulated (fixture-backed sandbox), false means production — simulated data is never mistakable for real.\n\n**Grant keys** (connect UI, MSP permissions, this contract): `psa.company.read`, `psa.company.update`, `psa.company.field.create`, `psa.company.events`, `psa.contact.read`, `psa.contact.create`, `psa.ticket.read`, `psa.ticket.create`, `psa.ticket.update`, `psa.ticket.events`, `psa.time.write`, `psa.agreement.read`, `psa.agreement.line.write`, `psa.project.read`, `psa.project.write`, `psa.project.create`, `psa.opportunity.write`, `psa.config.read`, `psa.config.write`, `rmm.device.read`, `rmm.device.events`, `rmm.device.write`, `docs.document.read`, `docs.document.write`, plus existing `commerce` read/write. `never.delete`, `never.setup_tables`, `psa.company.create` and `psa.agreement.create` always refuse: vendors never create PSA companies, agreements or billing lines; `psa.agreement.line.write` only updates quantities on existing PSA lines the vendor matched (via the mapping API). A write without the grant returns `grant_missing` with `needed`, one English sentence, and `doc_url`. Leftover `psa_company_update_refused` means the grant is present and policy still refused.\n\n**Escape hatch:** Canonical first. Every canonical object includes `vendor: {connector, native_id, native}` on reads (`native` is the raw vendor object; `.raw` is the same payload). `.raw` and `vendor.native` are read-only extra fields. Writes accept optional `vendor_native` after the write grant on tickets and on `POST /companies/write` (company custom fields; grant `psa.company.update`, default off). We do not guarantee every native field.\n\n**Developer docs:** [Quickstart](/docs/quickstart) · [Billing](/docs/billing) · [Alerts](/docs/alerts) · [Object dictionary](/docs/object-dictionary) · [What we write](/docs/object-dictionary#what-we-write) · [Error codes](/docs/errors) · Try it out below (paste your sandbox API key into Authorize).",
+    "version": "0.100.0",
     "x-quickstart": "/docs/quickstart",
     "x-error-catalog": "/docs/errors",
     "x-object-dictionary": "/docs/object-dictionary"
@@ -1447,9 +1447,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response List Alert Types Tenants Tenant Id Alert Types Get"
+                  "$ref": "#/components/schemas/AlertTypeList"
                 }
               }
             }
@@ -1587,16 +1585,14 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
+                "$ref": "#/components/schemas/AlertTypesBody"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -1604,9 +1600,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Put Alert Types Tenants Tenant Id Alert Types Put"
+                  "$ref": "#/components/schemas/AlertTypeWriteResult"
                 }
               }
             }
@@ -1790,9 +1784,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response List Isv Alert Types Isv Alert Types Get"
+                  "$ref": "#/components/schemas/AlertTypeList"
                 }
               }
             }
@@ -1909,16 +1901,14 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
+                "$ref": "#/components/schemas/AlertTypesBody"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -1926,9 +1916,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Put Isv Alert Types Isv Alert Types Put"
+                  "$ref": "#/components/schemas/AlertTypeWriteResult"
                 }
               }
             }
@@ -2379,9 +2367,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Get Alert Routing Tenants Tenant Id Alert Routing Get"
+                  "$ref": "#/components/schemas/AlertRoutingView"
                 }
               }
             }
@@ -2519,16 +2505,14 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
+                "$ref": "#/components/schemas/AlertRoutingBody"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -2536,9 +2520,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Put Alert Routing Tenants Tenant Id Alert Routing Put"
+                  "$ref": "#/components/schemas/AlertRoutingView"
                 }
               }
             }
@@ -2719,9 +2701,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response List Alert Snoozes Tenants Tenant Id Alert Snoozes Get"
+                  "$ref": "#/components/schemas/SnoozeList"
                 }
               }
             }
@@ -2859,16 +2839,14 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
+                "$ref": "#/components/schemas/SnoozeCreateBody"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -2876,9 +2854,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Add Alert Snooze Tenants Tenant Id Alert Snoozes Post"
+                  "$ref": "#/components/schemas/SnoozeCreated"
                 }
               }
             }
@@ -3032,9 +3008,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Undo Alert Snooze Tenants Tenant Id Alert Snoozes Snooze Id Undo Post"
+                  "$ref": "#/components/schemas/SnoozeRemoved"
                 }
               }
             }
@@ -3145,7 +3119,7 @@
     "/tenants/{tenant_id}/alerts": {
       "post": {
         "summary": "Send Alert",
-        "description": "Send one alert. Bitlync routes it to the MSP's destination.\n\nBody: type (name or id), severity (optional; defaults to the type's\nsuggested severity), device ({id, name} or a string), customer,\ndescription (optional), dry_run (default false), event_id or\nidempotency_key. The id is unique per event. A repeat needs a new\nid. The stored key is alert-event:{tenant}:{isv}:{event_id}.\nA commit without either id returns 422 request_invalid. The ticket\ntitle carries type, category, and severity. Repeat alerts for the\nsame device update one open ticket when the MSP left dedupe on.\nBitlync never reopens a ticket the MSP closed. Refused with\nfeature_off before any vendor call when alerts are disabled.\nBody at most 64 KB. A missing length is 411. An oversized body is 413.",
+        "description": "Send one alert. Bitlync routes it to the MSP's destination.\n\nBody: type (name or id), severity (optional; defaults to the type's\nsuggested severity), device ({id, name} or a string), customer,\ndescription (optional), dry_run (default false), event_id or\nidempotency_key. The id is unique per event. A repeat needs a new\nid. The stored key is alert-event:{tenant}:{isv}:{event_id}.\nThe first ticket for a device while dedupe is on may omit both ids:\nBitlync uses one key for that open ticket so two first creates cannot\nboth commit. A note on that ticket, and any create while dedupe is\noff, returns 422 request_invalid when both ids are omitted. The ticket\ntitle carries type, category, and severity. Repeat alerts for the\nsame device update one open ticket when the MSP left dedupe on.\nBitlync never reopens a ticket the MSP closed. Refused with\nfeature_off before any vendor call when alerts are disabled.\nBody at most 64 KB. A missing length is 411. An oversized body is 413.",
         "operationId": "send_alert_tenants__tenant_id__alerts_post",
         "security": [
           {
@@ -3174,16 +3148,14 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
+                "$ref": "#/components/schemas/AlertSendBody"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -3191,9 +3163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Send Alert Tenants Tenant Id Alerts Post"
+                  "$ref": "#/components/schemas/AlertSendResult"
                 }
               }
             }
@@ -3324,7 +3294,7 @@
     "/tenants/{tenant_id}/alerts/test": {
       "post": {
         "summary": "Send Test Alert",
-        "description": "Send a test ticket through the same routing as a real alert.\n\nUses the first catalog type, or a sample type when the catalog is\nempty. Sandbox and fixture connectors do not call a live stack.\nBody at most 64 KB. A missing length is 411. An oversized body is 413.",
+        "description": "Send a test ticket through the same routing as a real alert.\n\nWhen the body does not name a type, this uses the first alert type\nin the catalog. When the catalog is empty, it uses the sample type\ntest-alert. Sandbox and fixture connectors do not call a live stack.\nBody at most 64 KB. A missing length is 411. An oversized body is 413.",
         "operationId": "send_test_alert_tenants__tenant_id__alerts_test_post",
         "security": [
           {
@@ -3358,8 +3328,7 @@
               "schema": {
                 "anyOf": [
                   {
-                    "type": "object",
-                    "additionalProperties": true
+                    "$ref": "#/components/schemas/AlertTestBody"
                   },
                   {
                     "type": "null"
@@ -3376,9 +3345,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Send Test Alert Tenants Tenant Id Alerts Test Post"
+                  "$ref": "#/components/schemas/AlertSendResult"
                 }
               }
             }
@@ -5230,7 +5197,7 @@
           "Visibility"
         ],
         "summary": "Register Ticket Event Webhook",
-        "description": "Register an optional push URL for ticket/device/company events.\n\nSame endpoint as ticket events — not a second webhook. Secret is\nreturned once. Payloads are HMAC-SHA256 signed\n(Bitlync-Signature: t=,v1= over ``{t}.{body}``).\nHTTP 410 disables. Retry with backoff on Deployment.tick.\nRegister with any connected watch-events grant; delivery\nre-checks the grant for that kind.",
+        "description": "Register an optional push URL for ticket/device/company events.\n\nSame endpoint as ticket events — not a second webhook. Secret is\nreturned once. Payloads are HMAC-SHA256 signed\n(Bitlync-Signature: t=<unix>,v1=<hex> over ``{t}.{body}``).\nHTTP 410 disables. Retry with backoff on Deployment.tick.\nRegister with any connected watch-events grant; delivery\nre-checks the grant for that kind.",
         "operationId": "register_ticket_event_webhook_tenants__tenant_id__ticket_events_webhook_post",
         "security": [
           {
@@ -8638,16 +8605,14 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Body"
+                "$ref": "#/components/schemas/BillingQuantityCsvBody"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -13513,7 +13478,7 @@
     "/connect/{token}/background": {
       "get": {
         "summary": "Background",
-        "description": "Legacy session-scoped URL (pre opaque id): a live token is 302'd to\nthe token-free /connect/bg/ URL; a dead token gets nothing.",
+        "description": "Legacy session-scoped URL (pre opaque id): a live token is 302'd to\nthe token-free /connect/bg/<id> URL; a dead token gets nothing.",
         "operationId": "background_connect__token__background_get",
         "parameters": [
           {
@@ -18432,6 +18397,1173 @@
         "title": "FeatureList",
         "type": "object",
         "additionalProperties": false
+      },
+      "AlertTypeWrite": {
+        "description": "One row of PUT /alert-types. The parser also accepts severity as an alias.",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "suggested_severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suggested Severity"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group"
+          },
+          "notify_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notify Days"
+          },
+          "fix_line": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fix Line"
+          },
+          "draft": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Draft"
+          }
+        },
+        "required": [
+          "name",
+          "category"
+        ],
+        "title": "AlertTypeWrite",
+        "type": "object"
+      },
+      "AlertTypesBody": {
+        "properties": {
+          "alert_types": {
+            "items": {
+              "$ref": "#/components/schemas/AlertTypeWrite"
+            },
+            "title": "Alert Types",
+            "type": "array"
+          }
+        },
+        "required": [
+          "alert_types"
+        ],
+        "title": "AlertTypesBody",
+        "type": "object"
+      },
+      "AlertDevice": {
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "title": "AlertDevice",
+        "type": "object"
+      },
+      "AlertSendBody": {
+        "additionalProperties": true,
+        "description": "POST /tenants/{tenant_id}/alerts. Omitted dry_run is false on the route.",
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
+          "alert_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Type"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          },
+          "device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/AlertDevice"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device"
+          },
+          "customer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "dry_run": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dry Run"
+          },
+          "event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Id"
+          },
+          "idempotency_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotency Key"
+          }
+        },
+        "title": "AlertSendBody",
+        "type": "object"
+      },
+      "AlertTestBody": {
+        "additionalProperties": true,
+        "description": "POST /tenants/{tenant_id}/alerts/test. Omitted dry_run is true on the route.",
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
+          "alert_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Type"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          },
+          "device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/AlertDevice"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device"
+          },
+          "customer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "dry_run": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dry Run"
+          },
+          "event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Id"
+          },
+          "idempotency_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotency Key"
+          }
+        },
+        "title": "AlertTestBody",
+        "type": "object"
+      },
+      "AlertRoutingBody": {
+        "properties": {
+          "vendor_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vendor Key"
+          },
+          "send_to": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Send To"
+          },
+          "reset": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reset"
+          },
+          "dedupe": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dedupe"
+          }
+        },
+        "title": "AlertRoutingBody",
+        "type": "object"
+      },
+      "SnoozeCreateBody": {
+        "properties": {
+          "scope": {
+            "title": "Scope",
+            "type": "string"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          },
+          "target_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Ref"
+          },
+          "duration": {
+            "title": "Duration",
+            "type": "string"
+          },
+          "alert_type_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Type Id"
+          }
+        },
+        "required": [
+          "scope",
+          "duration"
+        ],
+        "title": "SnoozeCreateBody",
+        "type": "object"
+      },
+      "BillingQuantityCsvBody": {
+        "properties": {
+          "csv": {
+            "default": "",
+            "title": "Csv",
+            "type": "string"
+          },
+          "dry_run": {
+            "default": false,
+            "title": "Dry Run",
+            "type": "boolean"
+          }
+        },
+        "title": "BillingQuantityCsvBody",
+        "type": "object"
+      },
+      "AlertTypeOut": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "group": {
+            "default": "",
+            "title": "Group",
+            "type": "string"
+          },
+          "group_label": {
+            "default": "",
+            "title": "Group Label",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "notify_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Notify Days"
+          },
+          "fix_line": {
+            "default": "",
+            "title": "Fix Line",
+            "type": "string"
+          },
+          "draft": {
+            "default": false,
+            "title": "Draft",
+            "type": "boolean"
+          },
+          "suggested_severity": {
+            "title": "Suggested Severity",
+            "type": "string"
+          },
+          "suggested_severity_label": {
+            "default": "",
+            "title": "Suggested Severity Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "suggested_severity"
+        ],
+        "title": "AlertTypeOut",
+        "type": "object"
+      },
+      "AlertTypeList": {
+        "properties": {
+          "alert_types": {
+            "items": {
+              "$ref": "#/components/schemas/AlertTypeOut"
+            },
+            "title": "Alert Types",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Next Cursor"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "alert_types",
+          "count",
+          "total",
+          "sandbox"
+        ],
+        "title": "AlertTypeList",
+        "type": "object"
+      },
+      "AlertTypeWriteResult": {
+        "properties": {
+          "alert_types": {
+            "items": {
+              "$ref": "#/components/schemas/AlertTypeOut"
+            },
+            "title": "Alert Types",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "alert_types",
+          "count"
+        ],
+        "title": "AlertTypeWriteResult",
+        "type": "object"
+      },
+      "AlertSendResult": {
+        "additionalProperties": true,
+        "description": "What send and test return. WriteResult fields are present on a ticket write.",
+        "properties": {
+          "success": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Success"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source Id"
+          },
+          "idempotent_replay": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Idempotent Replay"
+          },
+          "dry_run": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Dry Run"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Message"
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Raw"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          },
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "reopen": {
+            "default": false,
+            "title": "Reopen",
+            "type": "boolean"
+          },
+          "ticket_ref": {
+            "default": "",
+            "title": "Ticket Ref",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "title": "Title",
+            "type": "string"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Severity"
+          },
+          "alert_type": {
+            "$ref": "#/components/schemas/AlertTypeOut"
+          },
+          "destination": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Destination"
+          },
+          "priority_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Priority Id"
+          },
+          "priority_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Priority Name"
+          },
+          "dedupe": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Dedupe"
+          },
+          "snoozed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Snoozed"
+          }
+        },
+        "required": [
+          "sandbox",
+          "action",
+          "reason",
+          "alert_type"
+        ],
+        "title": "AlertSendResult",
+        "type": "object"
+      },
+      "AlertComingSoon": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "AlertComingSoon",
+        "type": "object"
+      },
+      "AlertRoutingType": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "group": {
+            "default": "",
+            "title": "Group",
+            "type": "string"
+          },
+          "severity": {
+            "title": "Severity",
+            "type": "string"
+          },
+          "send_to": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Send To",
+            "type": "array"
+          },
+          "send_label": {
+            "title": "Send Label",
+            "type": "string"
+          },
+          "custom": {
+            "title": "Custom",
+            "type": "boolean"
+          },
+          "off_allowed": {
+            "title": "Off Allowed",
+            "type": "boolean"
+          },
+          "by_severity": {
+            "title": "By Severity",
+            "type": "boolean"
+          },
+          "note": {
+            "default": "",
+            "title": "Note",
+            "type": "string"
+          },
+          "notify_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Notify Days"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "severity",
+          "send_to",
+          "send_label",
+          "custom",
+          "off_allowed",
+          "by_severity"
+        ],
+        "title": "AlertRoutingType",
+        "type": "object"
+      },
+      "AlertRoutingView": {
+        "properties": {
+          "vendor_key": {
+            "title": "Vendor Key",
+            "type": "string"
+          },
+          "rule": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Rule",
+            "type": "object"
+          },
+          "priority_map": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Priority Map",
+            "type": "object"
+          },
+          "coming_soon": {
+            "items": {
+              "$ref": "#/components/schemas/AlertComingSoon"
+            },
+            "title": "Coming Soon",
+            "type": "array"
+          },
+          "dedupe_line": {
+            "title": "Dedupe Line",
+            "type": "string"
+          },
+          "alert_types": {
+            "items": {
+              "$ref": "#/components/schemas/AlertRoutingType"
+            },
+            "title": "Alert Types",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "vendor_key",
+          "rule",
+          "priority_map",
+          "coming_soon",
+          "dedupe_line",
+          "alert_types",
+          "count",
+          "sandbox"
+        ],
+        "title": "AlertRoutingView",
+        "type": "object"
+      },
+      "Snooze": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "isv_key": {
+            "title": "Isv Key",
+            "type": "string"
+          },
+          "scope": {
+            "title": "Scope",
+            "type": "string"
+          },
+          "target_ref": {
+            "title": "Target Ref",
+            "type": "string"
+          },
+          "target_label": {
+            "default": "",
+            "title": "Target Label",
+            "type": "string"
+          },
+          "alert_type_id": {
+            "default": "",
+            "title": "Alert Type Id",
+            "type": "string"
+          },
+          "duration": {
+            "title": "Duration",
+            "type": "string"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ends At"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "tenant_id",
+          "isv_key",
+          "scope",
+          "target_ref",
+          "duration",
+          "created_at"
+        ],
+        "title": "Snooze",
+        "type": "object"
+      },
+      "SnoozeList": {
+        "properties": {
+          "snoozes": {
+            "items": {
+              "$ref": "#/components/schemas/Snooze"
+            },
+            "title": "Snoozes",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Next Cursor"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "snoozes",
+          "count",
+          "sandbox"
+        ],
+        "title": "SnoozeList",
+        "type": "object"
+      },
+      "SnoozeCreated": {
+        "properties": {
+          "snooze": {
+            "$ref": "#/components/schemas/Snooze"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "snooze",
+          "sandbox"
+        ],
+        "title": "SnoozeCreated",
+        "type": "object"
+      },
+      "SnoozeRemoved": {
+        "properties": {
+          "removed": {
+            "title": "Removed",
+            "type": "string"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "removed",
+          "sandbox"
+        ],
+        "title": "SnoozeRemoved",
+        "type": "object"
       }
     },
     "securitySchemes": {

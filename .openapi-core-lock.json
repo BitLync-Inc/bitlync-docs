@@ -1,8 +1,8 @@
 {
   "core_repo": "BitLync-Inc/bitlync-core",
-  "version": "0.99.0",
-  "sha256": "bf89bdf2a600898546f63f6b2e5cd2523af6921db2e47edc0b3247b9d805e031",
-  "pin_path": "docs/openapi/bitlync-openapi-0.99.0.json",
+  "version": "0.100.0",
+  "sha256": "49b803d30141a73cdcca5570f197f735f6d4866d8e263fc620e623d97e70f93c",
+  "pin_path": "docs/openapi/bitlync-openapi-0.100.0.json",
   "rule": "bitlync-core owns OpenAPI. Do not hand-edit openapi.json. Fix: from bitlync-core run bash scripts/openapi_sync_consumers.sh (opens PRs to docs + site) or workflow_dispatch openapi-sync. Never push the pin straight to main on consumers.",
-  "source_note": "JSON document served by https://bitlync-sandbox-demo.onrender.com/openapi.json (info.version 0.99.0) on 2026-10-21, re-serialized with 2-space indent. That host's live deploy is main commit 91f92be7e9aabdc29f528a8928f89e342584c134 (PR #433). bitlync-core was not readable from this environment, so this is not a byte check of docs/openapi/bitlync-openapi-0.99.0.json on core main. Alert catalog, send, test, routing, and snooze bodies stay untyped objects, matching the served spec."
+  "source_note": "JSON document served by https://bitlync-sandbox-demo.onrender.com/openapi.json (info.version 0.100.0) on 2026-10-21, re-serialized with 2-space indent. That host's live deploy is main commit 6b4dd8282fda5c5ef2fd82b1a733fb89cb91b8ac (PR #447). The pin file on bitlync-core was not readable from this environment, so this is not a byte check of docs/openapi/bitlync-openapi-0.100.0.json."
 }
