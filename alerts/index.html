@@ -72,14 +72,13 @@
   <p class="note">There is no breaking change to <code class="inline">POST /tenants/{tenant_id}/alerts</code>. The Activity tab does not add an API. Billing and Alerts write routes share one abuse limit. HTTP 429 is unchanged. See <a href="/concepts/rate-limits/">Rate limits</a>.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Setup</h3>
-  <p class="note">Turn on <strong>Send alerts to MSP tickets</strong> in Configure &gt; Features. Setup offers Scan your website, Upload a list (CSV or Excel), or Add by hand, then a review before the list is live.</p>
-  <p class="note">Add by hand, and any later edit, is <code class="inline">PUT /isv/alert-types</code> (the same body as <code class="inline">PUT /tenants/{tenant_id}/alert-types</code>). That call replaces the whole catalog. It does not merge. A type you leave out is removed. Category is required. Severity is Critical, High, Medium, Low, or Info. The row menu can edit, rename, or remove a type. Removing the last type returns to this guided setup.</p>
+  <p class="note">Turn on <strong>Send alerts to MSP tickets</strong> in Configure &gt; Features. Setup offers Upload a list (CSV or Excel) or Add by hand, then a review before the list is live.</p>
+  <p class="note">Add by hand, and any later edit, is <code class="inline">PUT /isv/alert-types</code> (the same body as <code class="inline">PUT /tenants/{tenant_id}/alert-types</code>). That call replaces the whole catalog. It does not merge. A type you leave out is removed. Category is required. Severity is Critical, High, Medium, Low, or Info. The type menu is Rename, Edit, Remove, and Duplicate. Removing the last type returns to this guided setup.</p>
   <p class="note">Upload a list on the API is <code class="inline">POST /isv/alert-types/import</code>. The body is <code class="inline">{"csv": "..."}</code>. Columns are name, description, type, and severity. Nothing is saved. Rows come back as drafts for review. A CSV with no name column returns 422 <code class="inline">request_invalid</code> and the message "The CSV needs a name column." On a trial row, the type column came back as a tag and the category was Product alerts. The OpenAPI file on this site is still 0.94.0 and does not list this route. The sandbox serves OpenAPI 0.99.0.</p>
-  <p class="note">The upload limit is 2 MB for Alerts and for a Billing price list. An alert import body over 2 MB returned 413 <code class="inline">request_invalid</code> and the message "Reload the page and try again." The upload screen also uses "That file is too large. Use a CSV or Excel file under 2 MB." The sandbox API did not return that sentence.</p>
-  <p class="note">Scan your website is not available on the sandbox. <code class="inline">POST /isv/alert-types/fill</code> returned 404 <code class="inline">unknown_resource</code> and the message "Not found." The sandbox description says the reader is not in this build. Treat fill-from-site as deploy pending, not live.</p>
+  <p class="note">An Alerts or Billing upload is at most 2 MB. An alert write that is refused returns "Reload the page and try again."</p>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Categories</h3>
-  <p class="note">The heading is Categories. On 2026-10-21, <code class="inline">GET /isv/alert-types</code> on the sandbox returned these starter rows.</p>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Groups</h3>
+  <p class="note">The heading is Categories. Types sit in three groups. Subscriptions &amp; billing starts with six types. Integration health starts with four. Product alerts starts empty. These are the starter rows <code class="inline">GET /isv/alert-types</code> returned on the sandbox.</p>
   <div class="cov-wrap">
     <table class="cov">
       <thead><tr><th scope="col">Category</th><th scope="col">Starter name</th></tr></thead>
@@ -97,33 +96,23 @@
       </tbody>
     </table>
   </div>
-  <p class="note">Those are the labels the sandbox returned. The category strings Subscriptions &amp; renewals, Network monitoring, and Security detections were not in that catalog. Integration health was. A category outside the seed can still be stored.</p>
+  <p class="note">Product alerts has no starter types. An upload is reviewed there before it is live.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">MSP connect</h3>
   <p class="note">Connect adds an alerts setup step with Back and Continue. The MSP chooses where alerts go, using fields from their stack. Type is required. Subtype (ConnectWise), Item, and the Halo subcategory are optional and default to None. The error "ConnectWise requires Subtype on {board}." is returned only when the stack mandates Subtype. The sandbox stack options for the fixture ConnectWise tenant list Board, Type, Subtype, and Item. One Item name in that fixture is None. The sandbox did not return the Subtype error string. No board was saved on that call.</p>
-  <p class="note">If the save cannot be read back, the message is "Reload the page and try again." If saves come too fast, the message is "Too many saves. Wait a minute and try again." The oversized import above is the call that returned the reload sentence. The sandbox did not return "Too many saves. Wait a minute and try again."</p>
+  <p class="note">If the save cannot be read back, the message is "Reload the page and try again." If saves come too fast, the message is "Too many saves. Wait a minute and try again."</p>
   <p class="note">The Done page links "Go to Activity". The sandbox Connect preview that was fetched was still on the keys step, so that link was not in the HTML. The step rail was Choose, Connect, Configure, Map companies, Done.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Activity</h3>
   <p class="note">The portal Activity tab has Needs your attention, a change log in the viewer's local time, Deliveries, and Send test ticket. Send test ticket on that tab is sandbox-only, 30 per minute. The console Activity destination returned 401 for the sandbox demo key, so this tab was not opened.</p>
-  <p class="note"><code class="inline">POST /tenants/{tenant_id}/alerts/test</code> with <code class="inline">dry_run</code> true on the sandbox returned a title <code class="inline">[Bitlync test] CrowdStrike: no action required, safe to close</code>. <code class="inline">priority_name</code> on that call was Informational. It did not create a ticket (<code class="inline">dry_run</code> true). Repeat alerts for the same device update one open ticket when dedupe is on. Bitlync does not reopen a ticket the MSP closed. That dedupe rule is already in the alert send description.</p>
+  <p class="note">A test ticket title looks like <code class="inline">[Bitlync test] {vendor display name}: ...</code>. On a sandbox dry run, <code class="inline">priority_name</code> was Informational, and <code class="inline">dry_run</code> true did not create a ticket. Repeat alerts for the same device update one open ticket when dedupe is on. Bitlync does not reopen a ticket the MSP closed. That dedupe rule is already in the alert send description.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Where an alert goes</h3>
   <p class="note"><code class="inline">GET /tenants/{tenant_id}/alert-routing</code> is on the sandbox (OpenAPI 0.99.0), not in the OpenAPI file on this site (0.94.0). For the sandbox ConnectWise tenant the rule was: Critical and High go to Ticket, Medium goes to Email, Low and Info go to Daily digest.</p>
 
-  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Deploy pending</h3>
-  <p class="note">Production deploy is still pending for the alerts v4 slice and for the later MSP send-to slice. Do not treat the following as live.</p>
-  <ul class="note" style="padding-left:1.2em">
-    <li>Fill from site. The sandbox route returns 404 "Not found."</li>
-    <li>No-default footers and the "where alerts go" empty state, beyond the routing rule above.</li>
-    <li>MSP Send to as a flat checkbox list.</li>
-    <li>One "Tickets go to" footer per section, with a Send test ticket link in that footer.</li>
-    <li>Autosave with a quiet check mark.</li>
-    <li>Subscriptions tickets stay Off until the MSP picks a destination.</li>
-    <li>The vendor alert-type menu adds Duplicate beside Rename, Edit, and Remove.</li>
-    <li>A test ticket the MSP closes from Bitlync. The sandbox lists <code class="inline">POST /connect/{token}/alerts/test/close</code> ("Close the test ticket this session created."). This pass did not create or close one.</li>
-  </ul>
-  <p class="note">The sandbox Connect preview footer already reads "Powered by bitlync". The pending slice says the footer shows only that line.</p>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Send to</h3>
+  <p class="note">MSP Send to is a flat checkbox list. Each section has one "Tickets go to" footer, with a Send test ticket link. The choice autosaves, and a quiet check mark shows when it has saved. Subscriptions tickets stay Off until the MSP picks a destination. The MSP can close the test ticket from Bitlync.</p>
+  <p class="note">The footer is "Powered by bitlync", with a lowercase b.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/what-we-write/">What we write</a>
