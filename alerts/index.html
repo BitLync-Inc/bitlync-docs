@@ -74,11 +74,35 @@
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Setup</h3>
   <p class="note">Turn on <strong>Send alerts to MSP tickets</strong> in Configure &gt; Features. Setup offers Upload a list (CSV or Excel) or Add by hand, then a review before the list is live.</p>
   <p class="note">Add by hand, and any later edit, is <code class="inline">PUT /isv/alert-types</code> (the same body as <code class="inline">PUT /tenants/{tenant_id}/alert-types</code>). That call replaces the whole catalog. It does not merge. A type you leave out is removed. Category is required. Severity is Critical, High, Medium, Low, or Info. The type menu is Rename, Edit, Remove, and Duplicate. Removing the last type returns to this guided setup.</p>
-  <p class="note">Upload a list on the API is <code class="inline">POST /isv/alert-types/import</code>. The body is <code class="inline">{"csv": "..."}</code>. Columns are name, description, type, and severity. Nothing is saved. Rows come back as drafts for review. A CSV with no name column returns 422 <code class="inline">request_invalid</code> and the message "The CSV needs a name column." On a trial row, the type column came back as a tag and the category was Product alerts. The OpenAPI file on this site is still 0.94.0 and does not list this route. The sandbox serves OpenAPI 0.99.0.</p>
+  <p class="note">Upload a list on the API is <code class="inline">POST /isv/alert-types/import</code>. The body is <code class="inline">{"csv": "..."}</code>. Columns are name, description, type, and severity. Nothing is saved. Rows come back as drafts for review. A CSV with no name column returns 422 <code class="inline">request_invalid</code> and the message "The CSV needs a name column." On a trial row, the type column came back as a tag and the category was Product alerts. OpenAPI 0.99.0 types that request as an object with no listed fields.</p>
   <p class="note">An Alerts or Billing upload is at most 2 MB. An alert write that is refused returns "Reload the page and try again."</p>
 
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Catalog</h3>
+  <p class="note"><code class="inline">GET /isv/alert-types</code> and <code class="inline">GET /tenants/{tenant_id}/alert-types</code> return the same rows. Omit <code class="inline">limit</code> and the whole catalog comes back, at most 200 types. <code class="inline">limit</code> is 1 to 200. Pass <code class="inline">next_cursor</code> back as <code class="inline">cursor</code>. <code class="inline">next_cursor</code> is null on the last page. <code class="inline">count</code> and <code class="inline">total</code> are the catalog size. A <code class="inline">limit</code> of 1 still returned <code class="inline">count</code> 11 and <code class="inline">total</code> 11, with one row in <code class="inline">alert_types</code>.</p>
+  <p class="note">OpenAPI 0.99.0 types each 200 body as an object with no listed fields. The sandbox GET returned <code class="inline">alert_types</code> (array), <code class="inline">count</code> (number), <code class="inline">total</code> (number), <code class="inline">next_cursor</code> (string or null), and <code class="inline">sandbox</code> (boolean). On this key the ISV call had <code class="inline">sandbox</code> false and the tenant call had <code class="inline">sandbox</code> true.</p>
+  <p class="note">Each row is <code class="inline">id</code> (string), <code class="inline">name</code> (string), <code class="inline">description</code> (string), <code class="inline">category</code> (string), <code class="inline">group</code> (string), <code class="inline">group_label</code> (string), <code class="inline">tags</code> (array of strings), <code class="inline">notify_days</code> (number or null), <code class="inline">fix_line</code> (string), <code class="inline">draft</code> (boolean), <code class="inline">suggested_severity</code> (string), and <code class="inline">suggested_severity_label</code> (string). Sync failing comes back with <code class="inline">suggested_severity</code> <code class="inline">by_cause</code>. The PUT severity check is the five names below, and <code class="inline">by_cause</code> is not one of them.</p>
+  <div class="code">
+    <div class="hd"><b>one catalog row</b><button class="copy" type="button" data-copy="{&quot;id&quot;:&quot;integration-changes&quot;,&quot;name&quot;:&quot;Integration changes&quot;,&quot;description&quot;:&quot;Tells MSPs when you add, remove or change a service.&quot;,&quot;category&quot;:&quot;Integration health&quot;,&quot;group&quot;:&quot;integration&quot;,&quot;group_label&quot;:&quot;Integration health&quot;,&quot;tags&quot;:[&quot;Integration&quot;],&quot;notify_days&quot;:null,&quot;fix_line&quot;:&quot;&quot;,&quot;draft&quot;:false,&quot;suggested_severity&quot;:&quot;medium&quot;,&quot;suggested_severity_label&quot;:&quot;Medium&quot;}">Copy</button></div>
+    <pre>{
+  "id": "integration-changes",
+  "name": "Integration changes",
+  "description": "Tells MSPs when you add, remove or change a service.",
+  "category": "Integration health",
+  "group": "integration",
+  "group_label": "Integration health",
+  "tags": ["Integration"],
+  "notify_days": null,
+  "fix_line": "",
+  "draft": false,
+  "suggested_severity": "medium",
+  "suggested_severity_label": "Medium"
+}</pre>
+  </div>
+  <p class="note">That object is the Integration changes row from the sandbox catalog. The full GET returned 11 rows, <code class="inline">count</code> 11, <code class="inline">total</code> 11, and <code class="inline">next_cursor</code> null. A <code class="inline">limit</code> of 1 returned the Subscription renewal row, the same <code class="inline">count</code> and <code class="inline">total</code>, and a <code class="inline">next_cursor</code> string.</p>
+  <p class="note"><code class="inline">PUT /isv/alert-types</code> and <code class="inline">PUT /tenants/{tenant_id}/alert-types</code> take the same body. OpenAPI 0.99.0 types it as an object with no listed fields. The operation description is <code class="inline">{"alert_types": [{name, category, suggested_severity, description?, id?}]}</code>. Category is required. A value that is not a list returns 422 <code class="inline">request_invalid</code> and "alert_types must be a list." Severity is Critical, High, Medium, Low, or Info. Anything else returns 422 <code class="inline">request_invalid</code> and "Severity must be Critical, High, Medium, Low or Info." At most 200 types. The body is at most 512 KB. A missing length is 411. An oversized body is 413. The 200 response is an object with no listed fields.</p>
+
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Groups</h3>
-  <p class="note">The heading is Categories. Types sit in three groups. Subscriptions &amp; billing starts with six types. Integration health starts with four. Product alerts starts empty. These are the starter rows <code class="inline">GET /isv/alert-types</code> returned on the sandbox.</p>
+  <p class="note">The heading is Categories. Types sit in three groups. Subscriptions &amp; billing starts with six types. Integration health starts with five. Product alerts starts empty. These are the starter rows <code class="inline">GET /isv/alert-types</code> returned on the sandbox.</p>
   <div class="cov-wrap">
     <table class="cov">
       <thead><tr><th scope="col">Category</th><th scope="col">Starter name</th></tr></thead>
@@ -93,6 +117,7 @@
         <tr><th scope="row">Integration health</th><td>Sync failing</td></tr>
         <tr><th scope="row">Integration health</th><td>Mapping needs attention</td></tr>
         <tr><th scope="row">Integration health</th><td>Stack slow or rate limited</td></tr>
+        <tr><th scope="row">Integration health</th><td>Integration changes</td></tr>
       </tbody>
     </table>
   </div>
@@ -108,7 +133,82 @@
   <p class="note">A test ticket title looks like <code class="inline">[Bitlync test] {vendor display name}: ...</code>. On a sandbox dry run, <code class="inline">priority_name</code> was Informational, and <code class="inline">dry_run</code> true did not create a ticket. Repeat alerts for the same device update one open ticket when dedupe is on. Bitlync does not reopen a ticket the MSP closed. That dedupe rule is already in the alert send description.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Where an alert goes</h3>
-  <p class="note"><code class="inline">GET /tenants/{tenant_id}/alert-routing</code> is on the sandbox (OpenAPI 0.99.0), not in the OpenAPI file on this site (0.94.0). For the sandbox ConnectWise tenant the rule was: Critical and High go to Ticket, Medium goes to Email, Low and Info go to Daily digest.</p>
+  <p class="note">Alert routing is owned by the MSP in Connect. Vendors should not call <code class="inline">PUT /tenants/{tenant_id}/alert-routing</code> to override it.</p>
+  <p class="note"><code class="inline">GET /tenants/{tenant_id}/alert-routing</code> takes optional query <code class="inline">vendor_key</code>. Omitted, the spec default is <code class="inline">connectwise</code>. OpenAPI 0.99.0 types the 200 body as an object with no listed fields. The sandbox ConnectWise tenant returned <code class="inline">vendor_key</code> (string), <code class="inline">rule</code> (object), <code class="inline">priority_map</code> (object), <code class="inline">coming_soon</code> (array), <code class="inline">dedupe_line</code> (string), <code class="inline">alert_types</code> (array), <code class="inline">count</code> (number), and <code class="inline">sandbox</code> (boolean).</p>
+  <p class="note"><code class="inline">rule</code> maps <code class="inline">critical</code> and <code class="inline">high</code> to <code class="inline">["ticket"]</code>, <code class="inline">medium</code> to <code class="inline">["email"]</code>, and <code class="inline">low</code> and <code class="inline">info</code> to <code class="inline">["daily_digest"]</code>. <code class="inline">priority_map</code> maps those severities to Critical, High, Normal, Low, and Low. <code class="inline">coming_soon</code> is <code class="inline">teams</code> (Teams or Slack) and <code class="inline">webhook</code> (Webhook).</p>
+  <p class="note">Each routing row is <code class="inline">id</code> (string), <code class="inline">name</code> (string), <code class="inline">group</code> (string), <code class="inline">severity</code> (string), <code class="inline">send_to</code> (array of strings), <code class="inline">send_label</code> (string), <code class="inline">custom</code> (boolean), <code class="inline">off_allowed</code> (boolean), <code class="inline">by_severity</code> (boolean), <code class="inline">note</code> (string), and <code class="inline">notify_days</code> (number or null). Connection problem came back <code class="inline">send_to</code> <code class="inline">["ticket", "email"]</code> with <code class="inline">off_allowed</code> false. Sync failing came back <code class="inline">severity</code> <code class="inline">by_cause</code>, <code class="inline">send_to</code> <code class="inline">[]</code>, and <code class="inline">by_severity</code> true.</p>
+  <div class="code">
+    <div class="hd"><b>GET /tenants/{tenant_id}/alert-routing</b><button class="copy" type="button" data-copy="{&quot;vendor_key&quot;:&quot;connectwise&quot;,&quot;rule&quot;:{&quot;critical&quot;:[&quot;ticket&quot;],&quot;high&quot;:[&quot;ticket&quot;],&quot;medium&quot;:[&quot;email&quot;],&quot;low&quot;:[&quot;daily_digest&quot;],&quot;info&quot;:[&quot;daily_digest&quot;]},&quot;coming_soon&quot;:[{&quot;id&quot;:&quot;teams&quot;,&quot;label&quot;:&quot;Teams or Slack&quot;},{&quot;id&quot;:&quot;webhook&quot;,&quot;label&quot;:&quot;Webhook&quot;}],&quot;count&quot;:11,&quot;sandbox&quot;:true}">Copy</button></div>
+    <pre>{
+  "vendor_key": "connectwise",
+  "rule": {
+    "critical": ["ticket"],
+    "high": ["ticket"],
+    "medium": ["email"],
+    "low": ["daily_digest"],
+    "info": ["daily_digest"]
+  },
+  "coming_soon": [
+    {"id": "teams", "label": "Teams or Slack"},
+    {"id": "webhook", "label": "Webhook"}
+  ],
+  "count": 11,
+  "sandbox": true
+}</pre>
+  </div>
+  <p class="note">The PUT description names <code class="inline">{"vendor_key", "send_to": {id: ["ticket", "email"]}, "reset": [id]}</code>. Send to must always include Ticket or Email. OpenAPI 0.99.0 types that body as an object with no listed fields. The GET <code class="inline">rule</code> uses <code class="inline">daily_digest</code> for Low and Info.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Send</h3>
+  <p class="note"><code class="inline">POST /tenants/{tenant_id}/alerts</code> sends one alert. OpenAPI 0.99.0 types the body as an object with no listed fields. The operation description names <code class="inline">type</code> (name or id), <code class="inline">severity</code> (optional; the type's suggested severity when omitted), <code class="inline">device</code> (an object <code class="inline">{id, name}</code> or a string), <code class="inline">customer</code>, <code class="inline">description</code> (optional), <code class="inline">dry_run</code> (boolean, default false), and <code class="inline">event_id</code> or <code class="inline">idempotency_key</code>. The id is unique per event. A repeat needs a new id. The body is at most 64 KB. A missing length is 411. An oversized body is 413.</p>
+  <p class="note">A call with a type and neither a customer nor a device returned 422 <code class="inline">request_invalid</code> and "Send a type, a customer, and a device." <code class="inline">type</code> <code class="inline">subscription-renewal</code> and <code class="inline">type</code> "Subscription renewal" both resolved. A string <code class="inline">device</code> was accepted. Omitting <code class="inline">severity</code> used the type's suggested severity, <code class="inline">low</code> for that row. Alerts off returns 409 <code class="inline">feature_off</code> before a vendor call.</p>
+  <div class="code">
+    <div class="hd"><b>POST /tenants/{tenant_id}/alerts</b><button class="copy" type="button" data-copy="{&quot;type&quot;:&quot;subscription-renewal&quot;,&quot;severity&quot;:&quot;low&quot;,&quot;device&quot;:{&quot;id&quot;:&quot;dev-1&quot;,&quot;name&quot;:&quot;FRONT-DESK&quot;},&quot;customer&quot;:&quot;Acme Dental&quot;,&quot;event_id&quot;:&quot;docs-probe-dry-2026-10-21&quot;,&quot;dry_run&quot;:true}">Copy</button></div>
+    <pre>{
+  "type": "subscription-renewal",
+  "severity": "low",
+  "device": {"id": "dev-1", "name": "FRONT-DESK"},
+  "customer": "Acme Dental",
+  "event_id": "docs-probe-dry-2026-10-21",
+  "dry_run": true
+}</pre>
+  </div>
+  <p class="note">OpenAPI 0.99.0 types the 200 body as an object with no listed fields. The sandbox <code class="inline">dry_run</code> true call returned <code class="inline">success</code> (boolean), <code class="inline">source</code> (string), <code class="inline">source_id</code> (string), <code class="inline">ticket_ref</code> (string), <code class="inline">idempotent_replay</code> (boolean), <code class="inline">dry_run</code> (boolean), <code class="inline">sandbox</code> (boolean), <code class="inline">action</code> (string), <code class="inline">reason</code> (string), <code class="inline">reopen</code> (boolean), <code class="inline">dedupe</code> (boolean), <code class="inline">title</code> (string), <code class="inline">severity</code> (string), <code class="inline">priority_id</code> (string), <code class="inline">priority_name</code> (string), <code class="inline">message</code> (string), <code class="inline">destination</code> (object), <code class="inline">alert_type</code> (the catalog row), and <code class="inline">raw</code> (object, the connector payload). On that call <code class="inline">action</code> was <code class="inline">create</code>, <code class="inline">reason</code> was <code class="inline">new</code>, <code class="inline">reopen</code> was false, <code class="inline">dedupe</code> was true, <code class="inline">destination</code> was <code class="inline">{}</code>, and <code class="inline">priority_name</code> was an empty string. The title was <code class="inline">[CrowdStrike] Low · Subscriptions &amp; billing · Subscription renewal · Acme Dental</code>.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Test</h3>
+  <p class="note"><code class="inline">POST /tenants/{tenant_id}/alerts/test</code> sends a test through the same routing. The body is optional. OpenAPI 0.99.0 types it as an object or null, with no listed fields. <code class="inline">{}</code> returned <code class="inline">dry_run</code> true. The body is at most 64 KB. A missing length is 411. An oversized body is 413.</p>
+  <p class="note">The 200 body has the same fields as send. On the sandbox, <code class="inline">title</code> was <code class="inline">[Bitlync test] CrowdStrike: no action required, safe to close</code>, <code class="inline">severity</code> was <code class="inline">critical</code>, <code class="inline">priority_name</code> was Informational, <code class="inline">priority_id</code> was <code class="inline">8</code>, and <code class="inline">dry_run</code> true did not create a ticket. <code class="inline">alert_type</code> was a sample row: <code class="inline">id</code> <code class="inline">test-alert</code>, <code class="inline">name</code> Test alert, <code class="inline">category</code> Security events, <code class="inline">group</code> <code class="inline">product</code>, <code class="inline">suggested_severity</code> <code class="inline">critical</code>. The catalog already had 11 types on that call.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Snooze</h3>
+  <p class="note"><code class="inline">GET /tenants/{tenant_id}/alert-snoozes</code> lists snoozes for this MSP. At most 500 are stored. <code class="inline">limit</code> is 1 to 100. Omitted, the page size is 25. Pass <code class="inline">cursor</code> for the next page. OpenAPI 0.99.0 types the 200 body as an object with no listed fields. The sandbox returned <code class="inline">snoozes</code> (array), <code class="inline">count</code> (number), <code class="inline">next_cursor</code> (string or null), and <code class="inline">sandbox</code> (boolean). An empty list is <code class="inline">count</code> 0 and <code class="inline">snoozes</code> <code class="inline">[]</code>.</p>
+  <p class="note">Each snooze is <code class="inline">id</code> (string), <code class="inline">tenant_id</code> (string), <code class="inline">isv_key</code> (string), <code class="inline">scope</code> (string), <code class="inline">target_ref</code> (string), <code class="inline">target_label</code> (string), <code class="inline">alert_type_id</code> (string), <code class="inline">duration</code> (string), <code class="inline">ends_at</code> (string or null), and <code class="inline">created_at</code> (string).</p>
+  <p class="note"><code class="inline">POST /tenants/{tenant_id}/alert-snoozes</code> adds one. OpenAPI 0.99.0 types the body as an object with no listed fields. The description names <code class="inline">scope</code> (<code class="inline">customer</code> or <code class="inline">device</code>), <code class="inline">target</code>, <code class="inline">duration</code> (<code class="inline">24h</code>, <code class="inline">7d</code>, or <code class="inline">until_resolved</code>), and <code class="inline">alert_type_id</code> (omit it for every alert). The body is at most 64 KB. Scope anything else returns 422 <code class="inline">request_invalid</code> and "Scope must be Customer or Device." Duration anything else returns 422 <code class="inline">request_invalid</code> and "Duration must be 24h, 7d, or Until resolved." The label "Until resolved" is stored as <code class="inline">until_resolved</code>. <code class="inline">until_resolved</code> comes back with <code class="inline">ends_at</code> null. <code class="inline">24h</code> and <code class="inline">7d</code> come back with an <code class="inline">ends_at</code> timestamp. An omitted <code class="inline">alert_type_id</code> is stored as an empty string.</p>
+  <div class="code">
+    <div class="hd"><b>POST /tenants/{tenant_id}/alert-snoozes</b><button class="copy" type="button" data-copy="{&quot;scope&quot;:&quot;customer&quot;,&quot;target&quot;:&quot;docs-probe-cust&quot;,&quot;duration&quot;:&quot;24h&quot;}">Copy</button></div>
+    <pre>{
+  "scope": "customer",
+  "target": "docs-probe-cust",
+  "duration": "24h"
+}</pre>
+  </div>
+  <div class="code">
+    <div class="hd"><b>200</b><button class="copy" type="button" data-copy="{&quot;snooze&quot;:{&quot;id&quot;:&quot;snz_8fdc48b1a10b70c9&quot;,&quot;tenant_id&quot;:&quot;sandbox-mainstreet&quot;,&quot;isv_key&quot;:&quot;demo-isv&quot;,&quot;scope&quot;:&quot;customer&quot;,&quot;target_ref&quot;:&quot;docs-probe-cust&quot;,&quot;target_label&quot;:&quot;docs-probe-cust&quot;,&quot;alert_type_id&quot;:&quot;&quot;,&quot;duration&quot;:&quot;24h&quot;,&quot;ends_at&quot;:&quot;2026-10-22T21:52:13.706524+00:00&quot;,&quot;created_at&quot;:&quot;2026-10-21T21:52:13.706524+00:00&quot;},&quot;sandbox&quot;:true}">Copy</button></div>
+    <pre>{
+  "snooze": {
+    "id": "snz_8fdc48b1a10b70c9",
+    "tenant_id": "sandbox-mainstreet",
+    "isv_key": "demo-isv",
+    "scope": "customer",
+    "target_ref": "docs-probe-cust",
+    "target_label": "docs-probe-cust",
+    "alert_type_id": "",
+    "duration": "24h",
+    "ends_at": "2026-10-22T21:52:13.706524+00:00",
+    "created_at": "2026-10-21T21:52:13.706524+00:00"
+  },
+  "sandbox": true
+}</pre>
+  </div>
+  <p class="note"><code class="inline">POST /tenants/{tenant_id}/alert-snoozes/{snooze_id}/undo</code> removes that snooze. The 200 body on the sandbox was <code class="inline">{"removed": "snz_8fdc48b1a10b70c9", "sandbox": true}</code>. <code class="inline">removed</code> is the id string. The route description says a snooze on another MSP is 404. OpenAPI 0.99.0 types that 200 body as an object with no listed fields.</p>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Send to</h3>
   <p class="note">MSP Send to is a flat checkbox list. Each section has one "Tickets go to" footer, with a Send test ticket link. The choice autosaves, and a quiet check mark shows when it has saved. Subscriptions tickets stay Off until the MSP picks a destination. The MSP can close the test ticket from Bitlync.</p>
