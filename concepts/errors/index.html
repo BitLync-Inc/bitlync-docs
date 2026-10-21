@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/">Reference</a>
@@ -85,6 +86,10 @@
 }</pre>
   </div>
   <p class="note">500 is <code class="inline">internal_error</code>. 501 is <code class="inline">unsupported</code>.</p>
+  <p class="note">Billing catalog checks return 422 <code class="inline">request_invalid</code>. The sandbox messages are "How often you report must be Daily or Monthly.", "How you bill must be Latest count, Count on a set day, Peak this month, or Average.", and "Two billing services use the key 'same-id'." for a repeated key.</p>
+  <p class="note">Alert CSV import with no name column: "The CSV needs a name column." A body over 2 MB: 413 <code class="inline">request_invalid</code> and "Reload the page and try again." Fill from site on the sandbox: 404 <code class="inline">unknown_resource</code> and "Not found."</p>
+  <p class="note">MSP configure uses "Reload the page and try again." and "Too many saves. Wait a minute and try again." When the stack mandates Subtype, the message is "ConnectWise requires Subtype on {board}."</p>
+  <p class="note">Deploy pending, and not returned by the sandbox: "Two billing services use the report id {id}." The upload sentence "That file is too large. Use a CSV or Excel file under 2 MB." is the screen copy. The oversized API body used "Reload the page and try again." instead.</p>
   <p class="note">Health, incidents, and audit are listed reads on Reference, not a new UI.</p>
 
       <div class="btn-row" style="margin:36px 0 0">

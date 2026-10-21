@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="index,follow"/>
+<title>Alerts · Bitlync docs</title>
+<meta name="description" content="List the alerts you send. Each MSP chooses where they land in their stack. Review an upload before it is live."/>
+<link rel="canonical" href="https://docs.bitlync.com/alerts/"/>
+<meta property="og:title" content="Alerts · Bitlync docs"/>
+<meta property="og:description" content="List the alerts you send. Each MSP chooses where they land in their stack. Review an upload before it is live."/>
+<meta property="og:url" content="https://docs.bitlync.com/alerts/"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body class="docs">
+<a class="skip" href="#docs-main">Skip to content</a>
+<header>
+  <div class="bar">
+    <a class="brand" href="https://www.bitlync.com/"><svg class="mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"><path d="M4.5 7.2C12 7.2 15.2 16 22.4 16"/><path d="M4.5 11.6C11.2 11.6 15 16 22.4 16"/><path d="M4.5 16C12 16 16 16 22.4 16"/><path d="M4.5 20.4C11.2 20.4 15 16 22.4 16"/><path d="M4.5 24.8C12 24.8 15.2 16 22.4 16"/></g><circle cx="24.3" cy="16" r="1.25" fill="currentColor"/></svg> bitlync</a>
+    <a class="docs-chip" href="/">Docs</a>
+  </div>
+</header>
+<main>
+<div class="page on" id="page-docs">
+  <div class="wrap docs-shell">
+    <nav class="docs-tree" aria-label="Docs">
+      <p>Docs</p>
+      <a href="/">Overview</a>
+      <a href="/quickstart/">Quickstart</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-quickstart">Chapters</button>
+          <div class="docs-fold-body" id="fold-quickstart" hidden>
+            <a href="/quickstart/connect-checklist/">Connect checklist (Halo/CW)</a>
+          </div>
+        </div>
+      </div>
+      <a href="/coverage/">Coverage</a>
+      <a href="/concepts/">Concepts</a>
+      <div class="nest">
+        <div class="docs-folder">
+          <button type="button" class="docs-fold" aria-expanded="false" aria-controls="fold-concepts">Chapters</button>
+          <div class="docs-fold-body" id="fold-concepts" hidden>
+            <a href="/concepts/store-served-reads/">Store-served reads</a>
+            <a href="/concepts/rate-limits/">Rate limits</a>
+            <a href="/concepts/delivery/">Delivery</a>
+            <a href="/concepts/webhooks/">Webhooks</a>
+            <a href="/concepts/writes/">Writes</a>
+            <a href="/concepts/credential-vault/">Credential vault</a>
+            <a href="/concepts/errors/">Errors</a>
+            <a href="/concepts/msp-permissions/">MSP permissions</a>
+          </div>
+        </div>
+      </div>
+      <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/" class="on">Alerts</a>
+      <a href="/use-cases/">Use cases</a>
+      <a href="/migrations/">Migrations</a>
+      <a href="/reference/">Reference</a>
+    </nav>
+    <div class="docs-main" id="docs-main">
+
+  <div class="docs-hero">
+    <p class="kicker">Alerts</p>
+    <h1>Alerts.</h1>
+    <p class="lede">List the alerts you send. Each MSP chooses where they land in their stack. Bitlync routes them. You do not pick a board, a team, or a form for them.</p>
+  </div>
+  <p class="note">There is no breaking change to <code class="inline">POST /tenants/{tenant_id}/alerts</code>. The Activity tab does not add an API. Billing and Alerts write routes share one abuse limit. HTTP 429 is unchanged. See <a href="/concepts/rate-limits/">Rate limits</a>.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Setup</h3>
+  <p class="note">Turn on <strong>Send alerts to MSP tickets</strong> in Configure &gt; Features. Setup offers Scan your website, Upload a list (CSV or Excel), or Add by hand, then a review before the list is live.</p>
+  <p class="note">Add by hand, and any later edit, is <code class="inline">PUT /isv/alert-types</code> (the same body as <code class="inline">PUT /tenants/{tenant_id}/alert-types</code>). That call replaces the whole catalog. It does not merge. A type you leave out is removed. Category is required. Severity is Critical, High, Medium, Low, or Info. The row menu can edit, rename, or remove a type. Removing the last type returns to this guided setup.</p>
+  <p class="note">Upload a list on the API is <code class="inline">POST /isv/alert-types/import</code>. The body is <code class="inline">{"csv": "..."}</code>. Columns are name, description, type, and severity. Nothing is saved. Rows come back as drafts for review. A CSV with no name column returns 422 <code class="inline">request_invalid</code> and the message "The CSV needs a name column." On a trial row, the type column came back as a tag and the category was Product alerts. The OpenAPI file on this site is still 0.94.0 and does not list this route. The sandbox serves OpenAPI 0.99.0.</p>
+  <p class="note">The upload limit is 2 MB for Alerts and for a Billing price list. An alert import body over 2 MB returned 413 <code class="inline">request_invalid</code> and the message "Reload the page and try again." The upload screen also uses "That file is too large. Use a CSV or Excel file under 2 MB." The sandbox API did not return that sentence.</p>
+  <p class="note">Scan your website is not available on the sandbox. <code class="inline">POST /isv/alert-types/fill</code> returned 404 <code class="inline">unknown_resource</code> and the message "Not found." The sandbox description says the reader is not in this build. Treat fill-from-site as deploy pending, not live.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Categories</h3>
+  <p class="note">The heading is Categories. On 2026-10-21, <code class="inline">GET /isv/alert-types</code> on the sandbox returned these starter rows.</p>
+  <div class="cov-wrap">
+    <table class="cov">
+      <thead><tr><th scope="col">Category</th><th scope="col">Starter name</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Subscriptions &amp; billing</th><td>Subscription renewal</td></tr>
+        <tr><th scope="row">Subscriptions &amp; billing</th><td>Price change</td></tr>
+        <tr><th scope="row">Subscriptions &amp; billing</th><td>Quantity updated</td></tr>
+        <tr><th scope="row">Subscriptions &amp; billing</th><td>Trial ending</td></tr>
+        <tr><th scope="row">Subscriptions &amp; billing</th><td>Trial converted</td></tr>
+        <tr><th scope="row">Subscriptions &amp; billing</th><td>Trial expired</td></tr>
+        <tr><th scope="row">Integration health</th><td>Connection problem</td></tr>
+        <tr><th scope="row">Integration health</th><td>Sync failing</td></tr>
+        <tr><th scope="row">Integration health</th><td>Mapping needs attention</td></tr>
+        <tr><th scope="row">Integration health</th><td>Stack slow or rate limited</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Those are the labels the sandbox returned. The category strings Subscriptions &amp; renewals, Network monitoring, and Security detections were not in that catalog. Integration health was. A category outside the seed can still be stored.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">MSP connect</h3>
+  <p class="note">Connect adds an alerts setup step with Back and Continue. The MSP chooses where alerts go, using fields from their stack. Type is required. Subtype (ConnectWise), Item, and the Halo subcategory are optional and default to None. The error "ConnectWise requires Subtype on {board}." is returned only when the stack mandates Subtype. The sandbox stack options for the fixture ConnectWise tenant list Board, Type, Subtype, and Item. One Item name in that fixture is None. The sandbox did not return the Subtype error string. No board was saved on that call.</p>
+  <p class="note">If the save cannot be read back, the message is "Reload the page and try again." If saves come too fast, the message is "Too many saves. Wait a minute and try again." The oversized import above is the call that returned the reload sentence. The sandbox did not return "Too many saves. Wait a minute and try again."</p>
+  <p class="note">The Done page links "Go to Activity". The sandbox Connect preview that was fetched was still on the keys step, so that link was not in the HTML. The step rail was Choose, Connect, Configure, Map companies, Done.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Activity</h3>
+  <p class="note">The portal Activity tab has Needs your attention, a change log in the viewer's local time, Deliveries, and Send test ticket. Send test ticket on that tab is sandbox-only, 30 per minute. The console Activity destination returned 401 for the sandbox demo key, so this tab was not opened.</p>
+  <p class="note"><code class="inline">POST /tenants/{tenant_id}/alerts/test</code> with <code class="inline">dry_run</code> true on the sandbox returned a title <code class="inline">[Bitlync test] CrowdStrike: no action required, safe to close</code>. <code class="inline">priority_name</code> on that call was Informational. It did not create a ticket (<code class="inline">dry_run</code> true). Repeat alerts for the same device update one open ticket when dedupe is on. Bitlync does not reopen a ticket the MSP closed. That dedupe rule is already in the alert send description.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Where an alert goes</h3>
+  <p class="note"><code class="inline">GET /tenants/{tenant_id}/alert-routing</code> is on the sandbox (OpenAPI 0.99.0), not in the OpenAPI file on this site (0.94.0). For the sandbox ConnectWise tenant the rule was: Critical and High go to Ticket, Medium goes to Email, Low and Info go to Daily digest.</p>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">Deploy pending</h3>
+  <p class="note">Production deploy is still pending for the alerts v4 slice and for the later MSP send-to slice. Do not treat the following as live.</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>Fill from site. The sandbox route returns 404 "Not found."</li>
+    <li>No-default footers and the "where alerts go" empty state, beyond the routing rule above.</li>
+    <li>MSP Send to as a flat checkbox list.</li>
+    <li>One "Tickets go to" footer per section, with a Send test ticket link in that footer.</li>
+    <li>Autosave with a quiet check mark.</li>
+    <li>Subscriptions tickets stay Off until the MSP picks a destination.</li>
+    <li>The vendor alert-type menu adds Duplicate beside Rename, Edit, and Remove.</li>
+    <li>A test ticket the MSP closes from Bitlync. The sandbox lists <code class="inline">POST /connect/{token}/alerts/test/close</code> ("Close the test ticket this session created."). This pass did not create or close one.</li>
+  </ul>
+  <p class="note">The sandbox Connect preview footer already reads "Powered by bitlync". The pending slice says the footer shows only that line.</p>
+
+      <div class="btn-row" style="margin:36px 0 0">
+        <a class="btn" href="/what-we-write/">What we write</a>
+        <a class="btn" href="/reference/">Reference</a>
+      </div>
+    </div>
+    <aside class="docs-rail" id="docsRail" aria-label="Code examples" hidden></aside>
+  </div>
+</div>
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bitlync · stealth · private beta</span>
+    <span><a href="https://www.bitlync.com/">www.bitlync.com</a></span>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+</body>
+</html>

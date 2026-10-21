@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/">Reference</a>
@@ -135,6 +136,7 @@
   
   <p class="lbl">Mechanism</p>
   <p class="note">ISV-facing: 600 req/min times the number of connected MSPs. There is no daily cap. The per-minute rate is the limit. Hit it and you get a rate-limit response with <code class="inline">Retry-After</code>. There is no silent throttle.</p>
+  <p class="note">Billing and Alerts write routes share one abuse limit. HTTP 429 from those routes is unchanged: branch on 429 and <code class="inline">Retry-After</code>. An oversized body is 413, not 429. See <a href="/concepts/errors/">Errors</a>.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">A rate-limit response you can branch on. The header is the wait. A delayed 200 is not a throttle.</p>
     <div class="code">

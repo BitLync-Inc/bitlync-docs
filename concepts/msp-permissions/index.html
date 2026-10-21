@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/">Reference</a>
@@ -86,6 +87,7 @@
 # ISV does not paste MSP creds.</pre>
   </div>
   <p class="note">The MSP pastes PSA keys in Connect. A partial connect stays partial. It is not reported as failed.</p>
+  <p class="note">When alerts are on, Connect adds an alerts setup step with Back and Continue. The MSP chooses where alerts go. Type is required. Subtype (ConnectWise), Item, and the Halo subcategory are optional and default to None. "ConnectWise requires Subtype on {board}." is returned only when the stack mandates Subtype. A save that cannot be read back says "Reload the page and try again." Too many saves says "Too many saves. Wait a minute and try again." Details are on <a href="/alerts/">Alerts</a>.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>

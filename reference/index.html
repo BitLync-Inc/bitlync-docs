@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/" class="on">Reference</a>
@@ -67,7 +68,7 @@
     <p class="kicker">Reference</p>
     <h1>Routes that exist today.</h1>
     <p class="lede">Auth is the <code class="inline">X-API-Key</code> header. Writes take <code class="inline">dry_run</code> (default false; writes are real). Import the OpenAPI file. This page is not the spec.</p>
-    <p class="note"><a href="/openapi.json">OpenAPI 0.94.0</a></p>
+    <p class="note"><a href="/openapi.json">OpenAPI 0.94.0</a>. The sandbox host currently serves OpenAPI 0.99.0. Routes below that say sandbox 0.99.0 are not in the file on this site.</p>
     <p class="note">Billing quantities: <code class="inline">POST /tenants/{tenant_id}/billing/quantities</code>. The MSP matches the line. You send an absolute quantity (0 stops billing) on your cadence (<code class="inline">daily</code> or <code class="inline">monthly</code>). The MSP's change limit defaults to 25%. A change over that limit waits. Ending a line is refused.</p>
     <div class="code">
       <div class="hd"><b>request</b><button class="copy" type="button" data-copy="{&quot;idempotency_key&quot;:&quot;docs-probe-1&quot;,&quot;dry_run&quot;:true,&quot;quantities&quot;:[{&quot;customer_ref&quot;:&quot;cust-42&quot;,&quot;customer_name&quot;:&quot;Brightside Pediatrics&quot;,&quot;service&quot;:&quot;managed-edr&quot;,&quot;quantity&quot;:44}]}">Copy</button></div>
@@ -134,6 +135,12 @@
     <tbody>
       <tr id="ref-agreements"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/agreements</code></td><td>Store-served agreement list.</td></tr>
       <tr id="ref-billing-quantities"><td><code>POST</code></td><td><code>/tenants/{tenant_id}/billing/quantities</code></td><td>Absolute quantities on lines the MSP matched. Quantity 0 stops billing. A change over the MSP's limit (default 25%) waits. Ending a line is refused.</td></tr>
+      <tr id="ref-billing-services"><td><code>GET</code> / <code>PUT</code></td><td><code>/isv/billing-services</code></td><td>Billing service catalog. <code>sent</code> is daily or monthly. Sandbox PUT requires <code>catalog_token</code> from the GET. Duplicate key message: Two billing services use the key '{id}'.</td></tr>
+      <tr id="ref-alert-types"><td><code>GET</code> / <code>PUT</code></td><td><code>/isv/alert-types</code></td><td>Alert-type catalog. PUT replaces the list. Same body as the tenant route. See <a href="/alerts/">Alerts</a>.</td></tr>
+      <tr id="ref-alerts-send"><td><code>POST</code></td><td><code>/tenants/{tenant_id}/alerts</code></td><td>Send one alert. No breaking change to this body. Alerts off: 409 <code>feature_off</code> before a vendor call.</td></tr>
+      <tr id="ref-alerts-test"><td><code>POST</code></td><td><code>/tenants/{tenant_id}/alerts/test</code></td><td>Sandbox dry_run title started with [Bitlync test]. <code>priority_name</code> on that call was Informational.</td></tr>
+      <tr id="ref-alert-import"><td><code>POST</code></td><td><code>/isv/alert-types/import</code></td><td>Sandbox 0.99.0. CSV body. Nothing is saved. Rows come back as drafts. At most 2 MB.</td></tr>
+      <tr id="ref-alert-routing"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/alert-routing</code></td><td>Sandbox 0.99.0. Critical and High go to Ticket. Medium goes to Email. Low and Info go to Daily digest.</td></tr>
       <tr id="ref-members"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/members</code></td><td>Time picker. Halo and ConnectWise when the member permission is on. A missing ConnectWise members permission returns 502 <code class="inline">upstream_auth_failure</code>. Each <code>id</code> is what <code>CreateTimeEntryBody.member</code> accepts.</td></tr>
       <tr id="ref-ticket-boards"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-boards</code></td><td>Board ids for ConnectWise and Halo (ConnectWise board, Halo team).</td></tr>
       <tr id="ref-ticket-statuses"><td><code>GET</code></td><td><code>/tenants/{tenant_id}/ticket-statuses</code></td><td>Status ids for create and update on ConnectWise and Halo. An unknown id returns 422.</td></tr>
