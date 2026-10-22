@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/">Reference</a>
@@ -68,7 +69,7 @@
   </div>
 <p class="note">Branch on the stable <code class="inline">code</code>.</p>
   <p class="lbl">Mechanism</p>
-  <p class="note">The codes on this page are the codes that exist: 401 <code class="inline">auth</code>, 403 <code class="inline">tenant</code>, 404 unknown tenant, 422 <code class="inline">validation</code> (and <code class="inline">request_invalid</code> on a bad sandbox reset), 429 plus <code class="inline">Retry-After</code>, 501 <code class="inline">unsupported</code>, 500 <code class="inline">internal_error</code>.</p>
+  <p class="note">The codes on this page are the codes that exist: 401 <code class="inline">auth</code>, 403 <code class="inline">tenant</code>, 404 unknown tenant, 409 <code class="inline">routing_msp_owned</code>, 422 <code class="inline">validation</code> (and <code class="inline">request_invalid</code> on a bad sandbox reset), 429 plus <code class="inline">Retry-After</code>, 501 <code class="inline">unsupported</code>, 500 <code class="inline">internal_error</code>.</p>
   <p class="lbl">What the caller sees</p>
   <p class="note">The body is <code class="inline">code</code>, <code class="inline">message</code>, and <code class="inline">doc_url</code>. <code class="inline">details</code> is optional.</p>
     <div class="code">
@@ -85,6 +86,11 @@
 }</pre>
   </div>
   <p class="note">500 is <code class="inline">internal_error</code>. 501 is <code class="inline">unsupported</code>.</p>
+  <p class="note" id="routing_msp_owned">409 <code class="inline">routing_msp_owned</code>. The message is "The MSP sets alert routing for this tenant in Connect. Nothing was saved."</p>
+  <p class="note">Billing catalog checks return 422 <code class="inline">request_invalid</code>. The sandbox messages are "How often you report must be Daily or Monthly.", "How you bill must be Latest count, Count on a set day, Peak this month, or Average.", and "Two billing services use the key 'same-id'." for a repeated key.</p>
+  <p class="note">Alert CSV import with no name column: "The CSV needs a name column." An Alerts or Billing upload is at most 2 MB. An alert write that is refused returns "Reload the page and try again."</p>
+  <p class="note">MSP configure uses "Reload the page and try again." and "Too many saves. Wait a minute and try again." When the stack mandates Subtype, the message is "ConnectWise requires Subtype on {board}."</p>
+  <p class="note">On the API, a repeated billing service key is "Two billing services use the key 'same-id'." In the console Add as service flow, a duplicate report id says "Two billing services use the report id {id}." <code class="inline">report_id</code> is not a public API field.</p>
   <p class="note">Health, incidents, and audit are listed reads on Reference, not a new UI.</p>
 
       <div class="btn-row" style="margin:36px 0 0">

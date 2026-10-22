@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/">Reference</a>
@@ -69,7 +70,7 @@
 <p class="note">A missing grant is HTTP 403, code <code class="inline">grant_missing</code>. A parked vendor permission is HTTP 409, code <code class="inline">scope_parked</code>. An unsupported capability is HTTP 501, code <code class="inline">unsupported_capability</code>.</p>
   <p class="note">ConnectWise and Halo connect are numbered click paths. Halo takes a client ID, a client secret, and the two server URLs. SuperOps connects with an API token, a subdomain, and a region. The sandbox offers SuperOps tickets (read and write), companies (read), and agreements (read). SuperOps has no custom-field value writes, no agreement-line writes, and no draft contracts. A missing permission is named in English. PSA company create is not supported (403 <code class="inline">company_create_not_supported</code>); companies are created by the MSP. Billing writes are quantity updates on lines the MSP matched, on an existing agreement. Send quantity 0 to stop billing. Ending a line is refused.</p>
   <p class="lbl">ISV experience config</p>
-  <p class="note"><code class="inline">GET|PUT /isv/experience-config</code> sets category config for PSA, RMM, Docs, CS, and Commerce, plus recommended grants and branding. Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Recommended grants drive Connect rows. Sandbox Experience Preview (<code class="inline">POST /connect/sessions/preview</code> and console <code class="inline">#/experience</code>) walks Connect: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
+  <p class="note"><code class="inline">GET|PUT /isv/experience-config</code> sets category config for PSA, RMM, Docs, CS, and Commerce, plus recommended grants and branding. Vendors inherit the category template. Access is List, Read, and Write, and those stack. Never is its own setting. The MSP can tighten the starting verbs. Recommended grants drive Connect rows. Sandbox Experience Preview walks Connect: keys, grants, boards, map, done. Getting Started on Setup is Suggest, Save, Preview, then Use MCP or Use API. After Save, copy-paste prompts follow the saved profile. Partner credentials and Production MSP Connect keys are separate. Connections lists each MSP and vendor, last sync, and sync detail. Issues gives a support blurb and a redacted request debug.</p>
   <p class="lbl">Mechanism</p>
   <p class="note">The MSP pastes keys in the guided flow. The probe names the permission to fix. The ISV does not paste MSP creds.</p>
   <p class="lbl">What the caller sees</p>
@@ -86,6 +87,7 @@
 # ISV does not paste MSP creds.</pre>
   </div>
   <p class="note">The MSP pastes PSA keys in Connect. A partial connect stays partial. It is not reported as failed.</p>
+  <p class="note">When alerts are on, Connect adds an alerts setup step with Back and Continue. The MSP chooses where alerts go. Type is required. Subtype (ConnectWise), Item, and the Halo subcategory are optional and default to None. "ConnectWise requires Subtype on {board}." is returned only when the stack mandates Subtype. A save that cannot be read back says "Reload the page and try again." Too many saves says "Too many saves. Wait a minute and try again." Details are on <a href="/alerts/">Alerts</a>.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>

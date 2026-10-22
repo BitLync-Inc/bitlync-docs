@@ -57,6 +57,7 @@
         </div>
       </div>
       <a href="/what-we-write/">What we write</a>
+      <a href="/alerts/">Alerts</a>
       <a href="/use-cases/">Use cases</a>
       <a href="/migrations/">Migrations</a>
       <a href="/reference/">Reference</a>
@@ -142,7 +143,18 @@
     <li>Billing: the MSP matches each service to an existing line on an existing agreement. You send an absolute quantity (0 stops billing). Bitlync never creates agreements or lines</li>
   </ul>
 
-  <p class="note">Coverage for Halo and ConnectWise: <a href="/coverage/">Coverage</a>. Sandbox curl: <a href="/quickstart/">Quickstart</a>.</p>
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">8. Alerts</h3>
+  <p class="note">When alerts are on, Connect adds an alerts setup step. Back returns to the previous step. Continue saves and moves on. Choose where alerts go in your stack. Type is required. Subtype (ConnectWise), Item, and the Halo subcategory are optional and default to None. The message "ConnectWise requires Subtype on {board}." appears only when your stack mandates Subtype.</p>
+  <ul class="note" style="padding-left:1.2em">
+    <li>If the page cannot save, it says "Reload the page and try again."</li>
+    <li>If saves come too fast, it says "Too many saves. Wait a minute and try again."</li>
+    <li>Done links to "Go to Activity"</li>
+  </ul>
+
+  <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">9. Activity</h3>
+  <p class="note">Activity shows Needs your attention, a change log in your local time, Deliveries, and Send test ticket. Send test ticket is sandbox-only, 30 per minute. The public demo key cannot open the console Activity page (401), so this is the merged portal layout, not a view of that screen.</p>
+
+  <p class="note">Coverage for Halo and ConnectWise: <a href="/coverage/">Coverage</a>. Sandbox curl: <a href="/quickstart/">Quickstart</a>. Alert catalog and routing: <a href="/alerts/">Alerts</a>.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>
