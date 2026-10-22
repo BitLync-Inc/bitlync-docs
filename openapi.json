@@ -2566,7 +2566,7 @@
             }
           },
           "409": {
-            "description": "Deliberate API failure. Branch on `code`, not HTTP status alone.",
+            "description": "409 routing_msp_owned. The MSP sets alert routing for this tenant in Connect. Nothing was saved. Branch on `code`.",
             "content": {
               "application/json": {
                 "schema": {
