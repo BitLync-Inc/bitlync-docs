@@ -1,8 +1,7 @@
 {
   "core_repo": "BitLync-Inc/bitlync-core",
   "version": "0.100.0",
-  "sha256": "eb150db60ff095a42ca2fd47f4b952d33a1d4aca2f6d852d4ad8a656823eae3c",
+  "sha256": "d8a780fd1d3db4570d71cced35181c40676d088c5829f04c74941ccd659d325e",
   "pin_path": "docs/openapi/bitlync-openapi-0.100.0.json",
-  "rule": "bitlync-core owns OpenAPI. Do not hand-edit openapi.json. Fix: from bitlync-core run bash scripts/openapi_sync_consumers.sh (opens PRs to docs + site) or workflow_dispatch openapi-sync. Never push the pin straight to main on consumers.",
-  "source_note": "JSON document served by https://bitlync-sandbox-demo.onrender.com/openapi.json (info.version 0.100.0) on 2026-10-22, re-serialized with 2-space indent. That host's live deploy is main commit 363c8b808ff1f4b1769d1ecd7449cf04c33ed62f (PR #446). info.version is still 0.100.0. The only difference from the 2026-10-21 document is the PUT /tenants/{tenant_id}/alert-routing 409 description. The pin file on bitlync-core was not readable from this environment, so this is not a byte check of docs/openapi/bitlync-openapi-0.100.0.json."
+  "fix": "bitlync-core owns OpenAPI. Do not hand-edit openapi.json. Fix: from bitlync-core run bash scripts/openapi_sync_consumers.sh (opens PRs to docs + site) or workflow_dispatch openapi-sync. Never push the pin straight to main on consumers."
 }
