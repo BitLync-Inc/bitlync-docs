@@ -134,18 +134,18 @@
   <p class="note">PSA company create is not supported: companies are created by the MSP. A PSA create returns 403 <code class="inline">company_create_not_supported</code> with no PSA call. Match to an existing company instead.</p>
   <p class="note">Device write runs when the MSP turns on that grant. Exact-name Match fills Match when one PSA company name hits one ISV customer. Ambiguous names stay Needs match. Each row is Match, company import from PSA, or Skip. Bulk unmatched import takes a <code class="inline">dry_run</code> preview. Company import creates the customer in the ISV. Contacts are list and match. Ticket create and update take board, status, and priority ids from the ConnectWise and Halo lists. An unknown id returns 422. A missing grant is <code class="inline">grant_missing</code>.</p>
   <p class="note">A write that does not apply returns a stable <code class="inline">code</code>, one sentence, and <code class="inline">doc_url</code>.</p>
-  <p class="note"><code class="inline">agreement_header_not_supported</code> — the call asked to create an agreement.</p>
-  <p class="note"><code class="inline">agreement_requires_existing</code> — missing or unknown agreement.</p>
+  <p class="note"><code class="inline">agreement_header_not_supported</code>: the call asked to create an agreement.</p>
+  <p class="note"><code class="inline">agreement_requires_existing</code>: missing or unknown agreement.</p>
   <p class="note">ConnectWise and Halo write on an existing project.</p>
-  <p class="note"><code class="inline">project_requires_existing</code> — missing or unknown project.</p>
-  <p class="note"><code class="inline">project_header_not_supported</code> — the call asked to create a project.</p>
-  <p class="note"><code class="inline">project_not_writable</code> — this project will not take the write.</p>
-  <p class="note"><code class="inline">project_company_cannot_update</code> — the project’s company cannot be updated.</p>
+  <p class="note"><code class="inline">project_requires_existing</code>: missing or unknown project.</p>
+  <p class="note"><code class="inline">project_header_not_supported</code>: the call asked to create a project.</p>
+  <p class="note"><code class="inline">project_not_writable</code>: this project will not take the write.</p>
+  <p class="note"><code class="inline">project_company_cannot_update</code>: the project’s company cannot be updated.</p>
   <p class="note">Pax8 matches companies it already has, then creates the rest. That is the distributor, not the PSA.</p>
-  <p class="note"><code class="inline">company_create_not_supported</code> — a PSA company create; companies are created by the MSP.</p>
-  <p class="note"><code class="inline">psa_company_update_refused</code> — the grant is on and this company update did not run.</p>
-  <p class="note"><code class="inline">company_match_ambiguous</code> — more than one match.</p>
-  <p class="note"><code class="inline">distributor_required</code> — no connected distributor for this write.</p>
+  <p class="note"><code class="inline">company_create_not_supported</code>: a PSA company create; companies are created by the MSP.</p>
+  <p class="note"><code class="inline">psa_company_update_refused</code>: the grant is on and this company update did not run.</p>
+  <p class="note"><code class="inline">company_match_ambiguous</code>: more than one match.</p>
+  <p class="note"><code class="inline">distributor_required</code>: no connected distributor for this write.</p>
 
       <div class="btn-row" style="margin:36px 0 0">
         <a class="btn" href="/quickstart/">Quickstart</a>
