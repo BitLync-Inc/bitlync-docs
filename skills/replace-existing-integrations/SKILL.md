@@ -26,7 +26,7 @@ The job: they already wrote vendor clients. They change those calls to Bitlync. 
 
 ## Phase 1 — Inventory
 
-1. List the vendor APIs they call today (PSA first: ConnectWise, Halo, SuperOps). SuperOps is sandbox only for now.
+1. List the vendor APIs they call today (PSA first: ConnectWise, Halo, SuperOps). SuperOps is sandbox only for now. On sandbox, SuperOps checks the API key only and does not connect: no tickets, companies, or agreements yet.
 2. For each, list the operations they use (list/get/create/update/close) and the fields they depend on.
 3. Map each to a Bitlync word: Ticket, Company, Contact, Device, Agreement, Billing line item, Project.
 4. Mark a missing route as missing. Do not describe a route that is not in these docs.
