@@ -82,14 +82,14 @@
   <ul class="note" style="padding-left:1.2em">
     <li>From the ISV product (or Bitlync link), MSP opens the <strong>hosted Connect</strong> link for that vendor</li>
     <li>MSP accepts <strong>MSP Connect Terms</strong> before keys save</li>
-    <li>Follow the numbered steps beside the fields (Halo: client ID, secret, auth + resource URLs; ConnectWise: company id, public/private keys, client id, base URL)</li>
+    <li>Follow the numbered steps beside the fields (Halo: Halo address, client ID, client secret; ConnectWise: company id, public/private keys, client id, base URL)</li>
   </ul>
 
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">2. Keys and permissions</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>Paste credentials</li>
     <li>Halo credential type: create a Halo API application that uses the client credentials grant (Client ID and Secret) with the <code class="inline">all</code> scope. Other Halo auth methods (e.g. username/password or authorization code) cannot create custom fields, so Bitlync setup fails with them</li>
-    <li>Halo URLs: Halo shows two URLs for the API application. Put the URL ending in <code class="inline">/auth</code> in the Bitlync Auth server field (for example <code class="inline">https://yourcompany.halopsa.com/auth</code>). Put the URL ending in <code class="inline">/api</code> in the Bitlync Resource server field (for example <code class="inline">https://yourcompany.halopsa.com/api</code>). Enter the full URLs as shown, with no trailing slash. Bitlync adds <code class="inline">/token</code> to the Auth server URL to get a token, and sends API calls to the Resource server URL</li>
+    <li>Halo address: enter only your Halo address in the <strong>Halo address</strong> field (for example <code class="inline">yourcompany.halopsa.com</code>), with no <code class="inline">/auth</code> or <code class="inline">/api</code>. <code class="inline">https://</code> is optional. Bitlync adds <code class="inline">/auth</code> and <code class="inline">/api</code> itself</li>
     <li>Tip: after Halo setup, sign out of Halo and back in, or hard refresh the page. Halo caches settings, so new custom fields and settings may not show until you do</li>
     <li>Bitlync <strong>tests</strong> the connection in the flow</li>
     <li>If something is missing, fix the <strong>named</strong> permission in the PSA, then re-test</li>
