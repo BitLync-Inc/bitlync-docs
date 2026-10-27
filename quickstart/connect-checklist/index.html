@@ -89,6 +89,7 @@
   <ul class="note" style="padding-left:1.2em">
     <li>Paste credentials</li>
     <li>Halo credential type: create a Halo API application that uses the client credentials grant (Client ID and Secret) with the <code class="inline">all</code> scope. Other Halo auth methods (e.g. username/password or authorization code) cannot create custom fields, so Bitlync setup fails with them</li>
+    <li>Halo URLs: Halo shows two URLs for the API application. Put the URL ending in <code class="inline">/auth</code> in the Bitlync Auth server field (for example <code class="inline">https://yourcompany.halopsa.com/auth</code>). Put the URL ending in <code class="inline">/api</code> in the Bitlync Resource server field (for example <code class="inline">https://yourcompany.halopsa.com/api</code>). Enter the full URLs as shown, with no trailing slash. Bitlync adds <code class="inline">/token</code> to the Auth server URL to get a token, and sends API calls to the Resource server URL</li>
     <li>Tip: after Halo setup, sign out of Halo and back in, or hard refresh the page. Halo caches settings, so new custom fields and settings may not show until you do</li>
     <li>Bitlync <strong>tests</strong> the connection in the flow</li>
     <li>If something is missing, fix the <strong>named</strong> permission in the PSA, then re-test</li>
