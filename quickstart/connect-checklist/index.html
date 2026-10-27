@@ -88,6 +88,8 @@
   <h3 style="font-family:var(--serif);font-size:26px;margin:36px 0 8px">2. Keys and permissions</h3>
   <ul class="note" style="padding-left:1.2em">
     <li>Paste credentials</li>
+    <li>Halo credential type: create a Halo API application that uses the client credentials grant (Client ID and Secret) with the <code class="inline">all</code> scope. Resource-server credentials cannot create custom fields, so Bitlync setup fails with them</li>
+    <li>Tip: after Halo setup, sign out of Halo and back in, or hard refresh the page. Halo caches, so new custom fields and settings may not show until you do</li>
     <li>Bitlync <strong>tests</strong> the connection in the flow</li>
     <li>If something is missing, fix the <strong>named</strong> permission in the PSA, then re-test</li>
     <li>Prefer a <code class="inline">dry_run</code> / preview where the product offers it before real writes</li>
